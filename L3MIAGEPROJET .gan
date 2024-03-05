@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Bataille de navale" company="" webLink="http://" view-date="2023-12-01" view-index="0" gantt-divider-location="627" resource-divider-location="300" version="3.3.3300" locale="fr_FR">
+    <description/>
+    <view zooming-state="default:9" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="347" order="0"/>
+        <field id="tpd4" name="Date de début" width="132" order="1"/>
+        <field id="tpd5" name="Date de fin" width="132" order="2"/>
+        <field id="tpd15" name="Notes" width="20" order="3"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="filter.dueTodayTasks" value="false"/>
+        <option id="filter.overdueTasks" value="false"/>
+        <option id="filter.inProgressTodayTasks" value="false"/>
+        <timeline><![CDATA[23,29]]></timeline>
+        <option id="color.recent"><![CDATA[#ffff33 #ff3333 #006666 #ffccff #33ffff]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="210" order="0"/>
+        <field id="1" name="Rôle par défaut" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="3" uid="4a28475533f9446da4fcf321e49edc45" name="Analyse du besoin et conception initial" meeting="false" project="true" start="2024-02-20" duration="6" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="false">
+            <task id="5" uid="16e842a217834117836f58abe6754420" name="Définir les fonctionnalités du jeu ( navires, règles du jeu ... )" color="#ffccff" meeting="false" start="2024-02-20" duration="2" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="4" uid="0874884fdf334ec5ac8920add0d972b3" name="Définir les exigences du jeu en terme d'interface utilisateurs" color="#ffccff" meeting="false" start="2024-02-21" duration="3" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="2" uid="4635eb65e08c42afbf4adf24da4c81d9" name="Identifier les contraintes du projet" color="#ffccff" meeting="false" start="2024-02-23" duration="3" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="6" uid="3447370f6f6e45dfaf57d5ad3143cd8b" name="Conception initiale" meeting="false" start="2024-02-27" duration="28" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="false">
+            <task id="7" uid="70f917e7724c4f008859777698143360" name="Créer un diagrammes de classe" meeting="false" start="2024-03-27" duration="7" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="8" uid="adb565b34aed44a395a61344863f3d76" name="Concevoir l'architecture de base du jeu (grilles, navires ..)" meeting="false" start="2024-02-29" duration="3" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="31" uid="899f4eb19fec48e18d35adc902d48485" name="Définir les règles du jeu et les interactions entre les différents éléments" meeting="false" start="2024-02-27" duration="2" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="14" uid="35d0cc3ca2084de8a3041f73da5aad0d" name="Implémentation des éléments du jeu" meeting="false" start="2024-03-08" duration="5" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true">
+            <task id="13" uid="0993847f30cb4143aeb2ee14f5d8e37e" name="Créer la grille de jeu" color="#006666" meeting="false" start="2024-03-08" duration="1" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="12" uid="f603d8c4f4ab4dbd8e18fec7c033d524" name="définir et implémenter les différents types de navir" color="#006666" meeting="false" start="2024-03-08" duration="1" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="10" uid="c5ea75fe98da4cf4a6e8c2267d1d4280" name="implémenter la logique de placement des navires" color="#006666" meeting="false" start="2024-03-08" duration="1" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="11" uid="786c086fda544514af28dddd14a0d774" name="Gérer la fin de partie ( victoire, défaite)" color="#006666" meeting="false" start="2024-03-11" duration="2" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="18" uid="b08f6f9c5e664128a936a76e1e378ace" name="implémenter l'interface utilisateurs" color="#006666" meeting="false" start="2024-03-12" duration="3" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="32" uid="08f8f222cb3f4d61ba311ed76d1918a3" name="Compte rendu" shape="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" meeting="true" start="2024-03-12" duration="0" complete="0" thirdDate="2024-03-12" thirdDate-constraint="0" expand="true"/>
+        <task id="19" uid="af78a123253349d597dd8710c292ebcc" name="Tests unitaires et débogages" meeting="false" start="2024-03-15" duration="4" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true">
+            <task id="20" uid="c2dd8121ab63458c8fbb64bf67192515" name="Faire des tests sur les classes" color="#ffff33" meeting="false" start="2024-03-15" duration="1" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="21" uid="5ee7272e13e0413d835f5fc30adfdeea" name="Tester le jeu dans différentes situations" color="#ffff33" meeting="false" start="2024-03-18" duration="2" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="22" uid="65cb921c383a4fa2a3ae894acc744d40" name="Déboguer les erreurs et les problèmes" color="#ffff33" meeting="false" start="2024-03-18" duration="3" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="23" uid="98b79227e795442499eee0dc5ed90083" name="Finalisation et documentation du code" meeting="false" start="2024-03-21" duration="5" complete="0" thirdDate="2024-03-21" thirdDate-constraint="0" expand="true">
+            <task id="25" uid="e673af0815e94cc4b712bffd31b585d3" name="Réviser et améliorer le code" meeting="false" start="2024-03-21" duration="4" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="26" uid="adb17a4afd0a45ee96e66fe4df9118ca" name="Rédiger la documentation du code ( Commentaires )" meeting="false" start="2024-03-26" duration="2" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="24" uid="8751ea4e2126473d9632e84fbbf91be9" name="préparer la documentation utilisateurs" meeting="false" start="2024-03-27" duration="1" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="33" uid="affe71eac5854a17947d555feee0cd05" name="compte rendu" meeting="true" start="2024-03-26" duration="0" complete="0" thirdDate="2024-02-01" thirdDate-constraint="0" expand="true"/>
+        <task id="27" uid="63ebba0d53d742ebb8bccf387d75ed4e" name="Préparation de la présentation finale" meeting="false" start="2024-03-28" duration="17" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true">
+            <task id="30" uid="caa84b56c6814170bc0a786148410cb1" name="Préparer une démonstration du jeu" meeting="false" start="2024-03-28" duration="7" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="29" uid="5c6453a9eab644878dd79f597649d5c7" name="Préparer une présentation pour expliquer le projet" color="#8cb6ce" meeting="false" start="2024-04-08" duration="5" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="28" uid="80e03aa9ea3b42d1b62d223e4bbf6bd8" name="Préparer la présentation pour assurer la com fluide" meeting="false" start="2024-04-15" duration="5" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="34" uid="36510b9a24764c418512648d86f9cbda" name="Compte rendu" meeting="true" start="2024-04-09" duration="0" complete="0" thirdDate="2024-04-09" thirdDate-constraint="0" expand="true"/>
+        <task id="35" uid="936837bbd7f8476b910fe2791786ef15" name="Orale" color="#ff3333" meeting="true" start="2024-05-21" duration="0" complete="0" thirdDate="2024-01-22" thirdDate-constraint="0" priority="4" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
