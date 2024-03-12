@@ -11,9 +11,9 @@ public class Player {
     public int NbreTotalShot;
     public int NbreShotSuccess;
     public int NbreBateauShot;
-    public Cell LastCellShot = new Cell(-1,-1);
+    public Cell LastCellShot = new Cell(-1, -1);
     public BufferReader buffer;
-
+    public List<Cell> cellsShot;
 
     public Player(String name, Board board) {
         this.name = name;
@@ -23,9 +23,8 @@ public class Player {
         this.NbreShotSuccess = 0;
         this.LastCellShot = null;
         this.buffer = new BufferedReader(new InputStreamReader(System.in));
+        this.cellsShot = new ArrayList<Cell>();
     }
-
-   
 
     /**
      * @return
@@ -35,7 +34,7 @@ public class Player {
     }
 
     /**
-     * @param cell 
+     * @param cell
      * @param boat
      */
     public void placeBateau(Cell cell, Boat boat) {
@@ -80,8 +79,10 @@ public class Player {
         System.out.println("║");
         System.out.println("║ Nombre de tirs réalisés : " + this.NbreTotalShot);
         System.out.println("║ Nombre de tirs réussis : " + this.NbreShotSuccess);
-        System.out.println("║ Précision : " + (double) Math.round(((double) (NbreShotSuccess) / (double) (NbreTotalShot)) * 100.0) + "%");
-        //System.out.println("║ Nombre de bateaux adverses détruis : " + NbreBateauShot + "/" + Config.getNbBoats());
+        System.out.println("║ Précision : "
+                + (double) Math.round(((double) (NbreShotSuccess) / (double) (NbreTotalShot)) * 100.0) + "%");
+        // System.out.println("║ Nombre de bateaux adverses détruis : " + NbreBateauShot
+        // + "/" + getNbBoats());
         System.out.println("║");
         System.out.println("============================================================");
     }
@@ -94,16 +95,16 @@ public class Player {
     }
 
     /**
-     * @param x 
-     * @param y 
+     * @param x
+     * @param y
      * @return
      */
     public void setLastCellShot(int x, int y) {
-        this.LastCellShot =  new Cell(x, y);
+        this.LastCellShot = new Cell(x, y);
     }
 
     /**
-     * @param cells 
+     * @param cells
      * @return
      */
     public void shootAt(int x, int y) {
@@ -120,6 +121,10 @@ public class Player {
                 }
             }
         }
+    }
+
+    public void getCellsShot() {
+        return this.cellsShot;
     }
 
 }
