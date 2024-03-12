@@ -1,5 +1,6 @@
 
 import java.util.*;
+import java.lang.*;
 
 /**
  * 
@@ -9,30 +10,16 @@ public class Board {
     /**
      * Default constructor
      */
-    public Board() {
+    public Board(int dim) {
+        cellules = new Cell[dim*dim];
         
     }
 
-    /**
-     * 
-     */
-    public Cell[] board;
+    public Cell[] cellules;
 
-    /**
-     * 
-     */
-    public Boat[] boats;
+    public ArrayList<Boat> bateaux;
 
-    /**
-     * 
-     */
-    public int nbreBoats;
-
-    /**
-     * @param Zx 
-     * @param Zy 
-     * @return
-     */
+    
     public void getCell(int Zx, int Zy) {
         // TODO implement here
         return null;
@@ -41,9 +28,32 @@ public class Board {
     /**
      * @return
      */
-    public void ShowBoardPlayer() {
-        // TODO implement here
-        return null;
+    public void ShowBoardPlayer(Player joueur, Player adversaire) {
+        Cell[] adv = adversaire.getCellsShot();
+        Cell[] plr = joueur.getBoats();
+        System.out.println(" Tes bateaux:\n _ _ _ _ _ _ _ _ _ _ \n");
+        char ca = ' ';
+        for (int i = 0; i < cellules.length/cellules.length; i++) {
+            System.out.println("|");
+            for (int j = 0; j < bateaux.size(); j++) {
+                for(int bat = 0; bat < plr.length; bat++){
+                    if(plr[bat].getX()==j && plr[bat].getY() == i){
+                        for (int tire = 0; tire < adv.length; tire++) {
+                            if(j == adv[tire].getX() && i == adv[tire].getY()) {
+                                ca = 'C';
+                            }
+                            if(ca != 'C'){
+                                ca = 'B';
+                            }
+                        }
+                    }
+                }
+            System.out.println(ca);
+            ca = ' ';
+            }
+            System.out.println("|\n _ _ _ _ _ _ _ _ _ _ \n");
+        }
+        
     }
 
     /**
@@ -51,18 +61,39 @@ public class Board {
      * @param enemie 
      * @return
      */
-    public void ShowPlayBoard(Player player, Player enemie) {
-        // TODO implement here
-        return null;
+    public void ShowPlayBoard(Player joueur, Player adversaire) {
+        Cell[] adv = adversaire.getBoats();
+        Cell[] plr = joueur.getCellsShot();
+        System.out.println(" Tes tires:\n _ _ _ _ _ _ _ _ _ _ \n");
+        char ca = ' ';
+        for (int i = 0; i < cellules.length/cellules.length; i++) {
+            System.out.println("|");
+            for (int j = 0; j < cellules.length/cellules.length; j++) {
+                for(int bat = 0; bat < plr.length; bat++){
+                    if(adv[bat].getX()==j && adv[bat].getY()== i){
+                        for (int tire = 0; tire < plr.length; tire++) {
+                            if(j == plr[tire].getX() && i == plr[tire].getY()) {
+                                ca = 'X';
+                            }
+                            if(ca != 'X'){
+                                ca = 'O';
+                            }
+                        }
+                    }
+                }
+            System.out.println(ca);
+            ca = ' ';
+            }
+            System.out.println("|\n _ _ _ _ _ _ _ _ _ _ \n");
+        }
     }
 
     /**
      * @param boat 
      * @return
      */
-    public void addBoard(Boat boat) {
-        // TODO implement here
-        return null;
+    public void addBoat(Boat boat) {
+        bateaux.add(boat);
     }
 
     /**
