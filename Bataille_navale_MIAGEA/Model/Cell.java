@@ -6,92 +6,78 @@ import java.util.*;
  */
 public class Cell {
 
-    /**
-     * Default constructor
-     */
-    public Cell() {
-    }
-
-    /**
-     * 
-     */
-    public int x;
-
-    /**
-     * 
-     */
+    private int x;
     public int y;
-
-    /**
-     * 
-     */
-    public void Attribute1;
-
-    /**
-     * 
-     */
+    public Boat boat;
     public boolean shot;
-
-    /**
-     * 
-     */
     public boolean cible;
+
+    public Cell(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.shot = false;
+        this.cible = false;//à revoir
+        this.boat = null;
+    }
 
     /**
      * @return
      */
-    public void addBoat() {
-        // TODO implement here
-        return null;
+    public void addBoat(Boat boat) {
+        this.boat = boat;
     }
 
     /**
      * @return
      */
     public int getX() {
-        // TODO implement here
-        return 0;
+        return this.x;
     }
 
     /**
      * @return
      */
     public int getY() {
-        // TODO implement here
-        return 0;
+        return this.y;
     }
 
     /**
      * @return
      */
+    // Marque la cellule comme eyant été tiré
     public void shoot() {
-        // TODO implement here
-        return null;
+        this.shot = true;
+        if (this.boat != null) {
+            this.boat.hit();
+        }
     }
 
     /**
      * @return
      */
+
+    // Vérifie si la cellule a été attaquée
     public boolean isShot() {
-        // TODO implement here
-        return false;
+        return this.shot;
     }
 
     /**
      * @return
      */
+
+    // Vérifie si la cellule est actuellement une cible
     public boolean isCible() {
-        // TODO implement here
-        return false;
+        return this.cible;
     }
 
     /**
-     * @param valeur 
+     * @param valeur
      * @return
      */
+
+    // Met à jour l'état de la cellule pour indiquer si elle est une cible ou non
     public void updateCible(boolean valeur) {
-        // TODO implement here
-        return null;
+        this.cible = valeur;
     }
 
 }
