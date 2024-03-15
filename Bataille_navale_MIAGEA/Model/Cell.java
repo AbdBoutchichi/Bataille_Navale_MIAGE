@@ -1,3 +1,4 @@
+package Modele;
 
 import java.util.*;
 
@@ -45,12 +46,12 @@ public class Cell {
      * @return
      */
     // Marque la cellule comme eyant été tiré
-    public void shoot() {
+    /*public void shoot() {
         this.shot = true;
         if (this.boat != null) {
             this.boat.hit();
         }
-    }
+    }*/
 
     /**
      * @return

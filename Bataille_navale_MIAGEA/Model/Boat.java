@@ -1,3 +1,5 @@
+package Modele;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -7,11 +9,45 @@ public class Boat {
     // private BoatState state;
     // private int hits;
 
-    public Boat(String name, int size) {
-        this.name = name;
-        this.cells = new Cell[size];
-        // this.state = BoatState.INTACT;
-        // this.hits = 0;
+    public Boat(int x, int y, char o, int t, String nom){
+        this.posX=x;
+        this.posY=y;
+        this.orientation = o;
+        this.cellules = new Cell[taille];
+        this.taille=t;
+        this.life = t;
+        this.name = nom;
+        addPos();
+    }
+
+
+    public int taille;
+    public int posX;
+    public int posY;
+    private char orientation;
+    public Cell[] cellules;
+    private int life;
+
+    boolean isPosition(int x, int y){
+        for (int i = 0; i < taille; i++) {
+            if ((orientation == 'H' || orientation == 'h') && x == posX && y == posY+i || (orientation == 'V' || orientation == 'v') && x == posX+i && y == posY){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void addPos(){
+        for(int i=0; i <  cellules.length; i++){
+            if(orientation=='V' || orientation== 'v'){
+                cellules[i] = new Cell(posX+i, posY);;
+            } else if(orientation=='H' || orientation== 'h'){
+                cellules[i] = new Cell(posX, posY+i);
+            } else {
+                System.out.println("y a un prb chef !! \n'" + orientation + "'n'est pas une valeur prise en compte");
+            }
+        }
     }
 
     /*
@@ -61,11 +97,29 @@ public class Boat {
     }
 
     public int getSize() {
-        return cells.length;
+        return this.taille;
     }
 
     public String getName() {
         return name;
+    }
+
+    public boolean isDead(){
+        if(life == 0){
+            return true;
+        }
+        return false;
+    }
+
+    public Cell[] getCells(Cell[] list, int x){
+        for (int i = 0; i < cellules.length; i++) {
+            list[i+x]=cellules[i];
+        }
+        return list;
+    }
+
+    public void touch(){
+        life--;
     }
 
     /*
