@@ -1,5 +1,5 @@
 package Modele;
-import java.util.*;
+import java.util.Scanner;
 
 /**
  * 
@@ -97,7 +97,7 @@ public class NormalMode {
             }
             lecteur = scanner.nextLine();
             if (brd.joueur2.over((int)lecteur.charAt(0)-49, brd.convertPos(lecteur.charAt(1)),dim,lecteur.charAt(2)) || brd.joueur2.out((int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),dim,lecteur.charAt(2), 10)) {
-                System.out.println("ta mere la pute choisis une autre position !!!");
+                System.out.println("CHOISIS UNE AUTRE POSITION..... !!!");
             } else {
                 if(bat == 5){
                     System.out.println("\n\nOù poser le Croiseur (longueur = 4)?");
