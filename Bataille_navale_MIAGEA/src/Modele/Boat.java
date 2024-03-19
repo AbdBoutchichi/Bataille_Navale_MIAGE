@@ -1,7 +1,6 @@
 package Modele;
 
-import java.util.List;
-import java.util.ArrayList;
+
 
 public class Boat {
     private String name;
@@ -38,6 +37,7 @@ public class Boat {
         return false;
     }
 
+    //Jusqu'à maintenant la méthode ne sert à rien 
     void addPos(){
         for(int i=0; i <  cellules.length; i++){
             if(orientation=='V' || orientation== 'v'){
@@ -120,6 +120,18 @@ public class Boat {
 
     public void touch(){
         life--;
+    }
+
+    public char getOrientation() {
+        return orientation;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
     }
 
     /*

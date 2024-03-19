@@ -2,7 +2,7 @@ package Modele;
 
 
 import java.util.*;
-import java.lang.*;
+
 
 /**
  * 
@@ -14,7 +14,7 @@ public class Board {
      */
     public Board(int dim, Player plr1, Player plr2) {
         dimension = dim;
-        cellules = new Cell[dim*dim];
+        cellules = new Cell[dim][dim];
         joueur1 = plr1;
         joueur2 = plr2;
         
@@ -22,7 +22,7 @@ public class Board {
 
     int dimension;
 
-    public Cell[] cellules;
+    public Cell[][] cellules;
 
     public Player joueur1;
     
@@ -150,13 +150,14 @@ public class Board {
     }
 
     public void turn(){
-        Scanner  scanner = new Scanner(System.in);
-        String tire;
-        System.out.println("\n\n\n══════════════════════════════════════════════════════════════════════════════════════════════\n\nAu tour de "+ joueur1.name+"\n\n══════════════════════════════════════════════════════════════════════════════════════════════\n\n\n");
-        ShowPlayBoard(joueur1, joueur2);
-        ShowBoardPlayer(joueur1, joueur2);
-        tire = scanner.nextLine();
-        joueur1.shootAt((int)tire.charAt(0), convertPos(tire.charAt(1)) );
+        try (Scanner scanner = new Scanner(System.in)) {
+            String tire;
+            System.out.println("\n\n\n══════════════════════════════════════════════════════════════════════════════════════════════\n\nAu tour de "+ joueur1.name+"\n\n══════════════════════════════════════════════════════════════════════════════════════════════\n\n\n");
+            ShowPlayBoard(joueur1, joueur2);
+            ShowBoardPlayer(joueur1, joueur2);
+            tire = scanner.nextLine();
+            joueur1.shootAt((int)tire.charAt(0), convertPos(tire.charAt(1)) );
+        }
     }
 
     /**
@@ -171,11 +172,31 @@ public class Board {
      * @param cells  
      * @return
      */
-    public boolean isThereNeighbors(Cell cells ) {
-        // TODO implement here
-        return false;
-    }
-
+    /*public boolean hasNeighbors(Boat boat) {
+        for (Cell cell : boat.getCells()) {
+            int x = cell.getX();
+            int y = cell.getY();
+            
+            // Vérifier les 8 directions autour de la cellule
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    if (dx == 0 && dy == 0) continue; // Skip la cellule du bateau elle-même
+                    
+                    int newX = x + dx;
+                    int newY = y + dy;
+                    
+                    if (newX >= 0 && newX < dimension && newY >= 0 && newY < dimension) {
+                        Cell neighbor = cells[newX][newY];
+                        if (neighbor.hasBoat()) {
+                            return true; // Un voisin avec un bateau a été trouvé
+                        }
+                    }
+                }
+            }
+        }
+        return false; // Aucun voisin avec un bateau n'a été trouvé 
+    }*/
+    
     /**
      * @param cells 
      * @return
@@ -228,6 +249,46 @@ public class Board {
         // TODO implement here
         return 0;
     }
+
+    //vérifie le placement des bateaux
+    public boolean canPlaceBoat(Boat boat) {
+        for (int i = 0; i < boat.getSize(); i++) {
+            int x = boat.getOrientation() == 'H' ? boat.getPosX() : boat.getPosX() + i;
+            int y = boat.getOrientation() == 'V' ? boat.getPosY() + i : boat.getPosY();
+    
+            if (x >= dimension || y >= dimension || x < 0 || y < 0) {
+                return false; // Le bateau sort du plateau
+            }
+    
+            if (cellules[x][y].hasBoat()) {
+                return false; // La cellule est déjà occupée par un autre bateau
+            }
+    
+            if (hasAdjacentBoats(x, y)) {
+                return false; // Il y a des bateaux adjacents
+            }
+        }
+        return true;
+    }
+
+    //Méthode vérifiant le voisinage
+    private boolean hasAdjacentBoats(int x, int y) {
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+    
+        for (int i = 0; i < dx.length; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+    
+            if (nx >= 0 && nx < dimension && ny >= 0 && ny < dimension) {
+                if (cellules[nx][ny].hasBoat()) {
+                    return true; // Une cellule adjacente contient un bateau
+                }
+            }
+        }
+        return false;
+    }
+    
 
 
 
