@@ -23,7 +23,7 @@ public class Menu {
 */
     public static void ShowMenu(){
 
-System.out.println("            _                                            ");
+System.out.println("            _        ooo                                     ");
 System.out.println("                     | |                                  ");
 System.out.println("                     '.|                                   ");
 System.out.println("     _-   _-    _-  _-||    _-    _-  _-   _-    _-    _-  ");
@@ -69,20 +69,37 @@ System.out.println("╚═══════════════════
     }
 
     public static int getDifficultyChoice() {
-        System.out.println("Choisir la difficulté :");
-        System.out.println("1. Facile");
-        System.out.println("2. Moyen");
-        System.out.println("3. Difficile");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║            Choisir la difficulté  :        ║");
+        System.out.println("╚════════════════════════════════════════════╝");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║                 1. Facile                  ║");
+        System.out.println("╚════════════════════════════════════════════╝");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║                 2. Moyen                   ║");
+        System.out.println("╚════════════════════════════════════════════╝");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║                 3. Difficile               ║");
+        System.out.println("╚════════════════════════════════════════════╝");
         int difficulty = lecteur.nextInt();
         lecteur.nextLine();
         return difficulty;
     }
 
     public static void displayEndGameOptions() {
-        System.out.println("Jeu terminé. Choisissez une option :");
-        System.out.println("1. Redémarrer");
-        System.out.println("2. Retour au menu principal");
-        System.out.println("3. Quitter");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║     Jeu terminé. Choisissez une option :   ║");
+        System.out.println("╚════════════════════════════════════════════╝");
+        System.out.println("");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║                 1. Redémarrer              ║");
+        System.out.println("╚════════════════════════════════════════════╝");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║          2. Retour au menu principal       ║");
+        System.out.println("╚════════════════════════════════════════════╝");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║                 3. Quitter                 ║");
+        System.out.println("╚════════════════════════════════════════════╝");
     }
 
     public static void main(String[] args) {
