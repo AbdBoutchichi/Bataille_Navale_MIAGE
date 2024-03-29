@@ -1,7 +1,9 @@
 package Modele;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 
 /**
@@ -15,6 +17,11 @@ public class Board {
     public Board(int dim, Player plr1, Player plr2) {
         dimension = dim;
         cellules = new Cell[dim][dim];
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                this.cellules[i][j] = new Cell(j, j); // Initialise chaque cellule ici
+            }
+        }
         joueur1 = plr1;
         joueur2 = plr2;
         
@@ -164,9 +171,9 @@ public class Board {
      * @param boat 
      * @return
      */
-    public void addBoat(Boat boat) {
-        bateaux.add(boat);
-    }
+    //public void addBoat(Boat boat) {
+       // bateaux.add(boat);
+    //}
 
     /**
      * @param cells  
@@ -251,25 +258,54 @@ public class Board {
     }
 
     //vérifie le placement des bateaux
-    public boolean canPlaceBoat(Boat boat) {
-        for (int i = 0; i < boat.getSize(); i++) {
-            int x = boat.getOrientation() == 'H' ? boat.getPosX() : boat.getPosX() + i;
-            int y = boat.getOrientation() == 'V' ? boat.getPosY() + i : boat.getPosY();
+    boolean canPlaceBoat(Boat boat) {
+        int x = boat.getPosX();
+        int y = boat.getPosY();
+        char orientation = boat.getOrientation();
+        int size = boat.getSize();
     
-            if (x >= dimension || y >= dimension || x < 0 || y < 0) {
-                return false; // Le bateau sort du plateau
-            }
+        if (orientation == 'H' && (y + size > dimension)) {
+            return false; // Dépassement horizontal
+        } else if (orientation == 'V' && (x + size > dimension)) {
+            return false; // Dépassement vertical
+        }
     
-            if (cellules[x][y].hasBoat()) {
-                return false; // La cellule est déjà occupée par un autre bateau
-            }
+        for (int i = 0; i < size; i++) {
+            int currentX = x + (orientation == 'V' ? i : 0);
+            int currentY = y + (orientation == 'H' ? i : 0);
     
-            if (hasAdjacentBoats(x, y)) {
-                return false; // Il y a des bateaux adjacents
+            if (currentX >= dimension || currentY >= dimension || cellules[currentX][currentY].hasBoat()) {
+                return false; // Le bateau chevaucherait un autre bateau ou dépasserait les limites
             }
         }
         return true;
     }
+    
+
+    public void addBoat(Boat boat) {
+        for (int i = 0; i < boat.getSize(); i++) {
+            int x = boat.getPosX();
+            int y = boat.getPosY();
+
+            if (boat.getOrientation() == 'H') {
+                y += i; // Si le bateau est horizontal, incrémentez y pour placer le bateau
+            } else if (boat.getOrientation() == 'V') {
+                x += i; // Si le bateau est vertical, incrémentez x pour placer le bateau
+            }
+
+            if (x >= 0 && x < dimension && y >= 0 && y < dimension) {
+                cellules[x][y].setBoat(boat); // Supposons que Cell a une méthode setBoat pour associer un bateau à la cellule
+            }
+        }
+    }
+
+
+//a getter for dimension
+public int getDimension(){
+	return this.dimension;
+}
+
+
 
     //Méthode vérifiant le voisinage
     private boolean hasAdjacentBoats(int x, int y) {
@@ -288,6 +324,25 @@ public class Board {
         }
         return false;
     }
+
+    public void placeBoat(Boat boat) {
+        if (!canPlaceBoat(boat)) {
+            System.out.println("Placement invalide.");
+            return; // Ou lancez une exception selon votre préférence
+        }
+
+        int x = boat.getPosX();
+        int y = boat.getPosY();
+        char orientation = boat.getOrientation();
+        int size = boat.getSize();
+
+        for (int i = 0; i < size; i++) {
+            int currentX = x + (orientation == 'H' ? 0 : i);
+            int currentY = y + (orientation == 'H' ? i : 0);
+            cellules[currentX][currentY].setBoat(boat); // Marque la cellule comme occupée par le bateau
+        }
+    }
+    
     
 
 

@@ -9,152 +9,152 @@ public class NormalMode {
     /**
      * Default constructor
      */
-    Scanner scanner;
+    private Scanner scanner;
+    private Board board;
+    private Player player1;
+    private Player player2;
+    private Menu menu;
+    private boolean gameOver;
+    private boolean isPlayer1Turn;
+
+
+        public NormalMode() {
+            this.scanner = new Scanner(System.in);
+            this.menu = new Menu();
+            initGame();
+        }
     
-    public NormalMode() {
-        scanner = new Scanner(System.in);
-        startNormalMode(10,5);
+        private void initGame() {
+            menu.ShowMenu();
+            menu.displayMainMenu();
+            int choice = menu.getPlayerChoice();
+    
+            // Création du joueur 1
+            System.out.println("Entrez le nom du Joueur 1:");
+            String name1 = scanner.nextLine();
+            player1 = new Player(name1);
+    
+            // Sélection du mode de jeu et création du joueur 2
+            if (choice == 1) {
+                System.out.println("Entrez le nom du Joueur 2:");
+                String name2 = scanner.nextLine();
+                player2 = new Player(name2);
+            } else if (choice == 2) {
+                System.out.println("Choisir la difficulté (0: Facile, 1: Moyen, 2: Difficile):");
+                int difficulty = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                player2 = new PlayerComputer(difficulty);
+            }
+    
+            // Initialisation du plateau
+            this.board = new Board(10, player1, player2);
+    
+            // Placement des bateaux
+            placeBoats(player1);
+            placeBoats(player2);
+    
+            // Début du jeu
+            startGame();
+        }
+    
+        public void startGame() {
+            System.out.println("Début de la Bataille Navale!");
+            isPlayer1Turn = true;
+    
+            while (!checkWinConditions()) {
+                System.out.println((isPlayer1Turn ? player1.getName() : player2.getName()) + "'s turn");
+                board.ShowBoardPlayer(isPlayer1Turn ? player1 : player2, isPlayer1Turn ? player2 : player1);
+                
+                playTurn(isPlayer1Turn ? player1 : player2);
+                isPlayer1Turn = !isPlayer1Turn;
+            }
+    
+            System.out.println("Le jeu est terminé.");
+            System.out.println(player1.isAlive() ? player1.getName() + " gagne!" : player2.getName() + " gagne!");
+        }
+
+        private boolean checkWinConditions() {
+            // Vérifie si tous les bateaux de player1 sont coulés
+            boolean player1Lost = player1.getCellsBoats().stream().allMatch(Boat::isSunk);
+            
+            // Vérifie si tous les bateaux de player2 sont coulés
+            boolean player2Lost = player2.getCellsBoats().stream().allMatch(Boat::isSunk);
+    
+            // Si l'un des joueurs a perdu tous ses bateaux, le jeu est terminé
+            return player1Lost || player2Lost;
+        }
+    
+
+        // Fin du jeu
+        //System.out.println("Le jeu est terminé. " + (player1.isAlive() ? player1.getName() : player2.getName()) + " a gagné !");
+    //}
+
+    private void placeBoats(Player player) {
+        int[] boatSizes = {5, 4, 3, 3, 2};
+        String[] boatNames = {"Porte-avions", "Croiseur", "Contre-torpilleur", "Sous-marin", "Torpilleur"};
+    
+        for (int i = 0; i < boatSizes.length; i++) {
+            boolean placed = false;
+            while (!placed) {
+                System.out.println(player.getName() + ", placez votre " + boatNames[i] + " (Taille: " + boatSizes[i] + ")");
+                System.out.print("Entrez la position de départ x (par exemple, 0 à 9): ");
+                int x = scanner.nextInt();
+                scanner.nextLine();
+    
+                System.out.print("Entrez la position de départ y (par exemple, 0 à 9): ");
+                int y = scanner.nextInt();
+                scanner.nextLine();
+    
+                System.out.print("Entrez l'orientation (V pour verticale ou H pour horizontale): ");
+                String orientationInput = scanner.nextLine(); // Lit la ligne entière pour l'orientation
+                char orientation = orientationInput.charAt(0);
+    
+                 if (board.canPlaceBoat(new Boat(x, y, orientation, boatSizes[i], orientationInput))) {
+                    board.placeBoat(new Boat(x, y, orientation, boatSizes[i], orientationInput));
+                     placed = true;
+                 } else {
+                     System.out.println("Placement invalide. Veuillez réessayer.");
+                 }
+    
+                
+                placed = true;
+            }
+        }
     }
-
-    public void startNormalMode(int dimension, int nbrBateau){
-
-        System.out.println("Nom du joueur 1 :");
-        String nom1 = scanner.nextLine();
-        System.out.println("Nom du joueur 2 :");
-        String nom2 = scanner.nextLine();
-
-        Player plr1 = new Player(nom1);
-        Player plr2 = new Player(nom2);
-        Board brd = new Board(dimension, plr1, plr2);
-
-
-        brd.ShowBoardPlayer(brd.joueur1, brd.joueur2);
-
-        System.out.println(brd.joueur1.name + " place tes bateaux");
-
-        int bat = 5;
-        int dim = 5;
-        String lecteur;
-
-
-        while (bat !=0) {
-            brd.ShowBoardPlayer(plr1, plr2);
-            if (bat == 2) {
-                dim++;
-            }
-
     
-            lecteur = scanner.nextLine();
+    
 
-//cette partie pourrait être plus optimisable********************************************************/
-            if (brd.joueur1.out((int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),dim,lecteur.charAt(2), brd.dimension)) {
-
-                System.out.println("Ton bateaux sors du plateaux !!!");
-
-            } else if(brd.joueur1.over((int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),dim,lecteur.charAt(2))){
-
-                System.out.println("Ton bateaux passe sur la position d'un autre !!!");
-
-            } else if(lecteur.length() > 3){
-
-                System.out.println("Coordonnées non conforme !!!");
-
-            } else{
-                if(bat == 5){
-                    System.out.println("\nDonne le placement de tes bateau en 3 caractere XAO\n\nX : un chiffre entre 0 et 9\n\nA : une lettre entre A et J\n\nO: son orientation V pour verticale et H pour horizontale\n\nOù poser le Porte-avions (longueur = 5)?");
-                    dim = 5;
-                    brd.joueur1.placeBateau(null, (int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),lecteur.charAt(2),dim,"Porte-avions");
-                    bat--;
-                } else if (bat == 4) {
-                    System.out.println("\n\nOù poser le Croiseur (longueur = 4)?");
-                    dim = 4;
-                    brd.joueur1.placeBateau(null, (int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),lecteur.charAt(2),dim,"Croiseur");
-                    bat--;
-                } else if (bat == 2 || bat == 3) {
-                    System.out.println("\n\nOù poser le Contre-torpilleur (longueur = 4)?");
-                    dim = 3;
-                    brd.joueur1.placeBateau(null, (int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),lecteur.charAt(2),dim,"Contre-torpilleur");
-                    bat--;
-                } else {
-                    System.out.println("\n\nOù poser le Torpilleur (longueur = 4)?");
-                    dim = 2;
-                    brd.joueur1.placeBateau(null, (int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),lecteur.charAt(2),dim,"Torpilleur");
-                    bat--;
-                }
-            }
-            dim--;
-            
-        }
-
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+brd.joueur2.name + " place tes bateaux\n\nDonne le placement de tes bateau en 3 caractere XAO\n\nX : un chiffre entre 0 et 9\n\nA : une lettre entre A et J\n\nO: son orientation V pour verticale et H pour horizontale\n\nOù poser le Porte-avions (longueur = 5)?");
-        bat = 5;
-        dim = 5;
-        while (bat !=0) {
-            brd.ShowBoardPlayer(plr2, plr1);
-            
-            if (bat == 2) {
-                dim++;
-            }
-            lecteur = scanner.nextLine();
-            if (brd.joueur2.over((int)lecteur.charAt(0)-49, brd.convertPos(lecteur.charAt(1)),dim,lecteur.charAt(2)) || brd.joueur2.out((int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),dim,lecteur.charAt(2), 10)) {
-                System.out.println("CHOISIS UNE AUTRE POSITION..... !!!");
-            } else {
-                if(bat == 5){
-                    System.out.println("\n\nOù poser le Croiseur (longueur = 4)?");
-                    dim = 5;
-                    brd.joueur2.placeBateau(brd, (int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),lecteur.charAt(2),dim,"Porte avion");
-                    bat--;
-                } else if (bat == 4) {
-                    System.out.println("\n\nOù poser le Contre-torpilleur (longueur = 3)?");
-                    dim = 4;
-                    brd.joueur2.placeBateau(null, (int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),lecteur.charAt(2),dim,"Croiseur");
-                    bat--;
-                } else if (bat == 2 || bat == 3) {
-                    System.out.println("\n\nOù poser le Torpilleur (longueur = 2)?");
-                    dim = 3;
-                    brd.joueur2.placeBateau(null, (int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),lecteur.charAt(2),dim,"Contre-torpilleur");
-                    bat--;
-                } else {
-                    
-                    dim = 2;
-                    brd.joueur2.placeBateau(brd, (int)lecteur.charAt(0)-48, brd.convertPos(lecteur.charAt(1)),lecteur.charAt(2),dim,"Torpilleur");
-                    bat--;
-                }
-            }
-            dim--;
-        }
-//************************************************************************************/
-        int tour = 0;
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDonnez le placement de vos tires en 2 caractere XA\n\nX : un chiffre entre 0 et 9\n\nA : une lettre entre A et J\n\nO: son orientation V pour verticale et H pour horizontale\n\nAppuyez sur entrée pour continuer");
-        lecteur = scanner.nextLine();
-        while(brd.joueur1.isAlive() || brd.joueur2.isAlive()) {
-            tour++;
-            if(tour % 2 == 1) {
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nc'est a " + brd.joueur1.getName()+ " de jouer : ");
-                brd.ShowBoardPlayer(brd.joueur1, brd.joueur2);
-                brd.ShowPlayBoard(brd.joueur1, brd.joueur2);
-                lecteur = scanner.nextLine();
-                brd.joueur1.shootAt((int)lecteur.charAt(0)-48, lecteur.charAt(1));
-                brd.joueur2.isTouch((int)lecteur.charAt(0)-48, lecteur.charAt(1));
-            } else {
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nc'est a" + brd.joueur2.getName()+ "de jouer : ");
-                brd.ShowBoardPlayer(brd.joueur2, brd.joueur1);
-                brd.ShowPlayBoard(brd.joueur2, brd.joueur1);
-                lecteur = scanner.nextLine();
-                brd.joueur2.shootAt((int)lecteur.charAt(0)-48, lecteur.charAt(1));
-                brd.joueur1.isTouch((int)lecteur.charAt(0)-48, lecteur.charAt(1));
-            }
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n changement de joueur !!\n\n Appuyez sur entrée pour changer de joueur");
-            lecteur = scanner.nextLine();
-        }
-
-        if(brd.joueur1.isAlive()){
-            System.out.println("╔══════════════════════════════════════════════════════════\n║\n║ "+brd.joueur1+" a gagné !!! Gloire a notre nouveau Heros\n║\n║ Il a fait"+brd.joueur1.NbreTotalShot+" tires\n║\n╚══════════════════════════════════════════════════════════");
+    private void playTurn(Player player) {
+        System.out.println("Au tour de " + player.getName() + ".");
+        if (player instanceof PlayerComputer) {
+            // Gère un tour automatique pour PlayerComputer
+            ((PlayerComputer) player).chooseNextMove();
         } else {
-            System.out.println("╔══════════════════════════════════════════════════════════\n║\n║ "+brd.joueur2+" a gagné !!! Gloire a notre nouveau Heros\n║\n║ Il a fait"+brd.joueur2.NbreTotalShot+" tires\n║\n╚══════════════════════════════════════════════════════════");
+            // Gère un tour pour un joueur humain
+            System.out.println("Entrez les coordonnées de votre tir (x, y):");
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            player.shootAt(x, y); // Supposons que cette méthode existe dans `Player`
+        }
+        
+    }
+    
+    private void endGame() {
+        menu.displayEndGameOptions();
+        int endChoice = menu.getPlayerChoice();
+        
+        switch (endChoice) {
+            case 1:
+                initGame(); // Cela devrait fonctionner si initGame est défini dans la même classe
+                break;
+            case 2:
+                gameOver = true; // Marque le jeu comme terminé
+                break;
+            case 3:
+                System.exit(0); // Quitte l'application
+                break;
         }
     }
-
-    
 
 }
+

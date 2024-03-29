@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class Player {
 
-    public String name;
+    public static String name;
     //public Board board;
     public int NbreTotalShot;
     public int NbreShotSuccess;
