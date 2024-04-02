@@ -26,7 +26,7 @@ public class PlayerComputer extends Player {
     }
 
     // Placement aléatoire des navires
-    private void placeShipsRandomly() {
+    public void placeShipsRandomly() {
         int[] shipSizes = {5, 4, 3, 3, 2};
         for (int size : shipSizes) {
             boolean placed = false;

@@ -167,95 +167,9 @@ public class Board {
         }
     }
 
-    /**
-     * @param boat 
-     * @return
-     */
-    //public void addBoat(Boat boat) {
-       // bateaux.add(boat);
-    //}
+  
 
-    /**
-     * @param cells  
-     * @return
-     */
-    /*public boolean hasNeighbors(Boat boat) {
-        for (Cell cell : boat.getCells()) {
-            int x = cell.getX();
-            int y = cell.getY();
-            
-            // Vérifier les 8 directions autour de la cellule
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dy = -1; dy <= 1; dy++) {
-                    if (dx == 0 && dy == 0) continue; // Skip la cellule du bateau elle-même
-                    
-                    int newX = x + dx;
-                    int newY = y + dy;
-                    
-                    if (newX >= 0 && newX < dimension && newY >= 0 && newY < dimension) {
-                        Cell neighbor = cells[newX][newY];
-                        if (neighbor.hasBoat()) {
-                            return true; // Un voisin avec un bateau a été trouvé
-                        }
-                    }
-                }
-            }
-        }
-        return false; // Aucun voisin avec un bateau n'a été trouvé 
-    }*/
-    
-    /**
-     * @param cells 
-     * @return
-     */
-    public boolean isboatInBoard(Cell cells) {
-        // TODO implement here
-        return false;
-    }
 
-    /**
-     * @param hauteur 
-     * @param largeur
-     */
-    public void generateBoard(int hauteur, int largeur) {
-        // TODO implement here
-    }
-
-    /**
-     * @param x 
-     * @param y 
-     * @param size 
-     * @param position 
-     * @return
-     */
-    public Cell generateBoat(int x, int y, int size, String position) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Boat getBoats() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Cell getCells() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public int getNbreBoats() {
-        // TODO implement here
-        return 0;
-    }
 
     //vérifie le placement des bateaux
     boolean canPlaceBoat(Boat boat) {
@@ -274,7 +188,7 @@ public class Board {
             int currentX = x + (orientation == 'V' ? i : 0);
             int currentY = y + (orientation == 'H' ? i : 0);
     
-            if (currentX >= dimension || currentY >= dimension || cellules[currentX][currentY].hasBoat()) {
+            if (currentX >= dimension || currentY >= dimension || cellules[currentX][currentY].hasBoat() ) {
                 return false; // Le bateau chevaucherait un autre bateau ou dépasserait les limites
             }
         }
@@ -283,21 +197,17 @@ public class Board {
     
 
     public void addBoat(Boat boat) {
-        for (int i = 0; i < boat.getSize(); i++) {
-            int x = boat.getPosX();
-            int y = boat.getPosY();
-
-            if (boat.getOrientation() == 'H') {
-                y += i; // Si le bateau est horizontal, incrémentez y pour placer le bateau
-            } else if (boat.getOrientation() == 'V') {
-                x += i; // Si le bateau est vertical, incrémentez x pour placer le bateau
+        if (canPlaceBoat(boat)) {
+            for (int i = 0; i < boat.getSize(); i++) {
+                int currentX = boat.getPosX() + (boat.getOrientation() == 'V' ? i : 0);
+                int currentY = boat.getPosY() + (boat.getOrientation() == 'H' ? i : 0);
+                cellules[currentX][currentY].setBoat(boat);
             }
-
-            if (x >= 0 && x < dimension && y >= 0 && y < dimension) {
-                cellules[x][y].setBoat(boat); // Supposons que Cell a une méthode setBoat pour associer un bateau à la cellule
-            }
+        } else {
+            System.out.println("Placement invalide pour le bateau.");
         }
-    }
+}
+
 
 
 //a getter for dimension

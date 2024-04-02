@@ -40,7 +40,7 @@ public class NormalMode {
                 String name2 = scanner.nextLine();
                 player2 = new Player(name2);
             } else if (choice == 2) {
-                System.out.println("Choisir la difficulté (0: Facile, 1: Moyen, 2: Difficile):");
+                menu.getDifficultyChoice();
                 int difficulty = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
                 player2 = new PlayerComputer(difficulty);
@@ -48,11 +48,14 @@ public class NormalMode {
     
             // Initialisation du plateau
             this.board = new Board(10, player1, player2);
+
+            board.ShowBoardPlayer(player2, player1);
     
             // Placement des bateaux
             placeBoats(player1);
             placeBoats(player2);
-    
+
+            board.ShowBoardPlayer(player2, player1);
             // Début du jeu
             startGame();
         }
@@ -85,11 +88,11 @@ public class NormalMode {
         }
     
 
-        // Fin du jeu
-        //System.out.println("Le jeu est terminé. " + (player1.isAlive() ? player1.getName() : player2.getName()) + " a gagné !");
-    //}
-
     private void placeBoats(Player player) {
+
+        if (player instanceof PlayerComputer){
+            ((PlayerComputer) player).placeShipsRandomly();
+        }else{
         int[] boatSizes = {5, 4, 3, 3, 2};
         String[] boatNames = {"Porte-avions", "Croiseur", "Contre-torpilleur", "Sous-marin", "Torpilleur"};
     
@@ -110,17 +113,16 @@ public class NormalMode {
                 char orientation = orientationInput.charAt(0);
     
                  if (board.canPlaceBoat(new Boat(x, y, orientation, boatSizes[i], orientationInput))) {
-                    board.placeBoat(new Boat(x, y, orientation, boatSizes[i], orientationInput));
+                    player.placeBateau(board, x, y, orientation, boatSizes[i], orientationInput);
                      placed = true;
                  } else {
                      System.out.println("Placement invalide. Veuillez réessayer.");
                  }
-    
-                
                 placed = true;
             }
         }
     }
+}
     
     
 
