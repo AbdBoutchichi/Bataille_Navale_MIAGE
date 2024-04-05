@@ -46,10 +46,12 @@ public class Board {
     /**
      * @return
      */
-    public void ShowBoardPlayer(Player joueur, Player adversaire) {
+
+     //affichage des bateaux du joueur
+    public void ShowBoardBoat(Player joueur, Player adversaire) {
         Cell[] adv = adversaire.getCellsShot();
         List<Boat> plr = joueur.getCellsBoats();
-        System.out.print(" Tes bateaux :\n  ");
+        System.out.print("Bateaux de "+ joueur.getName()+":\n  ");
         char ind = 'A';
         for (int index = 0; index < dimension; index++){
             System.out.print("  " + ind + " ");
@@ -69,7 +71,7 @@ public class Board {
             for (int j = 0; j < dimension; j++) {
                 
                 for(int bat = 0; bat < plr.size(); bat++){
-                    if(plr.get(bat).isPosition(i, j)){
+                    if(plr.get(bat).isPosition(j, i)){
                         ca = "B";
                         for (int tire = 0; tire < adv.length; tire++) {
                             if(j == adv[tire].getX() && i == adv[tire].getY()) {
@@ -107,10 +109,17 @@ public class Board {
      * @param enemie 
      * @return
      */
-    public void ShowPlayBoard(Player joueur, Player adversaire) {
+
+     //Affichage des precedent tire du joueur
+    public void ShowBoardShot(Player joueur, Player adversaire) {
         List<Boat> adv = adversaire.getCellsBoats();
         Cell[] plr = joueur.getCellsShot();
-        System.out.print(" Tes tires :");
+        System.out.print(" Tires de " + joueur.getName() + ":\n  ");
+        char ind = 'A';
+        for (int index = 0; index < dimension; index++){
+            System.out.print("  " + ind + " ");
+            ind++;
+        }
         for (int index = 0; index <= dimension; index++) {
             if (index == 0) {
                 System.out.print("\n  ╔═══");
@@ -122,11 +131,11 @@ public class Board {
         for (int i = 0; i < dimension; i++) {
             System.out.print(i + " ║ ");
             for (int j = 0; j < dimension; j++) {
-                for(int bat = 0; bat < plr.length; bat++){
-                    if(adv.get(bat).isPosition(i, j)){
+                for(int tire = 0; tire < plr.length; tire++){
+                    if(j == plr[tire].getX() && i == plr[tire].getY()){
                         ca = 'O';
-                        for (int tire = 0; tire < plr.length; tire++) {
-                            if(j == plr[tire].getX() && i == plr[tire].getY()) {
+                        for (int bat = 0; bat < adv.size(); bat++) {
+                            if(adv.get(bat).isPosition(j, i)) {
                                 ca = 'X';
                             }
                             
@@ -160,16 +169,102 @@ public class Board {
         try (Scanner scanner = new Scanner(System.in)) {
             String tire;
             System.out.println("\n\n\n══════════════════════════════════════════════════════════════════════════════════════════════\n\nAu tour de "+ joueur1.name+"\n\n══════════════════════════════════════════════════════════════════════════════════════════════\n\n\n");
-            ShowPlayBoard(joueur1, joueur2);
-            ShowBoardPlayer(joueur1, joueur2);
+            ShowBoardShot(joueur1, joueur2);
+            ShowBoardBoat(joueur1, joueur2);
             tire = scanner.nextLine();
             joueur1.shootAt((int)tire.charAt(0), convertPos(tire.charAt(1)) );
         }
     }
 
-  
+    /**
+     * @param boat 
+     * @return
+     */
+    //public void addBoat(Boat boat) {
+       // bateaux.add(boat);
+    //}
 
+    /**
+     * @param cells  
+     * @return
+     */
+    /*public boolean hasNeighbors(Boat boat) {
+        for (Cell cell : boat.getCells()) {
+            int x = cell.getX();
+            int y = cell.getY();
+            
+            // Vérifier les 8 directions autour de la cellule
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    if (dx == 0 && dy == 0) continue; // Skip la cellule du bateau elle-même
+                    
+                    int newX = x + dx;
+                    int newY = y + dy;
+                    
+                    if (newX >= 0 && newX < dimension && newY >= 0 && newY < dimension) {
+                        Cell neighbor = cells[newX][newY];
+                        if (neighbor.hasBoat()) {
+                            return true; // Un voisin avec un bateau a été trouvé
+                        }
+                    }
+                }
+            }
+        }
+        return false; // Aucun voisin avec un bateau n'a été trouvé 
+    }*/
+    
+    /**
+     * @param cells 
+     * @return
+     */
+    public boolean isboatInBoard(Cell cells) {
+        // TODO implement here
+        return false;
+    }
 
+    /**
+     * @param hauteur 
+     * @param largeur
+     */
+    public void generateBoard(int hauteur, int largeur) {
+        // TODO implement here
+    }
+
+    /**
+     * @param x 
+     * @param y 
+     * @param size 
+     * @param position 
+     * @return
+     */
+    public Cell generateBoat(int x, int y, int size, String position) {
+        // TODO implement here
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    public Boat getBoats() {
+        // TODO implement here
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    public Cell getCells() {
+        // TODO implement here
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    public int getNbreBoats() {
+        // TODO implement here
+        return 0;
+    }
 
     //vérifie le placement des bateaux
     boolean canPlaceBoat(Boat boat) {
@@ -188,7 +283,7 @@ public class Board {
             int currentX = x + (orientation == 'V' ? i : 0);
             int currentY = y + (orientation == 'H' ? i : 0);
     
-            if (currentX >= dimension || currentY >= dimension || cellules[currentX][currentY].hasBoat() ) {
+            if (currentX >= dimension || currentY >= dimension || cellules[currentX][currentY].hasBoat()) {
                 return false; // Le bateau chevaucherait un autre bateau ou dépasserait les limites
             }
         }
@@ -197,17 +292,21 @@ public class Board {
     
 
     public void addBoat(Boat boat) {
-        if (canPlaceBoat(boat)) {
-            for (int i = 0; i < boat.getSize(); i++) {
-                int currentX = boat.getPosX() + (boat.getOrientation() == 'V' ? i : 0);
-                int currentY = boat.getPosY() + (boat.getOrientation() == 'H' ? i : 0);
-                cellules[currentX][currentY].setBoat(boat);
-            }
-        } else {
-            System.out.println("Placement invalide pour le bateau.");
-        }
-}
+        for (int i = 0; i < boat.getSize(); i++) {
+            int x = boat.getPosX();
+            int y = boat.getPosY();
 
+            if (boat.getOrientation() == 'H') {
+                y += i; // Si le bateau est horizontal, incrémentez y pour placer le bateau
+            } else if (boat.getOrientation() == 'V') {
+                x += i; // Si le bateau est vertical, incrémentez x pour placer le bateau
+            }
+
+            if (x >= 0 && x < dimension && y >= 0 && y < dimension) {
+                cellules[x][y].setBoat(boat); // Supposons que Cell a une méthode setBoat pour associer un bateau à la cellule
+            }
+        }
+    }
 
 
 //a getter for dimension

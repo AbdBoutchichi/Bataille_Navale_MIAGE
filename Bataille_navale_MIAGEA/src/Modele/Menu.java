@@ -81,16 +81,20 @@ System.out.println("╚═══════════════════
         System.out.println("╔════════════════════════════════════════════╗");
         System.out.println("║                 3. Difficile               ║");
         System.out.println("╚════════════════════════════════════════════╝");
+        
+        //demande au joueur la difficulté du bot jusqu'a ce que la valeur données soir correcte.
         int difficulty = lecteur.nextInt();
-        lecteur.nextLine();
+        while (difficulty < 1 || difficulty > 3) {
+            difficulty = lecteur.nextInt();
+            valeurNonConforme();
+        }
         return difficulty;
     }
 
     public static void displayEndGameOptions() {
         System.out.println("╔════════════════════════════════════════════╗");
         System.out.println("║     Jeu terminé. Choisissez une option :   ║");
-        System.out.println("╚════════════════════════════════════════════╝");
-        System.out.println("");
+        System.out.println("╚════════════════════════════════════════════╝\n");
         System.out.println("╔════════════════════════════════════════════╗");
         System.out.println("║                 1. Redémarrer              ║");
         System.out.println("╚════════════════════════════════════════════╝");
@@ -100,6 +104,35 @@ System.out.println("╚═══════════════════
         System.out.println("╔════════════════════════════════════════════╗");
         System.out.println("║                 3. Quitter                 ║");
         System.out.println("╚════════════════════════════════════════════╝");
+    }
+
+    public static void valeurNonConforme(){
+        System.out.println("╔═══════════════════════════════════════════════╗");
+        System.out.println("║     La valeur entrée n'est pas conforme !     ║");
+        System.out.println("║       Veuillez saisir une valeur valide       ║");
+        System.out.println("╚═══════════════════════════════════════════════╝\n");
+    }
+
+    public static int modePlacement() {
+        System.out.println("╔════════════════════════════════════════════════╗");
+        System.out.println("║          Choisir le mode de placement :        ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.println("╔════════════════════════════════════════════════╗");
+        System.out.println("║                  1. Manuelle                   ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.println("╔════════════════════════════════════════════════╗");
+        System.out.println("║                 2. Automatique                 ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        
+        
+        //demande au joueur la difficulté du bot jusqu'a ce que la valeur données soir correcte.
+        int placement = 0;
+        while (placement <1 || placement > 2) {
+            placement = lecteur.nextInt();
+            System.out.println(""+placement);
+            if(placement <1 || placement > 2) valeurNonConforme();
+        }
+        return placement;
     }
 
     public static void main(String[] args) {

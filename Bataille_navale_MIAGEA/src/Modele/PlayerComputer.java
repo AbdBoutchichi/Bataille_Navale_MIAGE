@@ -8,9 +8,9 @@ import java.util.Random;
  * 
  */
 public class PlayerComputer extends Player {
-    public static final int EASY = 0;
-    public static final int MEDIUM = 1;
-    public static final int HARD = 2;
+    public static final int EASY = 1;
+    public static final int MEDIUM = 2;
+    public static final int HARD = 3;
 
     private int difficultyLevel;
     private Random random = new Random();
@@ -19,34 +19,35 @@ public class PlayerComputer extends Player {
     private int lastHitX = -1; // Dernière position en X d'un tir réussi
     private int lastHitY = -1; // Dernière position en Y d'un tir réussi
     
-    public PlayerComputer(int difficultyLevel) {
-        super("Computer");
-        this.difficultyLevel = difficultyLevel;
-        placeShipsRandomly(); // Placer les navires lors de l'initialisation
+    public PlayerComputer(int difficulty,  String n) {
+        super(n);
+        this.difficultyLevel = difficulty;
     }
 
     // Placement aléatoire des navires
-    public void placeShipsRandomly() {
-        int[] shipSizes = {5, 4, 3, 3, 2};
-        for (int size : shipSizes) {
-            boolean placed = false;
-            while (!placed) {
-                int x = random.nextInt(10);
-                int y = random.nextInt(10);
-                boolean horizontal = random.nextBoolean();
-                if (canPlaceShip(x, y, size, horizontal)) {
-                    for (int i = 0; i < size; i++) {
-                        if (horizontal) {
-                            ships[x + i][y] = true;
-                        } else {
-                            ships[x][y + i] = true;
-                        }
+        public void placeShipsRandomly(Board brd) {
+            char o;
+            String[] boatNames = {"PorteAvions", "Croiseur", "ContreTorpilleur", "SousMarin", "Torpilleur"};
+            int[] shipSizes = {5, 4, 3, 3, 2};
+            for (int i = 0; i<5; i++) {
+                boolean placed = false;
+                while (!placed) {
+                    
+                    int x = random.nextInt(9);
+                    int y = random.nextInt(9);
+                    boolean horizontal = random.nextBoolean();
+                    if (horizontal == true) o = 'H';
+                    else o = 'V';
+                    if (canPlace(new Boat(x, y, o, shipSizes[i], boatNames[i]))) {
+                        placeBateau(brd, x, y, o, shipSizes[i], boatNames[i]);
+                       
+                        placed = true;
                     }
-                    placed = true;
                 }
             }
+            brd.ShowBoardBoat(this, this);
         }
-    }
+    
 
     private boolean canPlaceShip(int x, int y, int size, boolean horizontal) {
         for (int i = 0; i < size; i++) {

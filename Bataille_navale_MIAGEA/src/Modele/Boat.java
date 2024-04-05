@@ -1,8 +1,9 @@
 package Modele;
 
-
-
 public class Boat {
+    //public enum nom {PorteAvion, SousMarin, Torpilleur, Croiseur, ContreTorpilleur};
+
+
     private String name;
     private Cell[] cells;
     // private BoatState state;
@@ -29,13 +30,47 @@ public class Boat {
 
     boolean isPosition(int x, int y){
         for (int i = 0; i < taille; i++) {
-            if ((orientation == 'H' || orientation == 'h') && x == posX && y == posY+i || (orientation == 'V' || orientation == 'v') && x == posX+i && y == posY){
+            if ((orientation == 'H' || orientation == 'h') && x == posX+i && y == posY || (orientation == 'V' || orientation == 'v') && x == posX && y == posY+i){
                 return true;
             }
         }
 
         return false;
     }
+
+    boolean isNeighbor(int x, int y){
+        if ((orientation == 'H' || orientation == 'h') && x == posX-1 && y == posY || (orientation == 'V' || orientation == 'v') && x == posX && y == posY-1) {
+            return true;
+        }
+
+        if ((orientation == 'H' || orientation == 'h') && x == posX+taille && y == posY || (orientation == 'V' || orientation == 'v') && x == posX && y == posY+taille) {
+            return true;
+        }
+
+        for (int i = 0; i < taille; i++) {
+            if ((orientation == 'H' || orientation == 'h') && x == posX+i && (y+1 == posY || y-1 == posY) || (orientation == 'V' || orientation == 'v') && (x-1 == posX || x+1 == posX) && y == posY+i){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*boolean isNeighbor(int x, int y){
+        if(orientation == 'H' || orientation == 'h'){
+            if (y == posY-1 && x == posX || y == posY+taille && x == posX){
+                return true;
+            }
+
+            for(int i = 0; i < taille; i++ ){
+                if((x == posX+1 || x == posX-1) && y == posY){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }*/
 
     //Jusqu'à maintenant la méthode ne sert à rien 
     void addPos(){
@@ -63,12 +98,10 @@ public class Boat {
 
     // Check si un bateau a coulé ou pas
     public boolean isSunk() {
-        for (int i = 0; i < this.cells.length; i++) {
-            if (!this.cells[i].isShot()) {
-                return false;
-            }
-        }
-        return true;
+        if(life == 0)
+            return true;
+        else 
+            return false;
     }
 
     // Retourne le tableau de cellule appartenant à un bateau
@@ -102,13 +135,6 @@ public class Boat {
 
     public String getName() {
         return name;
-    }
-
-    public boolean isDead(){
-        if(life == 0){
-            return true;
-        }
-        return false;
     }
 
     public Cell[] getCells(Cell[] list, int x){
@@ -152,3 +178,5 @@ public class Boat {
      * }
      */
 }
+
+
