@@ -75,7 +75,8 @@ public class Board {
                         ca = "B";
                         for (int tire = 0; tire < adv.length; tire++) {
                             if(j == adv[tire].getX() && i == adv[tire].getY()) {
-                                ca = "C";
+                                ca = "T";
+                                if(plr.get(bat).isSunk()) ca = "C";
                             }
                         }
                     }

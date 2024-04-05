@@ -48,7 +48,7 @@ public class Player {
      */
     public void placeBateau(Board brd, int x, int y, char orientation, int taille, String nom) {
         // Création du bateau selon le type spécifié
-        Boat boat = new Boat(x, y, orientation, taille, nom);
+        Boat boat = createBoat(x, y, orientation, taille, nom);
         System.out.println("Position souhaitais :" + boat.posX +";"+ boat.posY + " avec l'orientation:"+boat.getOrientation());
         if (boat == null) {
             System.out.println("Le type du bateau est inconnu : " + nom);
@@ -61,7 +61,7 @@ public class Player {
         }
     }
     
-    /*Boat createBoat(int x, int y, char orientation, int taille, String nom) {
+    Boat createBoat(int x, int y, char orientation, int taille, String nom) {
         switch(nom.toLowerCase()) {
             case "PorteAvion":
                 return new PorteAvion(x, y, orientation);
@@ -74,9 +74,9 @@ public class Player {
             case "Torpilleur":
                 return new Torpilleur(x, y, orientation);
             default:
-                return null;
+                return new Boat(x, y, orientation, taille, nom);
         }
-    }*/
+    }
     
 
     /**
@@ -161,10 +161,13 @@ public class Player {
         }
     }*/
 
+    //Ajoute la cellule sur laquelle le joueur tire a sa liste de tire
     public void shootAt(int x, int y){
         cellsShot.add(new Cell(x,y));
+        System.out.println(name + "tire en " + x + ";" + y);
     }
 
+    //renvoie la liste des cellules sur lesquelles il a tiré
     public Cell[] getCellsShot() {
         Cell[] shot = new Cell[cellsShot.size()];
         for (int i = 0; i < cellsShot.size(); i++) {

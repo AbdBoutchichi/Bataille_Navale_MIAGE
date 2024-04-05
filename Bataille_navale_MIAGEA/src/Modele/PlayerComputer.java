@@ -68,23 +68,23 @@ public class PlayerComputer extends Player {
     
 
     // Décision du prochain mouvement
-    public void chooseNextMove() {
+    public void chooseNextMove(Player adv) {
         switch (this.difficultyLevel) {
             case EASY:
-                chooseRandom();
+                chooseRandom(adv);
                 break;
             case MEDIUM:
-                chooseNearHit();
+                chooseNearHit(adv);
                 break;
             case HARD:
-                chooseStrategically();
+                chooseStrategically(adv);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + this.difficultyLevel);
         }
     }
 
-    private void chooseRandom() {
+    private void chooseRandom(Player adv) {
         int x, y;
         do {
             x = random.nextInt(10);
@@ -92,9 +92,10 @@ public class PlayerComputer extends Player {
         } while (hits[x][y]);
         
         shootAt(x, y);
+        adv.isTouch(x, y);
     }
 
-    private void chooseNearHit() {
+    private void chooseNearHit(Player adv) {
         // Logique améliorée pour choisir à proximité d'un coup réussi
         for (int i = 0; i < hits.length; i++) {
             for (int j = 0; j < hits[i].length; j++) {
@@ -105,13 +106,14 @@ public class PlayerComputer extends Player {
                         int newY = j + dir[1];
                         if (isValidMove(newX, newY)) {
                             shootAt(newX, newY);
+                            adv.isTouch(newX, newY);
                             return;
                         }
                     }
                 }
             }
         }
-        chooseRandom();
+        chooseRandom(adv);
     }
 
     private boolean allDirectionsChecked(int x, int y) {
@@ -130,7 +132,7 @@ public class PlayerComputer extends Player {
         return x >= 0 && x < 10 && y >= 0 && y < 10 && !hits[x][y];
     }
 
-    private void chooseStrategically() {
+    private void chooseStrategically(Player adv) {
         // Pour cette implémentation, supposons une stratégie basique qui suit les tirs réussis
         if (lastHitX != -1 && lastHitY != -1) {
             // Tenter de suivre la direction d'un navire touché
@@ -140,13 +142,14 @@ public class PlayerComputer extends Player {
                 int newY = lastHitY + dir[1];
                 if (isValidMove(newX, newY)) {
                     shootAt(newX, newY);
+                    adv.isTouch(newX, newY);
                     return;
                 }
             }
         }
     }
 
-    public void makeMove() {
-        chooseNextMove();
+    public void makeMove(Player adv) {
+        chooseNextMove(adv);
     }
 }

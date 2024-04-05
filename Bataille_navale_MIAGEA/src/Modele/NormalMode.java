@@ -75,10 +75,6 @@ public class NormalMode {
 
         private void initGameComputer(Player jr1, PlayerComputer ordi) {
             
-            
-    
-            
-    
             System.out.println("le placement");
     
             // Initialisation du plateau
@@ -86,12 +82,13 @@ public class NormalMode {
             
             // Placement des bateaux du joueur humain
             if(menu.modePlacement()==1)
-            placeBoats(jr1, bot);
-            else jr1.placeBoatsRandomly(board);
+            placeBoats(jr1, bot);//Si le joueur 1 veut placer les bateaux lui-même
+            else jr1.placeBoatsRandomly(board);//Si le joueur 1 souhaites ne pas les placer lui même
 
+            //l'ordi va placer ses bateaux 
             bot.placeShipsRandomly(board);
 
-            board.ShowBoardBoat(ordi, jr1);
+            
     
             // Début du jeu
             startGame(jr1, ordi);
@@ -106,10 +103,12 @@ public class NormalMode {
                 board.ShowBoardBoat(isPlayer1Turn ? jr1 : jr2, isPlayer1Turn ? jr2 : jr1);
                 
                 if(isPlayer1Turn){
-                    while(isPlayer1Turn){
-                    playTurn(jr1,jr2, isPlayer1Turn);}
+                    while(isPlayer1Turn && checkWinConditions(jr1, jr2)){
+                    playTurn(jr1,jr2);
+                    System.out.println("est ce au joueur 1:" + isPlayer1Turn);}
                 } else {
-                    while(!isPlayer1Turn){playTurn(jr2,jr1, isPlayer1Turn);}
+                    while(!isPlayer1Turn && checkWinConditions(jr1, jr2)){playTurn(jr2,jr1);
+                        System.out.println("est ce au joueur 2:" + !isPlayer1Turn);}
                 }
             }
     
@@ -164,15 +163,15 @@ public class NormalMode {
     
     
 
-    private void playTurn(Player jr1,Player jr2, boolean turnOf) {
+    private void playTurn(Player jr1,Player jr2) {
         System.out.println("Au tour de " + jr1.getName() + ".");
         int x = -1;
         int y = -1;
         if (jr1 instanceof PlayerComputer) {
             // Gère un tour automatique pour PlayerComputer
             System.out.println("tour NPC");
-            ((PlayerComputer) jr1).chooseNextMove();
-
+            ((PlayerComputer) jr1).chooseNextMove(jr2);
+            board.ShowBoardShot(jr1, jr2);
         } else {
             board.ShowBoardShot(jr1, jr2);
             
@@ -190,7 +189,9 @@ public class NormalMode {
             jr1.shootAt(x, y); // Supposons que cette méthode existe dans `Player`
             
         }
-        if(!jr2.isTouch(y, x)){turnOf= !turnOf;}
+        if(!jr2.isTouch(y, x)){
+            isPlayer1Turn = !isPlayer1Turn;
+        }
         
     }
     
