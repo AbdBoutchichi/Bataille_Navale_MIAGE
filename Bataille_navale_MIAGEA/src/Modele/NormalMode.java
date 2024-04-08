@@ -19,14 +19,20 @@ public class NormalMode {
     private Player player2;
     private PlayerComputer bot;
 
+    public NormalMode(){
 
-        public NormalMode() {
+    }
+
+        public NormalMode(int c) {
+
+            choice= c;
+
+            
+
             this.scanner = new Scanner(System.in);
             this.menu = new Menu();
-            menu.ShowMenu();
-            menu.displayMainMenu();
-            int choice = menu.getPlayerChoice();
 
+           
             // Création du joueur 1
             System.out.println("Entrez le nom du Joueur 1:");
             String name1 = scanner.nextLine();
@@ -44,7 +50,7 @@ public class NormalMode {
                 String name2 = scanner.nextLine();
                 player2 = new Player(name2);
                 initGame(player1, player2);
-
+                
             } else if (choice == 2) {
                 //defini la difficulté de l'ordinateur
                 int difficulty = menu.getDifficultyChoice();
@@ -66,8 +72,8 @@ public class NormalMode {
             if(menu.modePlacement()==1) placeBoats(jr1, jr2);
             else jr1.placeBoatsRandomly(board);
             //choix du joueur 2
-            if(menu.modePlacement()==1) placeBoats(jr1, jr2);
-            else jr1.placeBoatsRandomly(board);
+            if(menu.modePlacement()==1) placeBoats(jr2, jr1);
+            else jr2.placeBoatsRandomly(board);
     
             // Début du jeu
             startGame(jr1, jr2);
@@ -116,7 +122,7 @@ public class NormalMode {
             System.out.println(player1.isAlive() ? jr1.getName() + " gagne!" : jr2.getName() + " gagne!");
         }
 
-        private boolean checkWinConditions(Player jr1, Player jr2) {
+        public boolean checkWinConditions(Player jr1, Player jr2) {
             // Si l'un des joueurs a perdu tous ses bateaux, le jeu est terminé
             return jr1.isAlive() && jr2.isAlive();
         }
@@ -126,13 +132,13 @@ public class NormalMode {
         //System.out.println("Le jeu est terminé. " + (player1.isAlive() ? player1.getName() : player2.getName()) + " a gagné !");
     //}
 
-    private void placeBoats(Player plr1, Player plr2) {
+    public void placeBoats(Player plr1, Player plr2) {
         int[] boatSizes = {5, 4, 3, 3, 2};
         String[] boatNames = {"PorteAvions", "Croiseur", "ContreTorpilleur", "SousMarin", "Torpilleur"};
     
         for (int i = 0; i < boatSizes.length; i++) {
             boolean placed = false;
-            board.ShowBoardBoat(plr1, plr2);
+            this.board.ShowBoardBoat(plr1, plr2);
             while (!placed) {
                 System.out.println(plr1.getName() + ", placez votre " + boatNames[i] + " (Taille: " + boatSizes[i] + ")");
                 System.out.print("Entrez la position de départ x (par exemple, 0 à 9): ");

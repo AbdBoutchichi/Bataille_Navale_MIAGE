@@ -16,10 +16,44 @@ public class Jeu_Bataillenavale {
         winnerPlayer=null;
         //buffer=null;
         scanner = new Scanner(System.in);
-        new NormalMode();
+        menu = new Menu();
+
+        menu.ShowMenu();
+        menu.displayMainMenu();
+
+        switch (menu.getPlayerChoice()) {
+            case 1:
+                
+                new NormalMode(1);
+
+            case 2:
+                
+                new NormalMode(2);
+
+            case 3:
+                
+                new ModeArtillerie();
+
+            case 4:
+            
+                break;
+
+            case 5:
+                
+                break;
+
+            default:
+                break;
+        }
+
+        
+
+
+        
     }
 
     public Scanner scanner;
+    private Menu menu;
 
     /**
      * 

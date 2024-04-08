@@ -55,10 +55,13 @@ System.out.println("╚═══════════════════
         System.out.println("║       2. Jouer contre l'ordinateur         ║");
         System.out.println("╚════════════════════════════════════════════╝");
         System.out.println("╔════════════════════════════════════════════╗");
-        System.out.println("║          3. Charger une partie             ║");
+        System.out.println("║          3. Jouer en Artillerie            ║");
         System.out.println("╚════════════════════════════════════════════╝");
         System.out.println("╔════════════════════════════════════════════╗");
-        System.out.println("║               4. Quitter                   ║");
+        System.out.println("║           4. Charger une partie            ║");
+        System.out.println("╚════════════════════════════════════════════╝");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║               5. Quitter                   ║");
         System.out.println("╚════════════════════════════════════════════╝");
     }
 
