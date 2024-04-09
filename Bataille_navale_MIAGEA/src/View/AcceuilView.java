@@ -112,8 +112,8 @@ public class AcceuilView extends JFrame {
     }
 
     private void animateButton(JButton button, int startWidth, int startHeight, int endWidth, int endHeight, long duration) {
-        final int delay = 10; // Intervalle en ms entre les mises à jour de l'animation
-        final long startTime = System.currentTimeMillis(); // Heure de début de l'animation
+        final int delay = 10;
+        final long startTime = System.currentTimeMillis();
     
         Timer timer = new Timer(delay, e -> {
             long currentTime = System.currentTimeMillis();
