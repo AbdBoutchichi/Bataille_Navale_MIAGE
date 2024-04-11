@@ -1,9 +1,8 @@
 package Modele;
 
 public class Main {
-    public static void main(String[] args) {
+    
+    public static void main(String[] arg){
 
-        new Jeu_Battaillenavale();
     }
-
 }

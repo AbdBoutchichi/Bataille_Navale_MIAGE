@@ -8,52 +8,17 @@ public class ModeArtillerie extends NormalMode {
     private Menu menu;
     private boolean gameOver;
     private boolean isPlayer1Turn;
-    private int choice;
     private Player player1;
     private Player player2;
-    private PlayerComputer bot;
 
     private Threader th;
 
 
-    private boolean lifeOfThread1;
-    private boolean lifeOfThread2;
+    
     private int y;
     private int x;
-    private boolean val;
 
-    private Thread counterX = new Thread(() -> {
-        try {
-            System.out.println("Le compteur se lance");
-            while (lifeOfThread1) { // Défilement automatique jusqu'à ce que le thread soit interrompu
-                System.out.println("" + x);
-                Thread.sleep(100); // Défilement toutes les 1 seconde
-                x++; // Incrémentation de la valeur de la coordonnée
-                if(x==10) x=0; // Si on atteint 10, on revient a 0
-            }
-        } catch (InterruptedException e) {
-            System.err.println("X vaut :" + x);
-        }
-        System.out.println ("Fin du décompte Y");
-    });
-
-    Thread counterY = new Thread(() -> {
-        try {
-            System.out.println("Le compteur se lance");
-            while (lifeOfThread2) {
-             // Défilement automatique jusqu'à ce que le thread soit interrompu
-                System.out.println("" + y);
-                Thread.sleep(100); // Défilement toutes les 1 seconde
-                y++; // Incrémentation de la valeur de la coordonnée
-                if(y==10) y=0;
-            }
-            
-        } catch (InterruptedException e) {
-            System.err.println("Y vaut :" + y);
-            
-        }
-        System.out.println ("Fin du décompte Y");
-    });
+    
 
     
     public ModeArtillerie() {
@@ -145,13 +110,13 @@ public class ModeArtillerie extends NormalMode {
                     System.out.println(jr2.getName() + "Presse entrer pour lancer les roues");
                     scanner.nextLine();
                     playTurnArtillerie(jr2,jr1);
-                    System.out.println("est ce au joueur 2:" + !isPlayer1Turn);
                 }
             }
         }
 
         System.out.println("Le jeu est terminé.");
         System.out.println(player1.isAlive() ? jr1.getName() + " gagne!" : jr2.getName() + " gagne!");
+        endGameArt();
     }
 
     public void placeBoats(Player plr1, Player plr2) {
@@ -186,6 +151,22 @@ public class ModeArtillerie extends NormalMode {
                 
                 
             }
+        }
+    }
+
+    private void endGameArt() {
+        menu.displayEndGameOptions();
+        int endChoice = menu.getPlayerChoice();
+        
+        switch (endChoice) {
+            case 1:
+                initGameArtillerie(player1, player2); // Cela devrait fonctionner si initGame est défini dans la même classe
+            case 2:
+                gameOver = true; // Marque le jeu comme terminé
+                break;
+            case 3:
+                System.exit(0); // Quitte l'application
+                break;
         }
     }
 }

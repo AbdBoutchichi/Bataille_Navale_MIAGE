@@ -166,6 +166,7 @@ public class Board {
         }
     }
 
+    //permet la transition entre 2 joueurs (n'est actuellement pas utilisé)
     public void turn(){
         try (Scanner scanner = new Scanner(System.in)) {
             String tire;
@@ -310,10 +311,10 @@ public class Board {
     }
 
 
-//a getter for dimension
-public int getDimension(){
-	return this.dimension;
-}
+    //a getter for dimension
+    public int getDimension(){
+    	return this.dimension;
+    }
 
 
 
@@ -335,6 +336,7 @@ public int getDimension(){
         return false;
     }
 
+    //permet de placer les bateaux sur le plateau
     public void placeBoat(Boat boat) {
         if (!canPlaceBoat(boat)) {
             System.out.println("Placement invalide.");

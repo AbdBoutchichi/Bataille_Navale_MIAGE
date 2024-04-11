@@ -46,18 +46,34 @@ public class Player {
      * @param cell
      * @param boat
      */
-    public void placeBateau(Board brd, int x, int y, char orientation, int taille, String nom) {
+    public boolean placeBateau(Board brd, int x, int y, char orientation, int taille, String nom) {
         // Création du bateau selon le type spécifié
         Boat boat = createBoat(x, y, orientation, taille, nom);
         System.out.println("Position souhaitais :" + boat.posX +";"+ boat.posY + " avec l'orientation:"+boat.getOrientation());
-        if (boat == null) {
-            System.out.println("Le type du bateau est inconnu : " + nom);
-        }
+        
         
         // Vérification si le bateau peut être placé
         if (canPlace(x, y, taille, orientation)) {
+            System.out.println();
             boats.add(boat);
+            return true;
         } else {
+            return false;
+        }
+    }
+
+    public boolean placeBateau(Board brd, Boat b) {
+        
+        System.out.println("Position souhaitais :" + b.getPosX() +";"+ b.getPosY() + " avec l'orientation:"+b.getOrientation());
+        
+        
+        // Vérification si le bateau peut être placé
+        if (this.canPlace(b.getPosX(), b.getPosY(), b.getSize(), b.getOrientation())) {
+            System.out.println(b.getName());
+            boats.add(b);
+            return true;
+        } else {
+            return false;
         }
     }
     
@@ -201,6 +217,8 @@ public class Player {
         
     }
 
+
+    //Verifie si un bateau est a cette position
     public boolean over(int x, int y, int taille, char o){
         if(o == 'H' || o == 'h'){ 
             for(int i = 0;  i < taille; i++){
@@ -221,6 +239,7 @@ public class Player {
         return false;
     }
 
+    //verifie si la position est hors du plateau
     public boolean out(int x, int y, int taille, char o, int bordure){
         int valX;
         int valY;
@@ -232,6 +251,7 @@ public class Player {
         return false;
     }
 
+    //verifie si la position n'a pas de bateau adjacent
     public boolean neighbor(int x, int y, int taille, char o){
         if(o == 'H' || o == 'h'){ 
             for(int i = 0;  i < taille; i++){
@@ -252,6 +272,9 @@ public class Player {
         return false;
     }
 
+    
+
+    //verifie si on peut placer un bateau sur plateau a une position (x;y) en fonction d'un bateau
     public boolean canPlace(Boat b){
         
         if(!out(b.getPosX(), b.getPosY(), b.getSize(), b.getOrientation(), 10) && !over(b.getPosX(), b.getPosY(), b.getSize(), b.getOrientation()) && !neighbor(b.getPosX(), b.getPosY(), b.getSize(), b.getOrientation())){
@@ -260,6 +283,8 @@ public class Player {
         return false;
     }
 
+
+    //verifie si on peut placer un bateau sur plateau a une position (x;y) en fonction des données d'un bateau
     public boolean canPlace(int x, int y, int taille, char orient){
         
         if(!out(x, y, taille, orient, 10) && !over(x, y, taille, orient) && !neighbor(x, y, taille, orient)){
@@ -269,7 +294,7 @@ public class Player {
     }
 
 
-
+    //Verifie si le joueur a encore des bateaux en vie 
     public boolean isAlive(){
         for(int i = 0; i<boats.size(); i++){
             if(!boats.get(i).isSunk()){return true;};
@@ -281,6 +306,8 @@ public class Player {
     /**
      * @param brd
      */
+
+    //Place les bateaux de façon aleatoire sur le plateau
     public void placeBoatsRandomly(Board brd) {
         char o;
         String[] boatNames = {"PorteAvions", "Croiseur", "ContreTorpilleur", "SousMarin", "Torpilleur"};
@@ -295,15 +322,27 @@ public class Player {
                 o = horizontal? 'H' : 'V';
                 if (canPlace(x, y, shipSizes[i], o)) {
                     
-                    placeBateau(brd, x, y, o, shipSizes[i], boatNames[i]);
+                    
                    
-                    placed = true;
+                    placed = placeBateau(brd, x, y, o, shipSizes[i], boatNames[i]);;
                 }
             }
         }
         brd.ShowBoardBoat(this, this);
     }
 
+    public void placeBoatsRand(Board brd) {
+        
+        new PorteAvion(brd, this);
+        new Torpilleur(brd, this);
+        new ContreTorpilleur(brd, this);
+        new Croiseur(brd, this);
+        new SousMarin(brd, this);
+
+        brd.ShowBoardBoat(this, this);
+    }
+
+    //Verifie que le joueur n'a pas deja tiré à la position
     public boolean canShoot(int x, int y){
         if(x > 9 || y > 9 || x < 0 || y < 0) return false;
         for (Cell c : cellsShot) {

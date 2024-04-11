@@ -120,6 +120,7 @@ public class NormalMode {
     
             System.out.println("Le jeu est terminé.");
             System.out.println(player1.isAlive() ? jr1.getName() + " gagne!" : jr2.getName() + " gagne!");
+            endGame();
         }
 
         public boolean checkWinConditions(Player jr1, Player jr2) {
@@ -207,7 +208,11 @@ public class NormalMode {
         
         switch (endChoice) {
             case 1:
-                initGame(player1, player2); // Cela devrait fonctionner si initGame est défini dans la même classe
+                if (choice == 1) {
+                    initGame(player1, player2);
+                } else {
+                initGameComputer(player1, bot); // Cela devrait fonctionner si initGame est défini dans la même classe
+                }
             case 2:
                 gameOver = true; // Marque le jeu comme terminé
                 break;

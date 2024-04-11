@@ -1,5 +1,7 @@
 package Modele;
 
+import java.util.Random;
+
 public class Boat {
     //public enum nom {PorteAvion, SousMarin, Torpilleur, Croiseur, ContreTorpilleur};
 
@@ -20,6 +22,15 @@ public class Boat {
         addPos();
     }
 
+    public Boat(Board brd, Player plr, int t, String nom){
+        this.cellules = new Cell[taille];
+        this.taille=t;
+        this.life = t;
+        this.name = nom;
+        placeRandom(brd, plr);
+        addPos();
+    }
+
 
     public int taille;
     public int posX;
@@ -28,7 +39,9 @@ public class Boat {
     public Cell[] cellules;
     private int life;
 
-    boolean isPosition(int x, int y){
+
+    //Cette methode confirme si une position (x;y) appartient bien au bateau
+    public boolean isPosition(int x, int y){
         for (int i = 0; i < taille; i++) {
             if ((orientation == 'H' || orientation == 'h') && x == posX+i && y == posY || (orientation == 'V' || orientation == 'v') && x == posX && y == posY+i){
                 return true;
@@ -38,6 +51,8 @@ public class Boat {
         return false;
     }
 
+
+    //Cette methode confirme si une position (x;y) est mitoyenne au bateau
     boolean isNeighbor(int x, int y){
         if ((orientation == 'H' || orientation == 'h') && x == posX-1 && y == posY || (orientation == 'V' || orientation == 'v') && x == posX && y == posY-1) {
             return true;
@@ -56,22 +71,7 @@ public class Boat {
         return false;
     }
 
-    /*boolean isNeighbor(int x, int y){
-        if(orientation == 'H' || orientation == 'h'){
-            if (y == posY-1 && x == posX || y == posY+taille && x == posX){
-                return true;
-            }
-
-            for(int i = 0; i < taille; i++ ){
-                if((x == posX+1 || x == posX-1) && y == posY){
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }*/
-
+    
     //Jusqu'à maintenant la méthode ne sert à rien 
     void addPos(){
         for(int i=0; i <  cellules.length; i++){
@@ -85,16 +85,7 @@ public class Boat {
         }
     }
 
-    /*
-     * public void hit() {
-     * hits++;
-     * if (hits >= cells.length) {
-     * state = BoatState.SUNK;
-     * } else {
-     * state = BoatState.DAMAGED;
-     * }
-     * }
-     */
+    
 
     // Check si un bateau a coulé ou pas
     public boolean isSunk() {
@@ -118,6 +109,7 @@ public class Boat {
      * }
      * }
      */
+
 
     public Cell getCellByCoordinate(int x, int y) {
         for (Cell cell : cells) {
@@ -144,6 +136,8 @@ public class Boat {
         return list;
     }
 
+
+    //retire de la vie au le bateau a chaque fois qu'il est touché
     public void touch(){
         life--;
     }
@@ -160,23 +154,311 @@ public class Boat {
         return posY;
     }
 
-    /*
-     * public BoatState getState() {
-     * return state;
-     * }
-     */
+    public int fragment(int x, int y){
+        for (int i = 0; i < taille; i++) {
+            if ((orientation == 'H' || orientation == 'h') && x == posX+i && y == posY || (orientation == 'V' || orientation == 'v') && x == posX && y == posY+i){
+                return i;
+            }
+        }
 
-    /*
-     * public void setState(BoatState state) {
-     * this.state = state;
-     * }
-     */
+        return 0;
+    }
 
-    /*
-     * public int getHits() {
-     * return hits;
-     * }
-     */
+    public String part(int x, int y){
+        switch (name) {
+            case "Torpilleur":
+                switch (orientation) {
+                    case 'h':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/TorpilleurH1.png";
+                            case 1:
+                                return "/Images/TorpilleurH2.png";
+                            default:
+                                return "";
+                        }
+                    case 'H':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/TorpilleurH1.png";
+                            case 1:
+                                return "/Images/TorpilleurH2.png";
+                            default:
+                                return "";
+                        }
+
+                    case 'v':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/TorpilleurV1.png";
+                            case 1:
+                                return "/Images/TorpilleurV2.png";
+                            default:
+                                return "";
+                        }
+                    case 'V':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/TorpilleurV1.png";
+                            case 1:
+                                return "/Images/TorpilleurV2.png";
+                            default:
+                                return "";
+                        }
+                    default:
+                        return "";
+                }
+            
+            case "ContreTorpilleur":
+                
+                switch (orientation) {
+                    case 'h':
+                    
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                            System.out.println("ici");
+                                return "/Images/ContreTorpilleurH1.png";
+                            case 1:
+                                return "/Images/ContreTorpilleurH2.png";
+                            case 2:
+                                return "/Images/ContreTorpilleurH3.png";
+                            default:
+                                return "";
+                        }
+                    case 'H':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/ContreTorpilleurH1.png";
+                            case 1:
+                                return "/Images/ContreTorpilleurH2.png";
+                            case 2:
+                                return "/Images/ContreTorpilleurH3.png";
+                            default:
+                                return "";
+                        }
+
+                    case 'v':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/ContreTorpilleurV1.png";
+                            case 1:
+                                return "/Images/ContreTorpilleurV2.png";
+                            case 2:
+                                return "/Images/ContreTorpilleurV3.png";
+                            default:
+                                return "";
+                        }
+                    case 'V':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/ContreTorpilleurV1.png";
+                            case 1:
+                                return "/Images/ContreTorpilleurV2.png";
+                            case 2:
+                                return "/Images/ContreTorpilleurV3.png";
+                            default:
+                                return "";
+                        }
+                    default:
+                    return "";
+                        }
+            case "SousMarin":
+                switch (orientation) {
+                    case 'h':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/SousMarinH1.png";
+                            case 1:
+                                return "/Images/SousMarinH2.png";
+                            case 2:
+                                return "/Images/SousMarinH3.png";
+                            default:
+                                return "";
+                        }
+                    case 'H':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/SousMarinH1.png";
+                            case 1:
+                                return "/Images/SousMarinH2.png";
+                            case 2:
+                                return "/Images/SousMarinH3.png";
+                            default:
+                                return "";
+                        }
+
+                    case 'v':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/SousMarinV1.png";
+                            case 1:
+                                return "/Images/SousMarinV2.png";
+                            case 2:
+                                return "/Images/SousMarinV3.png";
+                            default:
+                                return "";
+                        }
+                    case 'V':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/SousMarinV1.png";
+                            case 1:
+                                return "/Images/SousMarinV2.png";
+                            case 2:
+                                return "/Images/SousMarinV3.png";
+                            default:
+                                return "";
+                        }
+                }
+
+            case "Croiseur":
+                switch (orientation) {
+                    case 'h':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/CroiseurH1.png";
+                            case 1:
+                                return "/Images/CroiseurH2.png";
+                            case 2:
+                                return "/Images/CroiseurH3.png";
+                            case 3:
+                                return "/Images/CroiseurH4.png";
+                            default:
+                                return "";
+                        }
+                    case 'H':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/CroiseurH1.png";
+                            case 1:
+                                return "/Images/CroiseurH2.png";
+                            case 2:
+                                return "/Images/CroiseurH3.png";
+                            case 3:
+                                return "/Images/CroiseurH4.png";
+                            default:
+                                return "";
+                        }
+
+                    case 'v':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/CroiseurV1.png";
+                            case 1:
+                                return "/Images/CroiseurV2.png";
+                            case 2:
+                                return "/Images/CroiseurV3.png";
+                            case 3:
+                                return "/Images/CroiseurV4.png";
+                            default:
+                                return "";
+                        }
+                    case 'V':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/CroiseurV1.png";
+                            case 1:
+                                return "/Images/CroiseurV2.png";
+                            case 2:
+                                return "/Images/CroiseurV3.png";
+                            case 3:
+                                return "/Images/CroiseurV4.png";
+                            default:
+                                return "";
+                        }
+                }
+
+            case "PorteAvion":
+                switch (orientation) {
+                    case 'h':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/PorteAvionH1.png";
+                            case 1:
+                                return "/Images/PorteAvionH2.png";
+                            case 2:
+                                return "/Images/PorteAvionH3.png";
+                            case 3:
+                                return "/Images/PorteAvionH4.png";
+                            case 4:
+                                return "/Images/PorteAvionH5.png";
+                            default:
+                                return "";
+                        }
+                    case 'H':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/PorteAvionH1.png";
+                            case 1:
+                                return "/Images/PorteAvionH2.png";
+                            case 2:
+                                return "/Images/PorteAvionH3.png";
+                            case 3:
+                                return "/Images/PorteAvionH4.png";
+                            case 4:
+                                return "/Images/PorteAvionH5.png";
+                            default:
+                                return "";
+                        }
+
+                    case 'v':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/PorteAvionV1.png";
+                            case 1:
+                                return "/Images/PorteAvionV2.png";
+                            case 2:
+                                return "/Images/PorteAvionV3.png";
+                            case 3:
+                                return "/Images/PorteAvionV4.png";
+                            case 4:
+                                return "/Images/PorteAvionV5.png";
+                            default:
+                                return "";
+                        }
+                    case 'V':
+                        switch (this.fragment(x, y)) {
+                            case 0:
+                                return "/Images/PorteAvionV1.png";
+                            case 1:
+                                return "/Images/PorteAvionV2.png";
+                            case 2:
+                                return "/Images/PorteAvionV3.png";
+                            case 3:
+                                return "/Images/PorteAvionV4.png";
+                            case 4:
+                                return "/Images/PorteAvionV5.png";
+                            default:
+                                return "";
+                        }
+                }
+                
+            default:
+                return "";
+        }
+
+    }
+    private void placeRandom(Board brd, Player plr){
+    
+        Random rand = new Random();
+        boolean horizontal;
+        boolean placed = false;
+        this.posX = -1;
+        this.posY=-1;
+        this.orientation = 'H';
+        while (!placed) {
+            this.posX = rand.nextInt(10);
+            this.posY = rand.nextInt(10);
+            horizontal = rand.nextBoolean();
+            orientation = horizontal? 'H' : 'V';
+            if(plr.canPlace(this)){
+                placed = plr.placeBateau(brd, this);
+            }
+        }
+    }
 }
+    
+    
+
 
 

@@ -93,4 +93,8 @@ public class Cell {
         this.cible = valeur;
     }
 
+    public boolean position(int posX, int posY){
+        return x== posX && y == posY;
+    }
+
 }

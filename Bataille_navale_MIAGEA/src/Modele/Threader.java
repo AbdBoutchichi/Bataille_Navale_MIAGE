@@ -8,7 +8,7 @@ public class Threader {
     Scanner scanner;
 
     boolean lifeOfThread;
-
+    //fait avancer la valeur de x
     Thread counterX = new Thread(() -> {
         try {
             System.out.println("Le compteur se lance");
@@ -34,6 +34,7 @@ public class Threader {
         
     }
 
+    //lance une roue en arriere plan et attend que le joueur l'arrete pour rendre une valeur
     public int roue(){
         counterX.start();
         scanner.nextLine();
