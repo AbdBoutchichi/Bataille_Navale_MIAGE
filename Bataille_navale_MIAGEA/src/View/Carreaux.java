@@ -31,7 +31,8 @@ public class Carreaux extends JButton{
         posX = x;
         posY = y;
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        this.setBackground(Color.blue);
+        ImageIcon background = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
+        this.setIcon(background);
         this.addActionListener(e);
     }
     

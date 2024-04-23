@@ -62,10 +62,25 @@ public class Player {
         }
     }
 
-    public boolean placeBateau(Board brd, Boat b) {
+    public boolean placeBateau(Boat b) {
         
         System.out.println("Position souhaitais :" + b.getPosX() +";"+ b.getPosY() + " avec l'orientation:"+b.getOrientation());
         
+        
+        // Vérification si le bateau peut être placé
+        if (this.canPlace(b.getPosX(), b.getPosY(), b.getSize(), b.getOrientation())) {
+            System.out.println(b.getName());
+            boats.add(b);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean placeBateau(int x, int y, char orientation, int taille, String nom) {
+        
+        Boat b = createBoat(x, y, orientation, taille, nom);
+        System.out.println("Position souhaitais :" + b.getPosX() +";"+ b.getPosY() + " avec l'orientation:"+b.getOrientation());
         
         // Vérification si le bateau peut être placé
         if (this.canPlace(b.getPosX(), b.getPosY(), b.getSize(), b.getOrientation())) {
@@ -180,7 +195,7 @@ public class Player {
     //Ajoute la cellule sur laquelle le joueur tire a sa liste de tire
     public void shootAt(int x, int y){
         cellsShot.add(new Cell(x,y));
-        System.out.println(name + "tire en " + x + ";" + y);
+        System.out.println(name + " tire en " + x + ";" + y);
     }
 
     //renvoie la liste des cellules sur lesquelles il a tiré
@@ -331,15 +346,15 @@ public class Player {
         brd.ShowBoardBoat(this, this);
     }
 
-    public void placeBoatsRand(Board brd) {
+    public void placeBoatsRand() {
         
-        new PorteAvion(brd, this);
-        new Torpilleur(brd, this);
-        new ContreTorpilleur(brd, this);
-        new Croiseur(brd, this);
-        new SousMarin(brd, this);
+        new PorteAvion(this);
+        new Torpilleur(this);
+        new ContreTorpilleur(this);
+        new Croiseur(this);
+        new SousMarin(this);
 
-        brd.ShowBoardBoat(this, this);
+        
     }
 
     //Verifie que le joueur n'a pas deja tiré à la position

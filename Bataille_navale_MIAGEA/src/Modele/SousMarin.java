@@ -5,7 +5,7 @@ public class SousMarin extends Boat{
         super(x, y, orientation, 3, "SousMarin");
     }
 
-    public SousMarin(Board brd, Player plr){
-        super(brd, plr, 3, "SousMarin");
+    public SousMarin(Player plr){
+        super(plr, 3, "SousMarin");
     }
 }

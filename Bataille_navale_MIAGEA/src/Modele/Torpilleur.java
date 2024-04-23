@@ -5,7 +5,7 @@ public class Torpilleur extends Boat{
         super(x, y, orientation, 2, "Torpilleur");
     }
 
-    public Torpilleur(Board brd, Player plr){
-        super(brd, plr, 2, "Torpilleur");
+    public Torpilleur(Player plr){
+        super(plr, 2, "Torpilleur");
     }
 }

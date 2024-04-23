@@ -5,8 +5,8 @@ public class Croiseur extends Boat{
         super(x,y,orientation,4,"Croiseur");
     }
 
-    public Croiseur(Board brd, Player plr){
-        super(brd, plr, 4,"Croiseur");
+    public Croiseur(Player plr){
+        super(plr, 4,"Croiseur");
     }
 
 }

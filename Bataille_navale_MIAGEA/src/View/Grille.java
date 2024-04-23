@@ -2,11 +2,11 @@ package View;
 
 import Modele.*;
 import java.awt.*;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.util.Scanner;
+
+import Controler.CarreauxInteract;
+
 
 
 
@@ -15,33 +15,47 @@ public class Grille extends JPanel{
     private static final int ROWS = 10;
     private static final int COLS = 10;
     private static final int CELL_SIZE = 30;
-    public Scanner scan;
-    public String img = "/Images/Mer.gif";
+    public JFrame window;
 
-    public Grille(int dim, Player jr, Player adv){
-        scan = new Scanner(System.in);
+    public Grille(int dim, Player jr, Player adv, JFrame frame){
         setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
         setOpaque(false);
         setLayout(new GridLayout(ROWS, COLS));
-        initGrille(jr, adv);
+        window = frame;
+        
+        initGrilleBoat(jr, adv);
+
     }
 
-    public void initGrille(Player jr, Player adv){
+    public Grille(int dim, Player jr, Player adv, Grille grilleBoat, JFrame frame){
+        setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
+        setOpaque(false);
+        setLayout(new GridLayout(ROWS, COLS));
+        window = frame;
+        
+        initGrilleShot(jr, adv, grilleBoat);
+        
+    }
+
+
+    
+
+    public void initGrilleBoat(Player jr, Player adv){
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 Carreaux cell = new Carreaux(row, col);
                 cell.setOpaque(true);
-                ImageIcon imageI = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
+                //cell.addActionListener(new CarreauxInteract(col, row, jr, adv, this));
+                ImageIcon imageI;
                 Image pict;
                 
                 for (Boat b : jr.getCellsBoats()) {
                     if (b.isPosition(col, row)) {
-                        System.out.println(b.getName() + " en " + b.getOrientation() + " à " + col + " ; " + row);
                         imageI = new ImageIcon(getClass().getResource(b.part(col, row)));
                         
-                        for (Cell c : adv.cellsShot) {
+                        for (Cell s : adv.cellsShot) {
 
-                                if(c.position(row, col)){
+                                if(s.position(row, col)){
                                     cell.setBackground(Color.red);
                                 } else { cell.setBackground(Color.blue); }
                         }
@@ -50,7 +64,10 @@ public class Grille extends JPanel{
                         imageI = new ImageIcon(pict);
                         cell = new Carreaux(row, col, imageI);
                        
-                    } else {  }
+                    } else { 
+                        imageI = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
+                    }
+                    
                 }
                 
                 
@@ -66,27 +83,57 @@ public class Grille extends JPanel{
         
     }
 
+    public void initGrilleShot(Player jr, Player adv, Grille boat){
+        for (int col = 0; col < COLS; col++) {
+            for (int row = 0; row < ROWS; row++) {
+                Carreaux cell = new Carreaux(row, col);
+                cell.setOpaque(true);
+                cell.addActionListener(new CarreauxInteract(col, row, jr, adv, this, boat));
+                for (Cell c : jr.cellsShot) {
+                    if (c.position(col, row)) {
+                        cell.setIcon(null);
+                        cell.setBackground(Color.red);
+                        
+                        for (Boat b : adv.getCellsBoats()) {
+
+                            if(b.isPosition(row, col)){
+                                cell.setBackground(Color.green);
+                            }
+                                
+                            
+
+                        }
+                        
+                    }
+                }
+                this.add(cell);
+            }
+        }
+
+        
+       
+        
+    }
+
     public static void main(String[] arg){
-        Scanner scan = new Scanner(System.in);
         JFrame frame = new JFrame();
-        frame.setSize(1000, 1000);
+        frame.setSize(2000, 1000);
 
         Player jr = new Player("Bob");
         Player adv = new Player("Bill");
 
-        //jr.boats.add(new PorteAvion(0, 0, 'H'));
-
-        jr.placeBoatsRand(new Board(10, jr, adv));
-        //jr.boats.remove(1);
-        
+        jr.placeBoatsRand();
+        adv.placeBoatsRand();
         
 
-        frame.add(new Grille(10, jr, adv));
+        Grille grille1 = new Grille(10, jr, adv, frame);
+        Grille grille2 = new Grille(10, jr, adv, grille1, frame);
+        frame.add(grille1, BorderLayout.WEST);
+        frame.add(grille2, BorderLayout.EAST);
 
         frame.pack();
 
         frame.setVisible(true);
-        scan.nextLine();
 
         
 
