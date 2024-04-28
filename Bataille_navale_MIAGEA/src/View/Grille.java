@@ -16,25 +16,26 @@ public class Grille extends JPanel{
     private static final int COLS = 10;
     private static final int CELL_SIZE = 30;
     public JFrame window;
+    private ImageIcon backgroundImage;
 
     public Grille(int dim, Player jr, Player adv, JFrame frame){
-        setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
-        setOpaque(false);
-        setLayout(new GridLayout(ROWS, COLS));
+        this.setSize(CELL_SIZE * COLS, CELL_SIZE * ROWS);
+        this.setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
+        this.setMaximumSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
+        
+        this.setOpaque(false);
+        this.setLayout(new GridLayout(ROWS, COLS));
         window = frame;
         
         initGrilleBoat(jr, adv);
-
     }
 
     public Grille(int dim, Player jr, Player adv, Grille grilleBoat, JFrame frame){
         setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
-        setOpaque(false);
+        setOpaque(true);
         setLayout(new GridLayout(ROWS, COLS));
         window = frame;
-        
         initGrilleShot(jr, adv, grilleBoat);
-        
     }
 
 
@@ -44,8 +45,6 @@ public class Grille extends JPanel{
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 Carreaux cell = new Carreaux(row, col);
-                cell.setOpaque(true);
-                //cell.addActionListener(new CarreauxInteract(col, row, jr, adv, this));
                 ImageIcon imageI;
                 Image pict;
                 
@@ -60,7 +59,7 @@ public class Grille extends JPanel{
                                 } else { cell.setBackground(Color.blue); }
                         }
                         pict = imageI.getImage();
-                        pict = pict.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH);
+                        pict = pict.getScaledInstance(CELL_SIZE, CELL_SIZE,  java.awt.Image.SCALE_SMOOTH);
                         imageI = new ImageIcon(pict);
                         cell = new Carreaux(row, col, imageI);
                        
@@ -117,6 +116,7 @@ public class Grille extends JPanel{
 
     public static void main(String[] arg){
         JFrame frame = new JFrame();
+        
         frame.setSize(2000, 1000);
 
         Player jr = new Player("Bob");
@@ -128,6 +128,7 @@ public class Grille extends JPanel{
 
         Grille grille1 = new Grille(10, jr, adv, frame);
         Grille grille2 = new Grille(10, jr, adv, grille1, frame);
+        
         frame.add(grille1, BorderLayout.WEST);
         frame.add(grille2, BorderLayout.EAST);
 
@@ -139,6 +140,8 @@ public class Grille extends JPanel{
 
 
     } 
+
+    
     
 }
 

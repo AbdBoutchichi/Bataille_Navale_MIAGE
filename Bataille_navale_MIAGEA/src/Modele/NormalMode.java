@@ -26,9 +26,6 @@ public class NormalMode {
         public NormalMode(int c) {
 
             choice= c;
-
-            
-
             this.scanner = new Scanner(System.in);
             this.menu = new Menu();
 
@@ -61,6 +58,38 @@ public class NormalMode {
                 initGameComputer(player1, bot);
             }
         }
+
+        public NormalMode(int c, String name1, String name2) {
+
+            choice= c;
+            this.menu = new Menu();
+
+           
+            // Création du joueur 1
+            System.out.println("Entrez le nom du Joueur 1:");
+            
+            player1 = new Player(name1);
+            
+            
+            
+
+            
+
+            // Sélection du mode de jeu et création du joueur 2
+            if (choice == 1) {
+                System.out.println("Entrez le nom du Joueur 2:");
+                player2 = new Player(name2);
+                initGame(player1, player2);
+                
+            } else if (choice == 2) {
+                //defini la difficulté de l'ordinateur
+                int difficulty = menu.getDifficultyChoice();
+                System.out.println("La difficulté de l'ordinateur sera :" + difficulty);
+
+                bot = new PlayerComputer(difficulty, "Computer");
+                
+            }
+        }
     
         private void initGame(Player jr1, Player jr2) {
             
@@ -78,6 +107,8 @@ public class NormalMode {
             // Début du jeu
             startGame(jr1, jr2);
         }
+
+        
 
         private void initGameComputer(Player jr1, PlayerComputer ordi) {
             

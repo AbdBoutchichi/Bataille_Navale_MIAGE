@@ -22,12 +22,12 @@ public class Boat {
         addPos();
     }
 
-    public Boat(Board brd, Player plr, int t, String nom){
+    public Boat(Player plr, int t, String nom){
         this.cellules = new Cell[taille];
         this.taille=t;
         this.life = t;
         this.name = nom;
-        placeRandom(brd, plr);
+        placeRandom(plr);
         addPos();
     }
 
@@ -438,7 +438,7 @@ public class Boat {
         }
 
     }
-    private void placeRandom(Board brd, Player plr){
+    private void placeRandom(Player plr){
     
         Random rand = new Random();
         boolean horizontal;
@@ -452,7 +452,7 @@ public class Boat {
             horizontal = rand.nextBoolean();
             orientation = horizontal? 'H' : 'V';
             if(plr.canPlace(this)){
-                placed = plr.placeBateau(brd, this);
+                placed = plr.placeBateau(this);
             }
         }
     }

@@ -1,7 +1,7 @@
 package Modele;
 
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,19 +29,15 @@ public class Board {
 
     int dimension;
 
-    public Cell[][] cellules;
+    private Cell[][] cellules;
 
-    public Player joueur1;
+    private Player joueur1;
     
-    public Player joueur2;
+    private Player joueur2;
 
-    public ArrayList<Boat> bateaux;
+    //private ArrayList<Boat> bateaux;
 
     
-    /*public void getCell(int Zx, int Zy) {
-        // TODO implement here
-        return null;
-    }*/
 
     /**
      * @return
@@ -178,42 +174,7 @@ public class Board {
         }
     }
 
-    /**
-     * @param boat 
-     * @return
-     */
-    //public void addBoat(Boat boat) {
-       // bateaux.add(boat);
-    //}
-
-    /**
-     * @param cells  
-     * @return
-     */
-    /*public boolean hasNeighbors(Boat boat) {
-        for (Cell cell : boat.getCells()) {
-            int x = cell.getX();
-            int y = cell.getY();
-            
-            // Vérifier les 8 directions autour de la cellule
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dy = -1; dy <= 1; dy++) {
-                    if (dx == 0 && dy == 0) continue; // Skip la cellule du bateau elle-même
-                    
-                    int newX = x + dx;
-                    int newY = y + dy;
-                    
-                    if (newX >= 0 && newX < dimension && newY >= 0 && newY < dimension) {
-                        Cell neighbor = cells[newX][newY];
-                        if (neighbor.hasBoat()) {
-                            return true; // Un voisin avec un bateau a été trouvé
-                        }
-                    }
-                }
-            }
-        }
-        return false; // Aucun voisin avec un bateau n'a été trouvé 
-    }*/
+    
     
     /**
      * @param cells 
@@ -319,7 +280,7 @@ public class Board {
 
 
     //Méthode vérifiant le voisinage
-    private boolean hasAdjacentBoats(int x, int y) {
+    /*private boolean hasAdjacentBoats(int x, int y) {
         int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
         int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
     
@@ -334,7 +295,7 @@ public class Board {
             }
         }
         return false;
-    }
+    }*/
 
     //permet de placer les bateaux sur le plateau
     public void placeBoat(Boat boat) {

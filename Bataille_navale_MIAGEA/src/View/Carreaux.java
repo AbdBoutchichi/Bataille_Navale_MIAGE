@@ -20,8 +20,8 @@ public class Carreaux extends JButton{
         posX = x;
         posY = y;
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        
-        this.setBackground(Color.blue);
+        this.setOpaque(false);
+        this.setBackground(new Color(250,250, 250, 0));
     }
 
     public Carreaux(int x, int y){
@@ -31,8 +31,10 @@ public class Carreaux extends JButton{
         posX = x;
         posY = y;
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        ImageIcon background = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
-        this.setIcon(background);
+        this.setOpaque(false);
+        this.setBackground(new Color(250,250, 250, 0));
+        //ImageIcon background = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
+        //this.setIcon(background);
         this.addActionListener(e);
     }
     
