@@ -22,6 +22,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import Controler.OrientationController;
+import Controler.SelectBoat;
+import Modele.Player;
+
 public class PlacementPage extends JFrame {
     private GridPanel gridPanel;
     //private GameController gameController;
@@ -36,7 +40,17 @@ public class PlacementPage extends JFrame {
     private boolean[] shipsPlaced;
     private String playerName;
 
+    private Player player;
+
+    public String orientation;
+    private int selectedSize;
+    private String selectedBoat;
+
+
     public PlacementPage(String playerName) {
+        player = new Player(playerName);
+        orientation = "Horizontale";
+
         this.playerName = playerName;
         ImageIcon[] shipIcons = {
             new ImageIcon("Images/Torpilleur.png"),
@@ -58,12 +72,13 @@ public class PlacementPage extends JFrame {
     }
 
     private void initializeComponents(ImageIcon[] shipIcons) {
-        gridPanel = new GridPanel();
+        gridPanel = new GridPanel(10, player, orientation,2, "Torpilleur");
         //gameController = new GameController(gridPanel);
 
         xField = new JTextField(5);
         yField = new JTextField(5);
         orientationComboBox = new JComboBox<>(new String[]{"Horizontal", "Vertical"});
+
 
         placeShipButton = new JButton("Place Ship");
         placeShipButton.addActionListener(e -> {
@@ -76,6 +91,9 @@ public class PlacementPage extends JFrame {
         placeShipButtonRandomly = new JButton("Place Ship Randomly");
 
         for (int i = 0; i < shipIcons.length; i++) {
+
+
+
             shipLabels[i] = new JLabel(shipIcons[i]);
             shipLabels[i].setText("1");
             shipLabels[i].setHorizontalTextPosition(JLabel.CENTER);
@@ -116,12 +134,17 @@ public class PlacementPage extends JFrame {
             ImageIcon resizedIcon = new ImageIcon(shipImage);
 
             JLabel shipLabel = new JLabel(resizedIcon);
-            JLabel shipCountLabel = new JLabel("1", SwingConstants.CENTER);
+
+            
+
+            JButton shipCountLabel = new JButton("1");
+            
 
             JPanel shipPanel = new JPanel(new BorderLayout());
             shipPanel.add(shipLabel, BorderLayout.CENTER);
             shipPanel.add(shipCountLabel, BorderLayout.SOUTH);
             shipsPanel.add(shipPanel);
+            shipCountLabel.addActionListener(new SelectBoat(this, shipPanel, shipImageFiles[i], selectedBoat));
         }
 
         shipsPanel.add(Box.createHorizontalGlue());
@@ -164,7 +187,7 @@ public class PlacementPage extends JFrame {
     
         getContentPane().setLayout(new BorderLayout());
         add(titlePanel, BorderLayout.NORTH);
-        add(gridPanel, BorderLayout.CENTER);
+        add(gridPanel, BorderLayout.WEST);
         add(inputPanel, BorderLayout.EAST);
         add(bottomPanel, BorderLayout.SOUTH);
     
@@ -192,6 +215,8 @@ public class PlacementPage extends JFrame {
     
 
     private void initializeController() {
+        OrientationController controllerComboBox = new OrientationController(orientationComboBox, orientation, gridPanel, player);
+        orientationComboBox.addActionListener(controllerComboBox);
     }
 
     

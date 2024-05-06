@@ -3,11 +3,21 @@ package View;
 import java.awt.*;
 import javax.swing.*;
 
+import Modele.Player;
+import Controler.*;
+
 public class NewGame extends JFrame {
 
     private static final int CELL_SIZE = 30;
+    private Player player1;
+    private Player player2;
+    private String boatSelected;
 
-    public NewGame() {
+    public NewGame(Player plr1, Player plr2) {
+        player1 = plr1;
+        player2 = plr2;
+
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bataille Navale");
 
@@ -16,22 +26,22 @@ public class NewGame extends JFrame {
         setLocationRelativeTo(null);
 
         setLayout(new BorderLayout(10, 10));
-        add(createPlayerPanel("Joueur 1"), BorderLayout.WEST);
+        add(createPlayerPanel(player1, player2), BorderLayout.WEST);
         add(createTimerPanel(), BorderLayout.CENTER);
-        add(createPlayerPanel("Joueur 2"), BorderLayout.EAST);
+        add(createPlayerPanel(player2, player1), BorderLayout.EAST);
         add(createBottomPanel(), BorderLayout.SOUTH);
 
         setVisible(true);
     }
 
-    private JPanel createPlayerPanel(String playerName) {
+    private JPanel createPlayerPanel(Player player, Player enemie) {
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel nameLabel = new JLabel(playerName, SwingConstants.CENTER);
-        JPanel gridPanel = new GridPanel();
+        JLabel nameLabel = new JLabel(player.getName(), SwingConstants.CENTER);
+        GridPanel grille = new GridPanel(10, player, enemie, this);
         JPanel controlPanel = createControlPanel();
 
         panel.add(nameLabel, BorderLayout.NORTH);
-        panel.add(gridPanel, BorderLayout.CENTER);
+        panel.add(grille, BorderLayout.CENTER);
         panel.add(controlPanel, BorderLayout.SOUTH);
 
         return panel;
@@ -123,7 +133,8 @@ public class NewGame extends JFrame {
 
     
             JLabel shipLabel = new JLabel(resizedIcon);
-            JLabel shipCountLabel = new JLabel("1", SwingConstants.CENTER);
+
+            JButton shipCountLabel = new JButton("1");
     
             JPanel shipPanel = new JPanel(new BorderLayout());
             shipPanel.add(shipLabel, BorderLayout.CENTER);
@@ -136,6 +147,8 @@ public class NewGame extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(NewGame::new);
+        Player plr1 = new Player("Bob");
+        Player plr2 = new Player("Bill");
+        new NewGame(plr1, plr2);
     }
 }

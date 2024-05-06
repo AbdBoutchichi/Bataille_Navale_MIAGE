@@ -5,6 +5,8 @@ public class Croiseur extends Boat{
         super(x,y,orientation,4,"Croiseur");
     }
 
+
+    //generateur autonome et aléatoire du Croiseur
     public Croiseur(Player plr){
         super(plr, 4,"Croiseur");
     }

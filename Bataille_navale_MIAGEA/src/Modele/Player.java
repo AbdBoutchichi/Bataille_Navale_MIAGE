@@ -251,6 +251,7 @@ public class Player {
                 }
             }
         }
+        
         return false;
     }
 
@@ -263,6 +264,7 @@ public class Player {
             valX = x + (o=='H' || o=='h'?i:0);
             if(valX>=bordure || valY>=bordure) return true;
         }
+        
         return false;
     }
 
@@ -305,6 +307,8 @@ public class Player {
         if(!out(x, y, taille, orient, 10) && !over(x, y, taille, orient) && !neighbor(x, y, taille, orient)){
             return true;
         }
+
+        System.out.println(x+" ; "+y);
         return false;
     }
 
@@ -364,6 +368,22 @@ public class Player {
             if(c.getX()==x && c.getY()==y) return false;
         }
         return true;
+    }
+
+    public int[] newPos(int x, int y, int size, char orientation, int dimension){
+        int[] pos = {x, y};
+        if (!out(x, y, size, orientation, dimension))
+        
+            return pos;
+        else if (orientation == 'H') 
+            pos[0] = x - ((x + size ) - dimension);
+        else 
+            pos[1] = y - ((y + size ) - dimension);
+
+
+        System.out.println("Dans newPos:"+pos[0]+" ; "+pos[1]);
+        return pos;
+
     }
 
 }

@@ -77,6 +77,7 @@ public class ModeArtillerie extends NormalMode {
         y = th.roue();
         
         System.out.println("tire souhaité en " + x + ";" + y);
+        //indique si la cellule a déja été touché ou non 
         if(jr1.canShoot(x, y)){
             jr1.shootAt(x, y);
             if(!jr2.isTouch(y, x)){

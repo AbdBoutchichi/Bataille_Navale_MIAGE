@@ -21,7 +21,9 @@ public class Boat {
         this.name = nom;
         addPos();
     }
+    
 
+    //creation d'un bateau de façon autonome et aléatoire 
     public Boat(Player plr, int t, String nom){
         this.cellules = new Cell[taille];
         this.taille=t;
@@ -164,6 +166,7 @@ public class Boat {
         return 0;
     }
 
+    //Renvoie en fonction de d'une position l'image correspondante à la partie du bateau
     public String part(int x, int y){
         switch (name) {
             case "Torpilleur":
