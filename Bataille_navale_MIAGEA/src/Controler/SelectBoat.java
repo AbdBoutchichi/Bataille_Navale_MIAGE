@@ -6,44 +6,76 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import View.GridPanel;
+import View.PlacementPage;
+
+import Modele.Player;
+
 public class SelectBoat implements ActionListener{
     private JPanel panel;
     private String path;
-    private JFrame frame;
+    private PlacementPage frame;
+    private GridPanel grille;
     private String selecteur;
+    private Player player;
+    private JComboBox combo;
 
-    public SelectBoat(JFrame f, JPanel p, String chemin, String s){
+    public SelectBoat(PlacementPage f, JPanel p, String chemin, GridPanel g, Player plr, JComboBox c){
         this.panel = p;
         this.path = chemin;
         this.frame = f;
-        this.selecteur = s;
+        this.grille = g;
+        this.player = plr;
+        this.combo = c;
     }
 
     public void actionPerformed(ActionEvent e){
-        frame.remove(panel);
-        panel.setBorder(BorderFactory.createLineBorder(Color.black));
+        
+        
         switch (path) {
             case "/Images/Torpilleur.png":
                 
-                selecteur = "Torpilleur";
-
+                frame.selectedBoat = "Torpilleur";
+                frame.selectedSize = 2;
+                System.out.println("ici y a " + frame.selectedBoat);
+                break;
             case "/Images/sousMarin.png":
                 
-                selecteur = "SousMarin";
+                frame.selectedBoat = "SousMarin";
+                frame.selectedSize = 3;
+                System.out.println("ici y a " + frame.selectedBoat);
+                break;
             case "/Images/PorteAvion.png":
                 
-                selecteur = "PorteAvion";
+                frame.selectedBoat = "PorteAvion";
+                frame.selectedSize = 5;
+                System.out.println("ici y a " + frame.selectedBoat);
+                break;
             case "/Images/Croiseur.png":
                 
-                selecteur = "Croiseur";
+                frame.selectedBoat = "Croiseur";
+                frame.selectedSize = 4;
+                
+                System.out.println("ici y a " + frame.selectedBoat);
+                break;
             case "/Images/contreTorpilleur.png":
                 
-                selecteur = "ContreTorpilleur";
+                frame.selectedBoat = "ContreTorpilleur";
+                frame.selectedSize = 3;
+                System.out.println("ici y a " + frame.selectedBoat);
+                break;
             default:
                 break;
         }
+
+        System.out.println("controler selectBoat "+ frame.selectedBoat);
+        grille.removeAll();
+        grille.initGridPanelPlacement(player, (String) combo.getSelectedItem(), frame.selectedSize, frame.selectedBoat);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        frame.add(panel);
+        frame.shipsPanel.removeAll();
+        frame.createShipsPanel();
+        frame.shipsPanel.revalidate();
+        frame.shipsPanel.repaint();
         frame.revalidate();
         frame.repaint();
     }

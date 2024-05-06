@@ -351,7 +351,7 @@ public class Player {
     }
 
     public void placeBoatsRand() {
-        
+        this.boats.clear();
         new PorteAvion(this);
         new Torpilleur(this);
         new ContreTorpilleur(this);
@@ -384,6 +384,27 @@ public class Player {
         System.out.println("Dans newPos:"+pos[0]+" ; "+pos[1]);
         return pos;
 
+    }
+
+    public void removeBoat(String name){
+        for (int i = 0; i< boats.size(); i++) {
+            if (boats.get(i).getName()== name) boats.remove(i);
+        }
+        
+    }
+
+    public boolean exist(String name){
+        for (Boat boat : boats) {
+            if (boat.getName()== name) return true;
+        }
+        return false;
+    }
+
+    public Boat recupBoat(String name){
+        for (Boat boat : boats) {
+            if (boat.getName()== name) return boat;
+        }
+        return null;
     }
 
 }

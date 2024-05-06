@@ -1,6 +1,7 @@
 package Controler;
 
 import Modele.Player;
+import Modele.Boat;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,8 @@ public class Placement implements ActionListener{
     private String name;
     private int dimension;
     private GridPanel grille;
-    PlacementPage page;
+    private PlacementPage page;
+    private boolean random;
 
     public Placement(Player player, GridPanel placement, int posX, int posY, int size, String name, String orientation, int dimension){
         this.x = posX;
@@ -33,21 +35,43 @@ public class Placement implements ActionListener{
         this.name = name;
         this.dimension = dimension;
         this.grille = placement;
-        
+        this.random = false;
+    }
+
+    public Placement(Player player, GridPanel placement, String o, int s, String n){
+        this.player = player;
+        this.grille = placement;
+        this.random = true;
+        this.size = s;
+        this.orientation = o;
+        this.name = n;
     }
 
     public void actionPerformed(ActionEvent e){
+        if(!random){
+            Boat b = player.recupBoat(name);
+            player.removeBoat(name);
+            if(player.canPlace(player.newPos(x, y, size, orientation.charAt(0), dimension)[0], player.newPos(x, y, size, orientation.charAt(0), dimension)[1], size, orientation.charAt(0))){
+                System.out.println("controler placement " + name);
+                grille.removeAll();
 
-        if(player.canPlace(player.newPos(x, y, size, orientation.charAt(0), dimension)[0], player.newPos(x, y, size, orientation.charAt(0), dimension)[1], size, orientation.charAt(0))){
+                
+                player.placeBateau(player.newPos(x, y, size, orientation.charAt(0), dimension)[0], player.newPos(x, y, size, orientation.charAt(0), dimension)[1], orientation.charAt(0), size, name);
+                grille.initGridPanelPlacement(player, orientation, size, name);
+
+                grille.repaint();
+                grille.revalidate();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Placement invalide", "Placement invalide", JOptionPane.INFORMATION_MESSAGE); 
+                if(b != null) player.boats.add(b);
+            }
+        } else {
+            player.placeBoatsRand();
             grille.removeAll();
-            
-            player.placeBateau(player.newPos(x, y, size, orientation.charAt(0), dimension)[0], player.newPos(x, y, size, orientation.charAt(0), dimension)[1], orientation.charAt(0), size, name);
-            grille.initGridPanelPlacement(player, orientation, 2, "Torpilleur");
-            
-            grille.repaint();
+            grille.initGridPanelPlacement(player, (String) orientation, size, name);
             grille.revalidate();
-            
-        } else 
-            JOptionPane.showMessageDialog(null, "Placement invalide", "Placement invalide", JOptionPane.INFORMATION_MESSAGE); 
+            grille.repaint();
+        }
     }
 }

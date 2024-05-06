@@ -15,18 +15,26 @@ public class OrientationController implements ActionListener{
     private JComboBox box;
     private GridPanel gridPanel;
     private Player player;
+    private String selectedBoat;
+    private int selectedSize;
+    private PlacementPage frame;
 
-    public OrientationController(JComboBox orientationBox, String selectedOrientation, GridPanel grid, Player player){
+    //Constructeur
+
+    public OrientationController(JComboBox orientationBox, String selectedOrientation, GridPanel grid, Player player, String boat, int size, PlacementPage f){
         this.box = orientationBox;
         this.orientation = selectedOrientation;
         this.gridPanel = grid;
         this.player = player;
+        this.selectedBoat = boat;
+        this.selectedSize = size;
+        this.frame = f;
     }
 
     public void actionPerformed(ActionEvent e){
         gridPanel.removeAll();
         orientation = (String) box.getSelectedItem();
-        gridPanel.initGridPanelPlacement(player, (String) box.getSelectedItem(), 2, "Torpilleur");
+        gridPanel.initGridPanelPlacement(player, (String) box.getSelectedItem(), frame.selectedSize, frame.selectedBoat);
         gridPanel.revalidate();
         gridPanel.repaint();
         System.out.println(orientation);

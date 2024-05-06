@@ -145,6 +145,7 @@ public class GridPanel extends JPanel{
                 Carreaux cell = new Carreaux(row, col);
                 ImageIcon imageI;
                 Image pict;
+                System.out.println("vue grid " + name);
                 Placement p = new Placement(jr, this, col, row, size, name, orientation, 10);
                 //Attribue a chaque bouton un action listener pour pouvoir placer les bateaux
                     cell.addActionListener(p);

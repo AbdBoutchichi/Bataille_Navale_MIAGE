@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -24,6 +25,7 @@ import javax.swing.SwingUtilities;
 
 import Controler.OrientationController;
 import Controler.SelectBoat;
+import Controler.Placement;
 import Modele.Player;
 
 public class PlacementPage extends JFrame {
@@ -31,10 +33,10 @@ public class PlacementPage extends JFrame {
     //private GameController gameController;
     private final static int CELL_SIZE = 30;
     private JTextField xField, yField;
-    private JComboBox<String> orientationComboBox;
+    public JComboBox<String> orientationComboBox;
     private JButton placeShipButton;
     private JButton placeShipButtonRandomly;
-    private JPanel shipsPanel;
+    public JPanel shipsPanel;
     private JLabel statusLabel;
     private JLabel[] shipLabels;
     private boolean[] shipsPlaced;
@@ -42,14 +44,17 @@ public class PlacementPage extends JFrame {
 
     private Player player;
 
-    public String orientation;
-    private int selectedSize;
-    private String selectedBoat;
+    public String orientation = "Horizontale";
+    public int selectedSize = 2;
+    public String selectedBoat = "Torpilleur";
 
 
     public PlacementPage(String playerName) {
         player = new Player(playerName);
-        orientation = "Horizontale";
+
+        String orientation = "Horizontale";
+        int selectedSize = 2;
+        String selectedBoat = "Torpilleur";
 
         this.playerName = playerName;
         ImageIcon[] shipIcons = {
@@ -72,7 +77,7 @@ public class PlacementPage extends JFrame {
     }
 
     private void initializeComponents(ImageIcon[] shipIcons) {
-        gridPanel = new GridPanel(10, player, orientation,2, "Torpilleur");
+        gridPanel = new GridPanel(10, player, orientation,selectedSize, selectedBoat);
         //gameController = new GameController(gridPanel);
 
         xField = new JTextField(5);
@@ -103,19 +108,21 @@ public class PlacementPage extends JFrame {
 
         statusLabel = new JLabel("Place your ships!");
     }
+    
     private JPanel createBottomPanel() {
         JPanel bottomPanel = new JPanel(new BorderLayout());
         JPanel trackingPanel1 = createTrackingPanel();
-        JPanel shipsPanel = createShipsPanel();
+        shipsPanel = new JPanel();
+        createShipsPanel();
 
         bottomPanel.add(trackingPanel1, BorderLayout.WEST);
-        bottomPanel.add(shipsPanel, BorderLayout.CENTER);
+        bottomPanel.add(this.shipsPanel, BorderLayout.CENTER);
 
         return bottomPanel;
     }
 
-    private JPanel createShipsPanel() {
-        JPanel shipsPanel = new JPanel();
+    public void createShipsPanel() {
+        System.out.println("ship init");
         shipsPanel.setBorder(BorderFactory.createTitledBorder("Flottes"));
         shipsPanel.setLayout(new BoxLayout(shipsPanel, BoxLayout.LINE_AXIS));
 
@@ -128,7 +135,17 @@ public class PlacementPage extends JFrame {
             "/Images/contreTorpilleur.png"
         };
 
+        String[] shipNames = {
+            "Torpilleur",
+            "sousMarin",
+            "PorteAvion",
+            "Croiseur",
+            "contreTorpilleur"
+        };
+
         for (int i = 0; i < shipSizes.length; i++) {
+            
+        
             ImageIcon shipIcon = new ImageIcon(getClass().getResource(shipImageFiles[i]));
             Image shipImage = shipIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE * shipSizes[i], Image.SCALE_SMOOTH);
             ImageIcon resizedIcon = new ImageIcon(shipImage);
@@ -137,19 +154,27 @@ public class PlacementPage extends JFrame {
 
             
 
-            JButton shipCountLabel = new JButton("1");
-            
-
             JPanel shipPanel = new JPanel(new BorderLayout());
-            shipPanel.add(shipLabel, BorderLayout.CENTER);
+
+            if(!(shipNames[i] == selectedBoat)){ 
+            JButton shipCountLabel = new JButton("1");
             shipPanel.add(shipCountLabel, BorderLayout.SOUTH);
+            shipCountLabel.addActionListener(new SelectBoat(this, shipPanel, shipImageFiles[i], gridPanel, player, orientationComboBox));
+            }
+            else {
+            JPanel shipCountPanel = new JPanel();
+            shipPanel.add(shipCountPanel, BorderLayout.SOUTH);
+            }
+            
+            shipPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+            shipPanel.add(shipLabel, BorderLayout.CENTER);
+            System.out.println("ship size init");
             shipsPanel.add(shipPanel);
-            shipCountLabel.addActionListener(new SelectBoat(this, shipPanel, shipImageFiles[i], selectedBoat));
         }
 
         shipsPanel.add(Box.createHorizontalGlue());
 
-        return shipsPanel;
+        
     }
 
     private JPanel createTrackingPanel() {
@@ -215,8 +240,9 @@ public class PlacementPage extends JFrame {
     
 
     private void initializeController() {
-        OrientationController controllerComboBox = new OrientationController(orientationComboBox, orientation, gridPanel, player);
+        OrientationController controllerComboBox = new OrientationController(orientationComboBox, orientation, gridPanel, player, selectedBoat, selectedSize, this);
         orientationComboBox.addActionListener(controllerComboBox);
+        placeShipButtonRandomly.addActionListener(new Placement(player, gridPanel, (String) orientationComboBox.getSelectedItem(), selectedSize, selectedBoat));
     }
 
     
@@ -228,6 +254,24 @@ public class PlacementPage extends JFrame {
             shipLabels[shipIndex].setEnabled(false);
 
         }
+    }
+
+    public void update(){
+        ImageIcon[] shipIcons = {
+            new ImageIcon("Images/Torpilleur.png"),
+            new ImageIcon("Images/sousMarin.png"),
+            new ImageIcon("Images/PorteAvion.png"),
+            new ImageIcon("Images/Croiseur.png"),
+            new ImageIcon("Images/contreTorpilleur.png")
+        };
+
+        initializeComponents(shipIcons);
+        layoutComponents();
+        initializeController();
+        setTitle("Naval Battle Game");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {
