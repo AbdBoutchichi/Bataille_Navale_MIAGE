@@ -55,6 +55,7 @@ public class PlacementPage extends JFrame {
         String orientation = "Horizontale";
         int selectedSize = 2;
         String selectedBoat = "Torpilleur";
+        
 
         this.playerName = playerName;
         ImageIcon[] shipIcons = {
@@ -79,9 +80,11 @@ public class PlacementPage extends JFrame {
     private void initializeComponents(ImageIcon[] shipIcons) {
         gridPanel = new GridPanel(10, player, orientation,selectedSize, selectedBoat);
         //gameController = new GameController(gridPanel);
-
+        System.out.println("1");
         xField = new JTextField(5);
         yField = new JTextField(5);
+        xField.setText("0");
+        yField.setText("0");
         orientationComboBox = new JComboBox<>(new String[]{"Horizontal", "Vertical"});
 
 
@@ -137,10 +140,10 @@ public class PlacementPage extends JFrame {
 
         String[] shipNames = {
             "Torpilleur",
-            "sousMarin",
+            "SousMarin",
             "PorteAvion",
             "Croiseur",
-            "contreTorpilleur"
+            "ContreTorpilleur"
         };
 
         for (int i = 0; i < shipSizes.length; i++) {
@@ -162,13 +165,14 @@ public class PlacementPage extends JFrame {
             shipCountLabel.addActionListener(new SelectBoat(this, shipPanel, shipImageFiles[i], gridPanel, player, orientationComboBox));
             }
             else {
-            JPanel shipCountPanel = new JPanel();
+            JLabel shipCountPanel = new JLabel("Place le", SwingConstants.CENTER);
             shipPanel.add(shipCountPanel, BorderLayout.SOUTH);
+            
+            System.out.println("ship size init");
             }
             
             shipPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
             shipPanel.add(shipLabel, BorderLayout.CENTER);
-            System.out.println("ship size init");
             shipsPanel.add(shipPanel);
         }
 
@@ -240,9 +244,11 @@ public class PlacementPage extends JFrame {
     
 
     private void initializeController() {
+        System.out.println("2");
         OrientationController controllerComboBox = new OrientationController(orientationComboBox, orientation, gridPanel, player, selectedBoat, selectedSize, this);
         orientationComboBox.addActionListener(controllerComboBox);
         placeShipButtonRandomly.addActionListener(new Placement(player, gridPanel, (String) orientationComboBox.getSelectedItem(), selectedSize, selectedBoat));
+        placeShipButton.addActionListener(new Placement(player, gridPanel, Integer.parseInt(xField.getSelectedText()), Integer.parseInt(yField.getSelectedText()), selectedSize, selectedBoat, orientation, 10));
     }
 
     

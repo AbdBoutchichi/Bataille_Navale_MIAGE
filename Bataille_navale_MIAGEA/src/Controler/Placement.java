@@ -47,6 +47,8 @@ public class Placement implements ActionListener{
         this.name = n;
     }
 
+    
+
     public void actionPerformed(ActionEvent e){
         if(!random){
             Boat b = player.recupBoat(name);
