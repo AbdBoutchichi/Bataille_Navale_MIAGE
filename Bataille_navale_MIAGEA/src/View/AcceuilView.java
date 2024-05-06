@@ -158,11 +158,14 @@ public class AcceuilView extends JFrame {
 
         if (imagePath.equals(HELP_IMAGE_PATH)) {
             button.addActionListener(e -> showHelpView());
+        }else  if(imagePath.equals(NEW_GAME_BUTTON_IMAGE_PATH)){
+            button.addActionListener(e->showNewGameMenuView());
         } else {
             button.addActionListener(this::buttonAction);
         }
         return button;
     
+       
         //button.addActionListener(this::buttonAction);
         //return button;
     }
@@ -170,6 +173,11 @@ public class AcceuilView extends JFrame {
     private void showHelpView() {
         Help helpView = new Help(this); // Supposons que HelpView est votre classe de fenêtre d'aide.
         helpView.setVisible(true);
+    }
+
+    private void showNewGameMenuView(){
+        NewGameMenu newGameMenuView = new NewGameMenu();
+        newGameMenuView.setVisible(true);
     }
     
     
