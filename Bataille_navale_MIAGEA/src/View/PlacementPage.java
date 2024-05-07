@@ -248,7 +248,7 @@ public class PlacementPage extends JFrame {
         OrientationController controllerComboBox = new OrientationController(orientationComboBox, orientation, gridPanel, player, selectedBoat, selectedSize, this);
         orientationComboBox.addActionListener(controllerComboBox);
         placeShipButtonRandomly.addActionListener(new Placement(player, gridPanel, (String) orientationComboBox.getSelectedItem(), selectedSize, selectedBoat));
-        placeShipButton.addActionListener(new Placement(player, gridPanel, Integer.parseInt(xField.getSelectedText()), Integer.parseInt(yField.getSelectedText()), selectedSize, selectedBoat, orientation, 10));
+        //placeShipButton.addActionListener(new Placement(player, gridPanel, Integer.parseInt(xField.getSelectedText()), Integer.parseInt(yField.getSelectedText()), selectedSize, selectedBoat, orientation, 10));
     }
 
     
