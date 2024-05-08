@@ -91,6 +91,21 @@ public class Player {
             return false;
         }
     }
+
+    public boolean placeBateau(String x, String y, char orientation, int taille, String nom) {
+        
+        Boat b = createBoat(newPos(convertPos(x), convertPos(y), taille, orientation, 10)[0], newPos(convertPos(x), convertPos(y), taille, orientation, 10)[1], orientation, taille, nom);
+        System.out.println("Position souhaitais :" + b.getPosX() +";"+ b.getPosY() + " avec l'orientation:"+b.getOrientation());
+        
+        // Vérification si le bateau peut être placé
+        if (this.canPlace(b.getPosX(), b.getPosY(), b.getSize(), b.getOrientation())) {
+            System.out.println(b.getName());
+            boats.add(b);
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     Boat createBoat(int x, int y, char orientation, int taille, String nom) {
         switch(nom.toLowerCase()) {
@@ -257,6 +272,7 @@ public class Player {
 
     //verifie si la position est hors du plateau
     public boolean out(int x, int y, int taille, char o, int bordure){
+        if(x < 0 || y < 0) return true;
         int valX;
         int valY;
         for(int i = 0;  i < taille; i++){
@@ -304,6 +320,17 @@ public class Player {
     //verifie si on peut placer un bateau sur plateau a une position (x;y) en fonction des données d'un bateau
     public boolean canPlace(int x, int y, int taille, char orient){
         
+        if(!out(x, y, taille, orient, 10) && !over(x, y, taille, orient) && !neighbor(x, y, taille, orient)){
+            return true;
+        }
+
+        System.out.println(x+" ; "+y);
+        return false;
+    }
+
+    public boolean canPlace(String posX, String posY, int taille, char orient){
+        int x = newPos(convertPos(posX), convertPos(posY), taille, orient, 10)[0];
+        int y = newPos(convertPos(posX), convertPos(posY), taille, orient, 10)[1];
         if(!out(x, y, taille, orient, 10) && !over(x, y, taille, orient) && !neighbor(x, y, taille, orient)){
             return true;
         }
@@ -372,16 +399,20 @@ public class Player {
 
     public int[] newPos(int x, int y, int size, char orientation, int dimension){
         int[] pos = {x, y};
+        System.out.println("Dans newPos:"+pos[0]+" ; "+pos[1]);
         if (!out(x, y, size, orientation, dimension))
         
             return pos;
+        else if(x < 0 || y < 0){
+            pos[0] = -1;
+            pos[1] = -1;}
         else if (orientation == 'H') 
-            pos[0] = x - ((x + size ) - dimension);
+            pos[0] = dimension - size;
         else 
-            pos[1] = y - ((y + size ) - dimension);
+            pos[1] =dimension - size;
 
 
-        System.out.println("Dans newPos:"+pos[0]+" ; "+pos[1]);
+        
         return pos;
 
     }
@@ -405,6 +436,35 @@ public class Player {
             if (boat.getName()== name) return boat;
         }
         return null;
+    }
+
+    public int convertPos(String pos){
+        System.out.println("convertion de " + pos);
+        if(pos.length()>1) return -1;
+        switch (pos) {
+            case "0":
+                return 0;
+            case "1":
+                return 1;
+            case "2":
+                return 2;
+            case "3":
+                return 3;
+            case "4":
+                return 4;
+            case "5":
+                return 5;
+            case "6":
+                return 6;
+            case "7":
+                return 7;
+            case "8":
+                return 8;
+            case "9":
+                return 9;
+            default:
+                return -1;
+        }
     }
 
 }

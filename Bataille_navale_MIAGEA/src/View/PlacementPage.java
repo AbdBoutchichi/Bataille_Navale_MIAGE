@@ -25,6 +25,8 @@ import javax.swing.SwingUtilities;
 
 import Controler.OrientationController;
 import Controler.SelectBoat;
+
+import Controler.PlacementField;
 import Controler.Placement;
 import Modele.Player;
 
@@ -89,12 +91,7 @@ public class PlacementPage extends JFrame {
 
 
         placeShipButton = new JButton("Place Ship");
-        placeShipButton.addActionListener(e -> {
-            int x = Integer.parseInt(xField.getText());
-            int y = Integer.parseInt(yField.getText());
-            String orientation = (String) orientationComboBox.getSelectedItem();
-            //gameController.placeShip(x, y, orientation);
-        });
+        
 
         placeShipButtonRandomly = new JButton("Place Ship Randomly");
 
@@ -248,7 +245,7 @@ public class PlacementPage extends JFrame {
         OrientationController controllerComboBox = new OrientationController(orientationComboBox, orientation, gridPanel, player, selectedBoat, selectedSize, this);
         orientationComboBox.addActionListener(controllerComboBox);
         placeShipButtonRandomly.addActionListener(new Placement(player, gridPanel, (String) orientationComboBox.getSelectedItem(), selectedSize, selectedBoat));
-        //placeShipButton.addActionListener(new Placement(player, gridPanel, Integer.parseInt(xField.getSelectedText()), Integer.parseInt(yField.getSelectedText()), selectedSize, selectedBoat, orientation, 10));
+        placeShipButton.addActionListener(new PlacementField(player, gridPanel, xField, yField, (String) orientationComboBox.getSelectedItem(), this));
     }
 
     

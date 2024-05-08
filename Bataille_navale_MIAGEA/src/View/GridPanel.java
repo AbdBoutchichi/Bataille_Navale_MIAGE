@@ -145,14 +145,14 @@ public class GridPanel extends JPanel{
                 Carreaux cell = new Carreaux(row, col);
                 ImageIcon imageI;
                 Image pict;
-                System.out.println("vue grid " + name);
+                
                 Placement p = new Placement(jr, this, col, row, size, name, orientation, 10);
                 //Attribue a chaque bouton un action listener pour pouvoir placer les bateaux
                     cell.addActionListener(p);
                 //recupére toutes les cellules sur lesquelles se trouve un bateau
                 for (Boat b : jr.getCellsBoats()) {
                     if (b.isPosition(col, row)) {
-                        System.out.println(b.getName() + " en " + col + " ; " + row);
+                        
                         imageI = new ImageIcon(getClass().getResource(b.part(col, row)));
                         
                         pict = imageI.getImage();
