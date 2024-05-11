@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Bataille de navale" company="" webLink="http://" view-date="2024-02-01" view-index="0" gantt-divider-location="526" resource-divider-location="300" version="3.3.3300" locale="fr_FR">
+    <description/>
+    <view zooming-state="default:9" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="288" order="0"/>
+        <field id="tpd4" name="Date de début" width="111" order="1"/>
+        <field id="tpd5" name="Date de fin" width="111" order="2"/>
+        <field id="tpd15" name="Notes" width="20" order="3"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="filter.dueTodayTasks" value="false"/>
+        <option id="filter.overdueTasks" value="false"/>
+        <option id="filter.inProgressTodayTasks" value="false"/>
+        <timeline><![CDATA[29,23]]></timeline>
+        <option id="color.recent"><![CDATA[#ffff33 #ff9900 #ffffff #ccccff #ffccff #ff3333 #3333ff #33ff33 #006666 #33ffff]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="206" order="0"/>
+        <field id="1" name="Rôle par défaut" width="90" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="3" uid="4a28475533f9446da4fcf321e49edc45" name="Analyse du besoin et conception initial" meeting="false" project="true" start="2024-02-20" duration="6" complete="100" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true">
+            <task id="5" uid="16e842a217834117836f58abe6754420" name="Définir les fonctionnalités du jeu ( navires, règles du jeu ... )" color="#ffccff" meeting="false" start="2024-02-20" duration="2" complete="100" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="4" uid="0874884fdf334ec5ac8920add0d972b3" name="Définir les exigences du jeu en terme d'interface utilisateurs" color="#ffccff" meeting="false" start="2024-02-21" duration="3" complete="100" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="2" uid="4635eb65e08c42afbf4adf24da4c81d9" name="Identifier les contraintes du projet" color="#ffccff" meeting="false" start="2024-02-23" duration="3" complete="100" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="6" uid="3447370f6f6e45dfaf57d5ad3143cd8b" name="Conception initiale" meeting="false" start="2024-02-27" duration="6" complete="100" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true">
+            <task id="31" uid="899f4eb19fec48e18d35adc902d48485" name="Définir les règles du jeu et les interactions entre les différents éléments" color="#3333ff" meeting="false" start="2024-02-27" duration="2" complete="100" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="7" uid="70f917e7724c4f008859777698143360" name="Créer un diagramme de classe" color="#3333ff" meeting="false" start="2024-02-27" duration="6" complete="100" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="8" uid="adb565b34aed44a395a61344863f3d76" name="Analyser les différentes associations du diagramme" color="#3333ff" meeting="false" start="2024-03-05" duration="1" complete="100" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="32" uid="08f8f222cb3f4d61ba311ed76d1918a3" name="Compte rendu" shape="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" meeting="true" start="2024-03-12" duration="0" complete="100" thirdDate="2024-03-12" thirdDate-constraint="0" expand="true"/>
+        <task id="14" uid="35d0cc3ca2084de8a3041f73da5aad0d" name="Implémentation des éléments du jeu" meeting="false" start="2024-03-12" duration="49" complete="88" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true">
+            <task id="38" uid="b88e1c05ef254ca1bc41c616afd9f729" name="Modèle" meeting="false" start="2024-03-12" duration="44" complete="91" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true">
+                <task id="55" uid="08c89d667200423582574231666e79e1" name="Implémentation de toutes les classes" meeting="false" start="2024-03-12" duration="11" complete="100" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true">
+                    <depend id="45" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="10" uid="c5ea75fe98da4cf4a6e8c2267d1d4280" name="Implementer classe Cell" color="#006666" meeting="false" start="2024-03-12" duration="1" complete="100" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+                <task id="39" uid="13e5fd78ad2045d0803da6fd410981a7" name="Implementer classe player" meeting="false" start="2024-03-20" duration="6" complete="100" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+                <task id="40" uid="7ce4120875194ce8a2199b9eb16387f8" name="Implementer classe boat" meeting="false" start="2024-03-12" duration="6" complete="100" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+                <task id="52" uid="e64d17b6aa074bf9ad0b9b6aa5866b73" name="Implementer classe board" meeting="false" start="2024-03-12" duration="6" complete="100" thirdDate="2024-01-08" thirdDate-constraint="0" expand="true"/>
+                <task id="41" uid="648a447b502742d58be0b03d09890acd" name="Implementer classe Menue" meeting="false" start="2024-03-19" duration="6" complete="100" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+                <task id="42" uid="444a2364e5b14a208f83ce228f72c13e" name="Implmenter classe PlayerComputer" meeting="false" start="2024-03-19" duration="6" complete="100" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+                <task id="43" uid="9e59601779124de6be350a23a2403d98" name="Implementation classe Game ( JeuBatailleNavale )" meeting="false" start="2024-03-19" duration="6" complete="100" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+                <task id="45" uid="5dc23c5c0c484c229abafc67e9a19dc2" name="Compilation et gestion des erreurs" meeting="false" start="2024-03-27" duration="21" complete="60" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+                <task id="44" uid="f69a67fa4607492a99e48a9606437cf6" name="Implementation classes des modes" meeting="false" start="2024-04-05" duration="26" complete="100" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="33" uid="affe71eac5854a17947d555feee0cd05" name="compte rendu" meeting="true" start="2024-03-29" duration="0" complete="0" thirdDate="2024-02-01" thirdDate-constraint="0" expand="true"/>
+            <task id="37" uid="5de5d2b44d2e4bc4b82cd8a46448e83d" name="Vue" meeting="false" start="2024-03-26" duration="39" complete="82" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true">
+                <task id="49" uid="1d27ada989174fa690d604a50324b911" name="Animations ( image.. etc )" color="#ffffff" meeting="false" start="2024-03-26" duration="14" complete="80" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+                <task id="56" uid="9e2e650cc1a6483c9389ff15f5194c2d" name="Implementation de la vue de la grille" color="#ffffff" meeting="false" start="2024-04-19" duration="7" complete="100" thirdDate="2024-03-01" thirdDate-constraint="0" expand="true"/>
+                <task id="57" uid="9da07f3ad8774c33b4e9081265a50e3a" name="Vue d'affichage de placement des bateaux" color="#ffffff" meeting="false" start="2024-04-23" duration="1" complete="100" thirdDate="2024-03-01" thirdDate-constraint="0" expand="true"/>
+                <task id="62" uid="78f62afbbfce4cd0a0b8a1846a545b6e" name="Refonte de la fenêtre de jeu" color="#ffffff" meeting="false" start="2024-05-07" duration="9" complete="70" thirdDate="2024-03-01" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="48" uid="0ed3e51974ce48da88ba0c32a37e7346" name="Contrôleur" meeting="false" start="2024-04-09" duration="21" complete="85" expand="true">
+                <task id="50" uid="52f6e11c0b6f4e95accbd61851ea9635" name="gerer les interactions du modèle-vue" color="#ccccff" meeting="false" start="2024-04-09" duration="14" complete="70" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+                <task id="58" uid="0b285018ffa54a35bf7fe6bba09bb3dc" name="Création du contrôleur de la grille" color="#ccccff" meeting="false" start="2024-04-19" duration="7" complete="100" thirdDate="2024-02-01" thirdDate-constraint="0" expand="true"/>
+                <task id="61" uid="aeacac9f548841648f1c6d70eef5ca77" name="Création du contrôleur SelectBoat" color="#ccccff" meeting="false" start="2024-04-29" duration="7" complete="100" thirdDate="2024-03-01" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="34" uid="36510b9a24764c418512648d86f9cbda" name="Compte rendu" meeting="true" start="2024-04-09" duration="0" complete="0" thirdDate="2024-04-09" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="36" uid="6f27ee0310e642cbaae2a219f40bd164" name="Solutionner les problemes d'IDE / git" color="#ff3333" meeting="false" start="2024-03-12" duration="1" complete="100" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true">
+            <task id="51" uid="6fda02b75244438cbfff4bedf946dc0f" name="résoudre le problème liée à eclipse" color="#ff3333" meeting="false" start="2024-03-12" duration="1" complete="100" thirdDate="2024-02-05" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="19" uid="af78a123253349d597dd8710c292ebcc" name="Tests et débogages" meeting="false" start="2024-04-16" duration="24" complete="50" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true">
+            <task id="20" uid="c2dd8121ab63458c8fbb64bf67192515" name="Faire des tests sur le jeu" color="#ffff33" meeting="false" start="2024-04-16" duration="24" complete="50" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="21" uid="5ee7272e13e0413d835f5fc30adfdeea" name="Tester le jeu dans différentes situations" color="#ffff33" meeting="false" start="2024-04-16" duration="24" complete="50" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="22" uid="65cb921c383a4fa2a3ae894acc744d40" name="Déboguer les erreurs et les problèmes" color="#ffff33" meeting="false" start="2024-04-16" duration="24" complete="50" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="53" uid="6adc1eac0dd147c7b92fea3dd170e8c6" name="Compte rendu" color="#33ff33" meeting="false" start="2024-05-13" duration="1" complete="100" thirdDate="2022-10-03" thirdDate-constraint="0" expand="true"/>
+        <task id="23" uid="98b79227e795442499eee0dc5ed90083" name="Finalisation et documentation du code" meeting="false" start="2024-05-14" duration="4" complete="0" thirdDate="2024-03-21" thirdDate-constraint="0" expand="true">
+            <task id="25" uid="e673af0815e94cc4b712bffd31b585d3" name="Revue et documentation du code" color="#33ff33" meeting="false" start="2024-05-14" duration="4" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="24" uid="8751ea4e2126473d9632e84fbbf91be9" name="préparer la documentation du jeu" color="#33ff33" meeting="false" start="2024-05-14" duration="4" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="27" uid="63ebba0d53d742ebb8bccf387d75ed4e" name="Préparation de la présentation finale" meeting="false" start="2024-05-17" duration="2" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true">
+            <task id="29" uid="5c6453a9eab644878dd79f597649d5c7" name="Préparer une présentation pour expliquer le projet" color="#8cb6ce" meeting="false" start="2024-05-17" duration="2" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="28" uid="80e03aa9ea3b42d1b62d223e4bbf6bd8" name="Préparation de l'orale" meeting="false" start="2024-05-17" duration="2" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="35" uid="936837bbd7f8476b910fe2791786ef15" name="Orale" color="#ff3333" meeting="true" start="2024-05-21" duration="0" complete="0" thirdDate="2024-01-22" thirdDate-constraint="0" priority="4" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="0" name="Abdelmoughit" function="Default:0" contacts="" phone=""/>
+        <resource id="1" name="Lilian" function="Default:0" contacts="" phone=""/>
+        <resource id="2" name="Leticia" function="Default:0" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="5" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="4" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="31" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="7" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="10" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="39" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="40" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="32" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="45" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="43" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="42" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="41" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="44" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="57" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="36" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="20" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="21" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="22" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="25" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="29" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="28" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="33" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="49" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="62" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="34" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="51" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="53" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="24" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="5" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="4" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="31" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="7" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="52" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="32" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="45" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="43" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="42" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="41" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="44" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="56" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="58" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="36" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="20" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="21" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="22" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="25" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="29" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="28" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="33" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="62" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="34" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="51" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="53" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="5" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="4" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="31" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="8" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="32" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="49" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="44" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="61" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="20" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="21" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="22" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="29" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="28" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="33" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="62" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="50" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="34" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="24" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
