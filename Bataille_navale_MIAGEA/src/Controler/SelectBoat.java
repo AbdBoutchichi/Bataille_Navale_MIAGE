@@ -7,20 +7,20 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import View.GridPanel;
-import View.PlacementPage;
+import View.PlacementPanel;
 
 import Modele.Player;
 
 public class SelectBoat implements ActionListener{
     private JPanel panel;
     private String path;
-    private PlacementPage frame;
+    private PlacementPanel frame;
     private GridPanel grille;
     private String selecteur;
     private Player player;
     private JComboBox combo;
 
-    public SelectBoat(PlacementPage f, JPanel p, String chemin, GridPanel g, Player plr, JComboBox c){
+    public SelectBoat(PlacementPanel f, JPanel p, String chemin, GridPanel g, Player plr, JComboBox c){
         this.panel = p;
         this.path = chemin;
         this.frame = f;

@@ -166,12 +166,11 @@ public class AcceuilView extends JFrame {
         return button;
     
        
-        //button.addActionListener(this::buttonAction);
-        //return button;
+      
     }
 
     private void showHelpView() {
-        Help helpView = new Help(this); // Supposons que HelpView est votre classe de fenêtre d'aide.
+        Help helpView = new Help(this); 
         helpView.setVisible(true);
     }
 
@@ -184,8 +183,7 @@ public class AcceuilView extends JFrame {
     
 
     private void buttonAction(ActionEvent e) {
-        // Determine which button was pressed and take appropriate action
-        // Your existing action code
+      
     }
 
     public static void main(String[] args) {

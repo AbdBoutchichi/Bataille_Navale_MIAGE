@@ -23,7 +23,7 @@ public class Placement implements ActionListener{
     private String name;
     private int dimension;
     private GridPanel grille;
-    private PlacementPage page;
+    private PlacementPanel page;
     private boolean random;
 
     public Placement(Player player, GridPanel placement, int posX, int posY, int size, String name, String orientation, int dimension){
