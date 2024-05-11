@@ -27,6 +27,7 @@ public class NewGameMenu extends JFrame {
     private final static String DIFFICULTY_MENU = "Difficulty Menu";
     private final static String PROFILE_MENU = "Profile Menu";
     private final static String PLACEMENT_PANEL = "Placement Panel";
+    private final static String RADAR_PLACEMENT_PANEL = "Radar Placement Panel";
 
     private String playerName;
 
@@ -53,10 +54,18 @@ public class NewGameMenu extends JFrame {
         cardPanel.add(createDifficultyMenu(), DIFFICULTY_MENU);
         cardPanel.add(createPlayerProfile(), PROFILE_MENU);
         cardPanel.add(createPlacementPanel(), PLACEMENT_PANEL);
+        cardPanel.add(createRadarPlacementPanel(), RADAR_PLACEMENT_PANEL);  // Add this line
         add(cardPanel);
     }
     
-
+    
+    private JPanel createRadarPlacementPanel() {
+        JPanel panel = new JPanel(new GridLayout(1, 1));
+        RadarPlacementPanel radarPlacementPanel = new RadarPlacementPanel(playerName);
+        panel.add(radarPlacementPanel);
+        return panel;
+    }
+    
     private JPanel createMainMenu() {
         JPanel mainMenu = new JPanel();
         mainMenu.setBackground(new Color(120, 90, 40));
@@ -81,8 +90,13 @@ public class NewGameMenu extends JFrame {
         mainMenu.add(btnArtillery);
 
         JButton btnRadar = new JButton("Jouer en RadarMode");
-        styleButton(btnRadar, 250, 280, 300, 50);
-        mainMenu.add(btnRadar);
+    styleButton(btnRadar, 250, 280, 300, 50);
+    btnRadar.addActionListener(e -> {
+        playerName = firstNameField.getText(); // Assurez-vous que firstNameField est accessible et contient le nom du joueur.
+        updateRadarPlacementPanel(playerName);
+        cardLayout.show(cardPanel, RADAR_PLACEMENT_PANEL);
+    });
+    mainMenu.add(btnRadar);
 
         JButton btnReturn = new JButton("Retour au menu principal");
         styleButton(btnReturn, 250, 340, 300, 50);
@@ -113,7 +127,15 @@ public class NewGameMenu extends JFrame {
 
         return difficultyMenu;
     }
-
+    
+    private void updateRadarPlacementPanel(String playerName) {
+        RadarPlacementPanel newRadarPlacementPanel = new RadarPlacementPanel(playerName);
+        cardPanel.remove(cardPanel.getComponent(4)); // Assurez-vous que c'est l'index correct après tous les ajouts.
+        cardPanel.add(newRadarPlacementPanel, RADAR_PLACEMENT_PANEL);
+        cardPanel.revalidate();
+        cardPanel.repaint();
+    }
+    
     private JPanel createPlayerProfile() {
         JPanel profilePanel = new JPanel(null);
         profilePanel.setBackground(new Color(10, 25, 48));
