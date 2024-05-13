@@ -5,65 +5,60 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 
+ * Classe pour gérer la sauvegarde et le chargement de parties du jeu.
  */
 public class SaveGamePart {
 
+    private static final String SAVE_DIRECTORY = "C:\\Users\\lenovo\\git\\Bataille_Navale_MIAGE\\"; // Chemin du dossier de sauvegarde
+
     /**
-     * Default constructor
+     * Sauvegarde une partie dans un fichier unique basé sur un timestamp.
+     * @param gamePartie L'état du jeu à sauvegarder.
      */
-    public SaveGamePart() {
+    public static void sauvegarderPartie(NormalMode gamePartie) {
+        String fileName = generateFileName(); // Génère un nom de fichier unique
+        try {
+            File file = new File(SAVE_DIRECTORY + fileName);
+            file.getParentFile().mkdirs(); // Crée les dossiers nécessaires si non existants
+            try (FileOutputStream fileOut = new FileOutputStream(file);
+                 ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(gamePartie);
+                System.out.println("La partie a été sauvegardée dans : " + file.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la sauvegarde du fichier: " + e.getMessage());
+        }
     }
 
     /**
-     * 
+     * Génère un nom de fichier unique pour chaque sauvegarde.
+     * @return Le nom du fichier généré.
      */
-   // public type field;
-
-    /**
-     * 
-     */
-    //public void Attribute1;
-
-    /**
-     * @return
-     */
-    public File createFile(Player plr1, Player plr2) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
-        String fileName = dateFormat.format(new Date()) + plr2.getName() + plr2.getName() + ".sav";
-        File file = new File("Sauvegarde", fileName);
-        return file;
+    private static String generateFileName() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        return "game_save_" + df.format(new Date()) + ".sav";
     }
 
     /**
-     * @return
+     * Liste tous les fichiers de sauvegarde disponibles dans le répertoire de sauvegarde.
+     * @return Un tableau des fichiers de sauvegarde.
      */
-    public void updateFiles(File file) throws IOException {
-        
+    public static File[] listSavedGames() {
+        File dir = new File(SAVE_DIRECTORY);
+        return dir.listFiles((dir1, name) -> name.startsWith("game_save_") && name.endsWith(".sav"));
     }
 
     /**
-     * @return
+     * Charge une partie spécifique depuis un fichier de sauvegarde.
+     * @param fileName Le nom du fichier à charger.
+     * @return L'objet NormalMode chargé, ou null en cas d'erreur.
      */
-    public void loadFile() {
-        // TODO implement here
-        return;
+    public static NormalMode chargerPartie(String fileName) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVE_DIRECTORY + fileName))) {
+            return (NormalMode) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Erreur lors du chargement de la partie : " + e.getMessage());
+            return null;
+        }
     }
-
-    /**
-     * @return
-     */
-    public void deleteFile() {
-        // TODO implement here
-        return;
-    }
-
-    /**
-     * @return
-     */
-    public void deleteAllFiles() {
-        // TODO implement here
-        return;
-    }
-
 }

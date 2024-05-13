@@ -1,5 +1,6 @@
 package Modele;
 import java.util.Random;
+import java.io.Serializable;
 
 
 
@@ -7,7 +8,7 @@ import java.util.Random;
 /**
  * 
  */
-public class PlayerComputer extends Player {
+public class PlayerComputer extends Player implements Serializable{
     public static final int EASY = 1;
     public static final int MEDIUM = 2;
     public static final int HARD = 3;

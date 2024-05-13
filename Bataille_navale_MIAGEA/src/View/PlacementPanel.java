@@ -134,7 +134,7 @@ public class PlacementPanel extends JPanel {
         trackingArea.setEditable(false);
         trackingArea.setFont(BUTTON_FONT);
         trackingArea.setBackground(THEME_COLOR);
-        trackingArea.setForeground(TEXT_COLOR); 
+        trackingArea.setForeground(TEXT_COLOR);
 
         JScrollPane scrollPane = new JScrollPane(trackingArea);
         scrollPane.setBackground(THEME_COLOR);
@@ -212,7 +212,7 @@ public class PlacementPanel extends JPanel {
     public void createShipsPanel() {
         shipsPanel.setBorder(BorderFactory.createTitledBorder("Flottes"));
         shipsPanel.setLayout(new BoxLayout(shipsPanel, BoxLayout.LINE_AXIS));
-        shipsPanel.setBackground(THEME_COLOR); // Ensure the background fits the theme color
+        shipsPanel.setBackground(THEME_COLOR);
     
         int[] shipSizes = {5, 4, 3, 3, 2};
         String[] shipImageFiles = {

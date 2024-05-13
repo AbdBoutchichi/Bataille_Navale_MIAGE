@@ -106,7 +106,6 @@ public class NewGameMenu extends JFrame {
         return mainMenu;
     }
 
-   
     private JPanel createDifficultyMenu() {
         JPanel difficultyMenu = new JPanel();
         difficultyMenu.setOpaque(false);
@@ -191,9 +190,6 @@ private void showDifficultyMenu(ActionEvent e) {
 private void showProfileMenu(String nextPanel) {
     cardLayout.show(cardPanel, PROFILE_MENU);
 }
-
-    
-
 
 private void openPlacementPage() {
     cardLayout.show(cardPanel, PLACEMENT_PANEL);

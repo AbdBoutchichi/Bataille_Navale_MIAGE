@@ -4,12 +4,13 @@ package Modele;
 //import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.io.Serializable;
 
 
 /**
  * 
  */
-public class Board {
+public class Board implements Serializable{
 
     /**
      * Default constructor

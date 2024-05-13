@@ -1,15 +1,14 @@
 package Controler;
 
-import Modele.Player;
-import Modele.Boat;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import View.*;
+import Modele.Boat;
+import Modele.Player;
+import View.GridPanel;
+import View.PlacementPanel;
 
 
 
@@ -46,6 +45,7 @@ public class Placement implements ActionListener{
         this.orientation = o;
         this.name = n;
     }
+ 
 
     
 
@@ -76,4 +76,6 @@ public class Placement implements ActionListener{
             grille.repaint();
         }
     }
+
+   
 }
