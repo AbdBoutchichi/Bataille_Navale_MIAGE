@@ -14,20 +14,18 @@ import Modele.Player;
 
 public class SelectBoat implements ActionListener{
     private JPanel panel;
-    private String path1;
-    private String path2;
-    private PlacementPanel frame1;
-    private RadarPlacementPanel frame2;
+    private String path;
+    private PlacementPanel frame;
     private GridPanel grille;
     private String selecteur;
     private Player player;
     private JComboBox combo;
 
-    public SelectBoat(PlacementPanel f, JPanel p, String chemin, GridPanel g1, Player plr, JComboBox c){
+    public SelectBoat(PlacementPanel f, JPanel p, String chemin, GridPanel g, Player plr, JComboBox c){
         this.panel = p;
-        this.path1 = chemin;
-        this.frame1 = f;
-        this.grille = g1;
+        this.path = chemin;
+        this.frame = f;
+        this.grille = g;
         this.player = plr;
         this.combo = c;
     }
@@ -35,53 +33,53 @@ public class SelectBoat implements ActionListener{
     public void actionPerformed(ActionEvent e){
         
         
-        switch (path1) {
+        switch (path) {
             case "/Images/Torpilleur.png":
                 
-                frame1.selectedBoat = "Torpilleur";
-                frame1.selectedSize = 2;
-                System.out.println("ici y a " + frame1.selectedBoat);
+                frame.selectedBoat = "Torpilleur";
+                frame.selectedSize = 2;
+                System.out.println("ici y a " + frame.selectedBoat);
                 break;
             case "/Images/sousMarin.png":
                 
-                frame1.selectedBoat = "SousMarin";
-                frame1.selectedSize = 3;
-                System.out.println("ici y a " + frame1.selectedBoat);
+                frame.selectedBoat = "SousMarin";
+                frame.selectedSize = 3;
+                System.out.println("ici y a " + frame.selectedBoat);
                 break;
             case "/Images/PorteAvion.png":
                 
-                frame1.selectedBoat = "PorteAvion";
-                frame1.selectedSize = 5;
-                System.out.println("ici y a " + frame1.selectedBoat);
+                frame.selectedBoat = "PorteAvion";
+                frame.selectedSize = 5;
+                System.out.println("ici y a " + frame.selectedBoat);
                 break;
             case "/Images/Croiseur.png":
                 
-                frame1.selectedBoat = "Croiseur";
-                frame1.selectedSize = 4;
+                frame.selectedBoat = "Croiseur";
+                frame.selectedSize = 4;
                 
-                System.out.println("ici y a " + frame1.selectedBoat);
+                System.out.println("ici y a " + frame.selectedBoat);
                 break;
             case "/Images/contreTorpilleur.png":
                 
-                frame1.selectedBoat = "ContreTorpilleur";
-                frame1.selectedSize = 3;
-                System.out.println("ici y a " + frame1.selectedBoat);
+                frame.selectedBoat = "ContreTorpilleur";
+                frame.selectedSize = 3;
+                System.out.println("ici y a " + frame.selectedBoat);
                 break;
             default:
                 break;
         }
 
        
-        System.out.println("controler selectBoat "+ frame1.selectedBoat);
+        System.out.println("controler selectBoat "+ frame.selectedBoat);
         grille.removeAll();
-        grille.initGridPanelPlacement(player, (String) combo.getSelectedItem(), frame1.selectedSize, frame1.selectedBoat);
+        grille.initGridPanelPlacement(player, (String) combo.getSelectedItem(), frame.selectedSize, frame.selectedBoat);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        frame1.shipsPanel.removeAll();
-        frame1.createShipsPanel();
-        frame1.shipsPanel.revalidate();
-        frame1.shipsPanel.repaint();
-        frame1.revalidate();
-        frame1.repaint();
+        frame.shipsPanel.removeAll();
+        frame.createShipsPanel();
+        frame.shipsPanel.revalidate();
+        frame.shipsPanel.repaint();
+        frame.revalidate();
+        frame.repaint();
 
     }      
 }

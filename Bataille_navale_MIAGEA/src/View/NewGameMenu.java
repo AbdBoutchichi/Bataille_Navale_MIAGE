@@ -1,7 +1,6 @@
 package View;
 
 import java.awt.CardLayout;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -22,6 +21,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Modele.Player;
 
 
 public class NewGameMenu extends JFrame implements MenuCallback{
@@ -34,13 +34,17 @@ public class NewGameMenu extends JFrame implements MenuCallback{
     public final static String Acceuil_View = "Acceuil_View";
     public final static String MAIN_MENU = "Main Menu";
     private final static String DIFFICULTY_MENU = "Difficulty Menu";
-    private final static String PROFILE_MENU = "Profile Menu";
-    private final static String PLACEMENT_PANEL = "Placement Panel";
+    public final static String PROFILE_MENU = "Profile Menu";
+    public final static String PLACEMENT_PANEL = "Placement Panel";
     private final static String RADAR_PLACEMENT_PANEL = "Radar Placement Panel";
     private final static String HELP_MENU = "Help Panel";
 
     private String playerName;
 
+    public Player player1;
+    public Player player2;
+
+    public boolean firstPlayer;
 
     public NewGameMenu() {
         initializeWindow();
@@ -73,6 +77,7 @@ public class NewGameMenu extends JFrame implements MenuCallback{
     }
 
     private void initializeCardPanel() {
+        firstPlayer = true;
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
         cardPanel.setBackground(new Color(10, 25, 48));
@@ -255,9 +260,10 @@ public void showAcceuilMenu() {
         cardLayout.show(cardPanel, HELP_MENU);
     }
 
-private void showProfileMenu(String nextPanel) {
-    cardLayout.show(cardPanel, PROFILE_MENU);
-}
+    public void showProfileMenu(String nextPanel) {
+        firstNameField.setText("");
+        cardLayout.show(cardPanel, PROFILE_MENU);
+    }
 
 private void openPlacementPage() {
     cardLayout.show(cardPanel, PLACEMENT_PANEL);

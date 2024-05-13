@@ -55,7 +55,18 @@ public class PlacementPanel extends JPanel {
     public int selectedSize = 2;
     public String selectedBoat = "Torpilleur";
 
+<<<<<<< HEAD
     public PlacementPanel(String playerName, ImageIcon avatar) {
+=======
+    private boolean firstPlayer;
+    private NewGameMenu page;
+
+    public PlacementPanel(String playerName, NewGameMenu page) {
+
+        this.firstPlayer = firstPlayer;
+        this.page = page;
+
+>>>>>>> a1a4995f9ce915a16c13d5dd82daa93911184578
         this.playerName = playerName;
         player = new Player(playerName);
         ImageIcon[] shipIcons = {
@@ -311,7 +322,24 @@ public class PlacementPanel extends JPanel {
     }
     
     private void validateAndProceed() {
-        
+        if(player.boats.size() == 5){
+            System.out.println("firstPlayer de page: "+ page.firstPlayer);
+            if(page.firstPlayer){
+                page.firstPlayer = false;
+                page.player1 = player;
+                page.showProfileMenu(page.PROFILE_MENU);
+                player = new Player(page.firstNameField.getText());
+                
+                System.out.println("firstPlayer: "+firstPlayer);
+            } else {
+                System.out.println("firstPlayer: "+firstPlayer);
+                NewGame game = new NewGame(page.player1, this.player);
+                game.setVisible(true);
+
+                page.setVisible(false);
+                page = null;
+            }
+        }
     }
 
     public void updateShipPlacement(int shipIndex) {

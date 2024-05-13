@@ -7,8 +7,7 @@ import javax.swing.JTextField;
 import Modele.Boat;
 import Modele.Player;
 import View.GridPanel;
-//import View.PlacementPage;
-import View.PlacementPanel;
+import View.PlacementPage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,18 +22,18 @@ public class PlacementField  implements ActionListener{
     private String name;
     private int dimension;
     private GridPanel grille;
-    private PlacementPanel page;
+    private PlacementPage page;
     private boolean random;
 
-    public PlacementField(Player player, GridPanel placement, JTextField posX, JTextField posY, String orientation, PlacementPanel placementPanel){
+    public PlacementField(Player player, GridPanel placement, JTextField posX, JTextField posY, String orientation, PlacementPage p){
         
         this.player = player;
         this.x = posX;
         this.y = posY;
-        this.size = placementPanel.selectedSize;
-        this.name = placementPanel.selectedBoat;
+        this.size = p.selectedSize;
+        this.name = p.selectedBoat;
         this.grille = placement;
-        this.page = placementPanel;
+        this.page = p;
         this.orientation = orientation;
     }
 

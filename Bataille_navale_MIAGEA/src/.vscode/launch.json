@@ -1,0 +1,70 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "GridPanel",
+            "request": "launch",
+            "mainClass": "Bataille_navale_MIAGEA/View.GridPanel",
+            "projectName": "src_f67a9004"
+        },
+        {
+            "type": "java",
+            "name": "PlacementPage",
+            "request": "launch",
+            "mainClass": "Bataille_navale_MIAGEA/View.PlacementPage",
+            "projectName": "src_f67a9004"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Bataille_navale_MIAGEA/Modele.Main",
+            "projectName": "src_f67a9004"
+        },
+        {
+            "type": "java",
+            "name": "Menu",
+            "request": "launch",
+            "mainClass": "Bataille_navale_MIAGEA/Modele.Menu",
+            "projectName": "src_f67a9004"
+        },
+        {
+            "type": "java",
+            "name": "AcceuilView",
+            "request": "launch",
+            "mainClass": "Bataille_navale_MIAGEA/View.AcceuilView",
+            "projectName": "src_f67a9004"
+        },
+        {
+            "type": "java",
+            "name": "Grille",
+            "request": "launch",
+            "mainClass": "Bataille_navale_MIAGEA/View.Grille",
+            "projectName": "src_f67a9004"
+        },
+        {
+            "type": "java",
+            "name": "Help",
+            "request": "launch",
+            "mainClass": "Bataille_navale_MIAGEA/View.Help",
+            "projectName": "src_f67a9004"
+        },
+        {
+            "type": "java",
+            "name": "NewGame",
+            "request": "launch",
+            "mainClass": "Bataille_navale_MIAGEA/View.NewGame",
+            "projectName": "src_f67a9004"
+        }
+    ]
+}
