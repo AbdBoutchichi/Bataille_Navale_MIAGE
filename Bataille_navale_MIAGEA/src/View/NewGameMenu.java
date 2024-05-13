@@ -15,22 +15,27 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import Modele.Player;
 
 
 public class NewGameMenu extends JFrame {
 
-    private JPanel cardPanel;
-    private JTextField firstNameField, pseudoField;
-    private CardLayout cardLayout;
+    public JPanel cardPanel;
+    public JTextField firstNameField, pseudoField;
+    public CardLayout cardLayout;
 
     private final static String MAIN_MENU = "Main Menu";
     private final static String DIFFICULTY_MENU = "Difficulty Menu";
-    private final static String PROFILE_MENU = "Profile Menu";
-    private final static String PLACEMENT_PANEL = "Placement Panel";
+    public final static String PROFILE_MENU = "Profile Menu";
+    public final static String PLACEMENT_PANEL = "Placement Panel";
     private final static String RADAR_PLACEMENT_PANEL = "Radar Placement Panel";
 
     private String playerName;
 
+    public Player player1;
+    public Player player2;
+
+    public boolean firstPlayer;
 
     public NewGameMenu() {
         initializeWindow();
@@ -46,6 +51,7 @@ public class NewGameMenu extends JFrame {
     }
 
     private void initializeCardPanel() {
+        firstPlayer = true;
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
         cardPanel.setBackground(new Color(10, 25, 48));
@@ -154,7 +160,7 @@ public class NewGameMenu extends JFrame {
         styleButton(submitButton, 250, 140, 300, 50);
         submitButton.addActionListener(e -> {
             playerName = firstNameField.getText();
-            updatePlacementPanel(playerName);
+            updatePlacementPanel(playerName, firstPlayer);
             cardLayout.show(cardPanel, PLACEMENT_PANEL);
         });
         profilePanel.add(submitButton);
@@ -171,26 +177,35 @@ public class NewGameMenu extends JFrame {
     
     private JPanel createPlacementPanel() {
         JPanel panel = new JPanel(new GridLayout(1, 1));
-        PlacementPanel placementPanel = new PlacementPanel("");
+        PlacementPanel placementPanel = new PlacementPanel("", this);
         panel.add(placementPanel);
         return panel;
     } 
     
-    private void updatePlacementPanel(String playerName) {
-        PlacementPanel newPlacementPanel = new PlacementPanel(playerName);
-        cardPanel.remove(cardPanel.getComponent(3)); 
-        cardPanel.add(newPlacementPanel, PLACEMENT_PANEL); 
-        cardPanel.revalidate();
-        cardPanel.repaint();
+    public void updatePlacementPanel(String playerName, boolean firstPlayer) {
+        if(firstPlayer){
+            PlacementPanel newPlacementPanel = new PlacementPanel(playerName, this);
+            cardPanel.remove(cardPanel.getComponent(3)); 
+            cardPanel.add(newPlacementPanel, PLACEMENT_PANEL); 
+            cardPanel.revalidate();
+            cardPanel.repaint();
+        } else {
+            PlacementPanel newPlacementPanel = new PlacementPanel(playerName, this);
+            cardPanel.remove(cardPanel.getComponent(3)); 
+            cardPanel.add(newPlacementPanel, PLACEMENT_PANEL); 
+            cardPanel.revalidate();
+            cardPanel.repaint();
+        }
     }
 
-private void showDifficultyMenu(ActionEvent e) {
-    cardLayout.show(cardPanel, DIFFICULTY_MENU);
-}
+    private void showDifficultyMenu(ActionEvent e) {
+        cardLayout.show(cardPanel, DIFFICULTY_MENU);
+    }
 
-private void showProfileMenu(String nextPanel) {
-    cardLayout.show(cardPanel, PROFILE_MENU);
-}
+    public void showProfileMenu(String nextPanel) {
+        firstNameField.setText("");
+        cardLayout.show(cardPanel, PROFILE_MENU);
+    }
 
     
 

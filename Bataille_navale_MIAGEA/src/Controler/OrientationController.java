@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-//import View.PlacementPage;
-import View.PlacementPanel;
+import View.PlacementPage;
 import View.GridPanel;
 import Modele.*;
 
@@ -18,25 +17,24 @@ public class OrientationController implements ActionListener{
     private Player player;
     private String selectedBoat;
     private int selectedSize;
-    //private PlacementPage frame;
-    private PlacementPanel placementPanel;
+    private PlacementPage frame;
 
     //Constructeur
 
-    public OrientationController(JComboBox orientationBox, String selectedOrientation, GridPanel grid, Player player, String boat, int size, PlacementPanel placementPanel){
+    public OrientationController(JComboBox orientationBox, String selectedOrientation, GridPanel grid, Player player, String boat, int size, PlacementPage f){
         this.box = orientationBox;
         this.orientation = selectedOrientation;
         this.gridPanel = grid;
         this.player = player;
         this.selectedBoat = boat;
         this.selectedSize = size;
-        this.placementPanel = placementPanel;
+        this.frame = f;
     }
 
     public void actionPerformed(ActionEvent e){
         gridPanel.removeAll();
         orientation = (String) box.getSelectedItem();
-        gridPanel.initGridPanelPlacement(player, (String) box.getSelectedItem(), placementPanel.selectedSize, placementPanel.selectedBoat);
+        gridPanel.initGridPanelPlacement(player, (String) box.getSelectedItem(), frame.selectedSize, frame.selectedBoat);
         gridPanel.revalidate();
         gridPanel.repaint();
         System.out.println(orientation);

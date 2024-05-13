@@ -161,9 +161,9 @@ public class GridPanel extends JPanel{
                         cell = new Carreaux(row, col, imageI);
                         //Retire l'action listener si il y a un bateau sur la case
                         cell.removeActionListener(p);
-                    } else { 
+                  
                         
-                    }
+                    } 
                     
                 }
                 
