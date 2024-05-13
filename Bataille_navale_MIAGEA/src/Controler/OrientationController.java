@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import View.PlacementPage;
+import View.PlacementPanel;
+import View.PlacementPanel;
 import View.GridPanel;
 import Modele.*;
 
@@ -17,11 +18,11 @@ public class OrientationController implements ActionListener{
     private Player player;
     private String selectedBoat;
     private int selectedSize;
-    private PlacementPage frame;
+    private PlacementPanel frame;
 
     //Constructeur
 
-    public OrientationController(JComboBox orientationBox, String selectedOrientation, GridPanel grid, Player player, String boat, int size, PlacementPage f){
+    public OrientationController(JComboBox orientationBox, String selectedOrientation, GridPanel grid, Player player, String boat, int size, PlacementPanel f){
         this.box = orientationBox;
         this.orientation = selectedOrientation;
         this.gridPanel = grid;

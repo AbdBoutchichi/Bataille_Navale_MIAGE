@@ -55,20 +55,17 @@ public class PlacementPanel extends JPanel {
     public int selectedSize = 2;
     public String selectedBoat = "Torpilleur";
 
-<<<<<<< HEAD
-    public PlacementPanel(String playerName, ImageIcon avatar) {
-=======
     private boolean firstPlayer;
     private NewGameMenu page;
 
-    public PlacementPanel(String playerName, NewGameMenu page) {
+    public PlacementPanel(String playerName,NewGameMenu page, ImageIcon avatar) {
 
-        this.firstPlayer = firstPlayer;
-        this.page = page;
-
->>>>>>> a1a4995f9ce915a16c13d5dd82daa93911184578
         this.playerName = playerName;
         player = new Player(playerName);
+        if (page == null) {
+            throw new IllegalArgumentException("Page parameter cannot be null");
+        }
+        this.page = page;
         ImageIcon[] shipIcons = {
             new ImageIcon("Images/Torpilleur.png"),
             new ImageIcon("Images/sousMarin.png"),
@@ -183,9 +180,9 @@ public class PlacementPanel extends JPanel {
         if (avatarIcon != null) {
             avatarLabel.setIcon(new ImageIcon(avatarIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH))); // Redimensionnement et affichage de l'avatar
         }
-        gbc.gridx = 0; // Première colonne
-        gbc.gridy = 0; // Première ligne
-        gbc.anchor = GridBagConstraints.WEST;  // Ancrage à l'ouest
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
         titlePanel.add(avatarLabel, gbc);
     
         // Title Label
@@ -322,25 +319,26 @@ public class PlacementPanel extends JPanel {
     }
     
     private void validateAndProceed() {
-        if(player.boats.size() == 5){
-            System.out.println("firstPlayer de page: "+ page.firstPlayer);
-            if(page.firstPlayer){
+        if (page == null) {
+            System.err.println("Error: Page reference is null");
+            return;
+        }
+    
+        if (player.boats.size() == 5) {
+            if (page.firstPlayer) {
                 page.firstPlayer = false;
                 page.player1 = player;
                 page.showProfileMenu(page.PROFILE_MENU);
                 player = new Player(page.firstNameField.getText());
-                
-                System.out.println("firstPlayer: "+firstPlayer);
             } else {
-                System.out.println("firstPlayer: "+firstPlayer);
                 NewGame game = new NewGame(page.player1, this.player);
                 game.setVisible(true);
-
                 page.setVisible(false);
                 page = null;
             }
         }
     }
+    
 
     public void updateShipPlacement(int shipIndex) {
         if (shipIndex >= 0 && shipIndex < shipsPlaced.length) {

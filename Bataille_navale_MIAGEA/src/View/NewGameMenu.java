@@ -27,7 +27,7 @@ import Modele.Player;
 public class NewGameMenu extends JFrame implements MenuCallback{
 
     public JPanel cardPanel;
-    private JTextField firstNameField;
+    public JTextField firstNameField;
     private CardLayout cardLayout;
     private ImageIcon playerAvatar; // Stocke l'avatar du joueur
 
@@ -226,14 +226,14 @@ private void chooseAvatar(JLabel avatarLabel) {
     private JPanel createPlacementPanel() {
         JPanel panel = new JPanel(new GridLayout(1, 1));
         ImageIcon playerAvatar = new ImageIcon("path/to/avatar.png");
-        PlacementPanel placementPanel = new PlacementPanel("PlayerName", playerAvatar);
+        PlacementPanel placementPanel = new PlacementPanel("PlayerName", this, playerAvatar);
         panel.add(placementPanel);
         return panel;
     } 
     
     private void updatePlacementPanel(String playerName, Icon avatarIcon) {
         ImageIcon playerAvatar = (ImageIcon) avatarIcon;
-        PlacementPanel newPlacementPanel = new PlacementPanel(playerName, playerAvatar);
+        PlacementPanel newPlacementPanel = new PlacementPanel(playerName, this, playerAvatar);
         cardPanel.add(newPlacementPanel, PLACEMENT_PANEL);  
         cardLayout.show(cardPanel, PLACEMENT_PANEL);
         cardPanel.revalidate();
