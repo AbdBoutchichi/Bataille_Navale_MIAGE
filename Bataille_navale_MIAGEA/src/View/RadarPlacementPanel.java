@@ -20,15 +20,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
-import Controler.OrientationController;
-//import Controler.OrientationControllerRadar;
-import Controler.Placement;
-import Controler.PlacementField;
-//import Controler.PlacementFieldRadar;
-//import Controler.PlacementRadar;
-import Controler.SelectBoat;
-//import Controler.selectBoatRadar;
 import Modele.Player;
 
 public class RadarPlacementPanel extends JPanel {
@@ -275,9 +266,9 @@ public class RadarPlacementPanel extends JPanel {
         return titlePanel;
     }
 
-    /*private void initializeControllerRadar() {
-        
-    }*/
+    private void initializeControllerRadar() {
+        // En attente de l'implémentation du Listener
+    }
 
     public void updateShipPlacement(int shipIndex) {
         if (shipIndex >= 0 && shipIndex < shipsPlaced.length) {

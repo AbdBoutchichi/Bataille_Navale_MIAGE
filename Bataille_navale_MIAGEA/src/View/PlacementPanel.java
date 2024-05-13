@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -38,6 +41,8 @@ public class PlacementPanel extends JPanel {
     private JLabel[] shipLabels;
     private boolean[] shipsPlaced;
     private String playerName;
+    private JLabel avatarLabel; 
+    private ImageIcon avatarIcon;
 
     private Player player;
 
@@ -50,7 +55,7 @@ public class PlacementPanel extends JPanel {
     public int selectedSize = 2;
     public String selectedBoat = "Torpilleur";
 
-    public PlacementPanel(String playerName) {
+    public PlacementPanel(String playerName, ImageIcon avatar) {
         this.playerName = playerName;
         player = new Player(playerName);
         ImageIcon[] shipIcons = {
@@ -60,6 +65,7 @@ public class PlacementPanel extends JPanel {
             new ImageIcon("Images/Croiseur.png"),
             new ImageIcon("Images/contreTorpilleur.png")
         };
+        this.avatarIcon = avatar;
         this.shipLabels = new JLabel[shipIcons.length];
         this.shipsPlaced = new boolean[shipIcons.length];
         initializeComponents(shipIcons);
@@ -155,14 +161,34 @@ public class PlacementPanel extends JPanel {
     }
 
     private JPanel createTitlePanel() {
-        JPanel titlePanel = new JPanel();
+        JPanel titlePanel = new JPanel(new GridBagLayout()); // Utilisation de GridBagLayout pour un placement plus flexible
         titlePanel.setBackground(THEME_COLOR);
+    
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);  // Ajoute des marges autour des composants
+    
+        // Avatar Label
+        avatarLabel = new JLabel();
+        if (avatarIcon != null) {
+            avatarLabel.setIcon(new ImageIcon(avatarIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH))); // Redimensionnement et affichage de l'avatar
+        }
+        gbc.gridx = 0; // Première colonne
+        gbc.gridy = 0; // Première ligne
+        gbc.anchor = GridBagConstraints.WEST;  // Ancrage à l'ouest
+        titlePanel.add(avatarLabel, gbc);
+    
+        // Title Label
         JLabel titleLabel = new JLabel("Place Your Ships, Player: " + playerName);
         titleLabel.setForeground(TEXT_COLOR);
         titleLabel.setFont(new Font("Stencil", Font.BOLD, 20));
-        titlePanel.add(titleLabel);
+        gbc.gridx = 1; // Seconde colonne, à côté de l'avatar
+        gbc.anchor = GridBagConstraints.WEST;  // Ancrage à l'ouest
+        titlePanel.add(titleLabel, gbc);
+    
         return titlePanel;
     }
+    
+    
 
     private JPanel createInputPanel() {
         JPanel inputPanel = new JPanel();

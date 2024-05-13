@@ -5,10 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 import Modele.Player;
-import Controler.CarreauxInteract;
-//import Controler.CarreauxInteractRadar;
-import Controler.Placement;
-//import Controler.PlacementRadar;
+
+
 
 public class RadarGridPanel extends JPanel {
 
@@ -43,7 +41,6 @@ public class RadarGridPanel extends JPanel {
         initRadarGridPanelPlacement(jr, orientation, size, name);
     }
 
-    // Generates a button grid for boat placement
     public void initRadarGridPanelBoat(Player jr, Player adv) {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
@@ -56,7 +53,6 @@ public class RadarGridPanel extends JPanel {
         }
     }
 
-    // Generates a button grid for shooting interaction
     public void initRadarGridPanelShot(Player jr, Player adv, RadarGridPanel boat) {
         for (int col = 0; col < COLS; col++) {
             for (int row = 0; row < ROWS; row++) {
@@ -70,7 +66,7 @@ public class RadarGridPanel extends JPanel {
         }
     }
 
-    // Initializes a button grid for placing boats with specific orientation and size
+   
     public void initRadarGridPanelPlacement(Player jr, String orientation, int size, String name) {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
