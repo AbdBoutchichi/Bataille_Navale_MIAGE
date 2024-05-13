@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -21,13 +22,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import Controler.OrientationController;
+//import Controler.OrientationControllerRadar;
 import Controler.Placement;
 import Controler.PlacementField;
+//import Controler.PlacementFieldRadar;
+//import Controler.PlacementRadar;
 import Controler.SelectBoat;
+//import Controler.selectBoatRadar;
 import Modele.Player;
 
 public class RadarPlacementPanel extends JPanel {
-    private GridPanel gridPanel;
+    private RadarGridPanel gridPanel;
     private JTextField xField, yField;
     public JComboBox<String> orientationComboBox;
     private JButton placeShipButton, placeShipButtonRandomly, validateButton, backButton;
@@ -41,6 +46,7 @@ public class RadarPlacementPanel extends JPanel {
     private Player player;
     public int selectedSize;
     public String selectedBoat;
+    public String orientation = "Horizontale";
 
     private static final Color THEME_COLOR = new Color(0, 100, 0); // Dark green typical of radar screens
     private static final Color TEXT_COLOR = new Color(255, 255, 255); // White text for better readability
@@ -61,11 +67,11 @@ public class RadarPlacementPanel extends JPanel {
         this.shipsPlaced = new boolean[shipIcons.length];
         initializeComponents(shipIcons);
         layoutComponents();
-        initializeController();
+        //initializeControllerRadar();
     }
 
     private void initializeComponents(ImageIcon[] shipIcons) {
-        gridPanel = new GridPanel(10, player, "Horizontal", 2, "Torpilleur"); // Adjust parameters as needed
+        gridPanel = new RadarGridPanel(10, player, "Horizontal", 2, "Torpilleur"); // Adjust parameters as needed
         xField = new JTextField("0", 5);
         yField = new JTextField("0", 5);
         orientationComboBox = new JComboBox<>(new String[]{"Horizontal", "Vertical"});
@@ -195,7 +201,7 @@ public class RadarPlacementPanel extends JPanel {
     public void createShipsPanel() {
         shipsPanel.setBorder(BorderFactory.createTitledBorder("Flottes"));
         shipsPanel.setLayout(new BoxLayout(shipsPanel, BoxLayout.LINE_AXIS));
-        shipsPanel.setBackground(THEME_COLOR); // Ensure the background fits the theme color
+        shipsPanel.setBackground(THEME_COLOR); 
     
         int[] shipSizes = {5, 4, 3, 3, 2};
         String[] shipImageFiles = {
@@ -230,7 +236,7 @@ public class RadarPlacementPanel extends JPanel {
                 JButton shipCountLabel = new JButton("1");
                 stylizeButton(shipCountLabel);
                 shipPanel.add(shipCountLabel, BorderLayout.SOUTH);
-                shipCountLabel.addActionListener(new SelectBoat(this, shipPanel, shipImageFiles[i], gridPanel, player, orientationComboBox));
+                //shipCountLabel.addActionListener((ActionListener) new selectBoat(this, shipPanel, shipImageFiles[i], gridPanel, player, orientationComboBox));
             } else {
                 JLabel shipCountPanel = new JLabel("Place le", SwingConstants.CENTER);
                 shipCountPanel.setForeground(TEXT_COLOR);
@@ -269,7 +275,15 @@ public class RadarPlacementPanel extends JPanel {
         return titlePanel;
     }
 
-    private void initializeController() {
-        // Define action listeners and other controller logic here
-    }
+    /*private void initializeControllerRadar() {
+        
+    }*/
+
+    public void updateShipPlacement(int shipIndex) {
+        if (shipIndex >= 0 && shipIndex < shipsPlaced.length) {
+            shipsPlaced[shipIndex] = true;
+            shipLabels[shipIndex].setText("0");
+            shipLabels[shipIndex].setEnabled(false);
+        }
+}
 }

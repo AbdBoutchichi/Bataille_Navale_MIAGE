@@ -1,8 +1,9 @@
 package Modele;
 
 import java.util.Random;
+import java.io.Serializable;
 
-public class Boat {
+public class Boat implements Serializable{
     //public enum nom {PorteAvion, SousMarin, Torpilleur, Croiseur, ContreTorpilleur};
 
 

@@ -1,11 +1,11 @@
 package Modele;
-
+import java.io.Serializable;
 
 
 /**
  * 
  */
-public class Cell {
+public class Cell implements Serializable{
 
     private int x;
     public int y;

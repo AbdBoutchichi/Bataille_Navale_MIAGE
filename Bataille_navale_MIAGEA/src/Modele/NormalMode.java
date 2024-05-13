@@ -1,15 +1,15 @@
 package Modele;
+import java.io.Serializable;
 import java.util.Scanner;
-import java.util.Random;
 /**
  * 
  */
-public class NormalMode {
+public class NormalMode implements Serializable{
 
     /**
      * Default constructor
      */
-    private Scanner scanner;
+    private transient Scanner scanner;
     private Board board;
     private Menu menu;
     private boolean gameOver;
@@ -20,13 +20,12 @@ public class NormalMode {
     private PlayerComputer bot;
 
     public NormalMode(){
-
+        this.scanner = new Scanner(System.in);
     }
 
         public NormalMode(int c) {
-
+            this();
             choice= c;
-            this.scanner = new Scanner(System.in);
             this.menu = new Menu();
 
            
@@ -38,7 +37,6 @@ public class NormalMode {
             
             
             
-
             
 
             // Sélection du mode de jeu et création du joueur 2
@@ -108,6 +106,24 @@ public class NormalMode {
             startGame(jr1, jr2);
         }
 
+        private Object readResolve() {
+            this.scanner = new Scanner(System.in);
+            return this;
+        }
+
+        public void resumeGame() {
+            // Assurez-vous que les joueurs sont non null avant de reprendre
+            if (player1 == null || (player2 == null && bot == null)) {
+                System.out.println("Erreur: Les données de joueur ne sont pas chargées correctement.");
+                return; // Sortir de la méthode si les joueurs ne sont pas chargés
+            }
+            // Reprendre avec les joueurs existants
+            if (bot != null) {
+                startGame(player1, bot); // Reprendre avec le joueur et l'ordinateur si c'est un jeu PvC
+            } else if (player2 != null) {
+                startGame(player1, player2); // Reprendre avec deux joueurs si c'est un jeu PvP
+            }
+        }
         
 
         private void initGameComputer(Player jr1, PlayerComputer ordi) {
@@ -147,6 +163,12 @@ public class NormalMode {
                     while(!isPlayer1Turn && checkWinConditions(jr1, jr2)){playTurn(jr2,jr1);
                         System.out.println("est ce au joueur 2:" + !isPlayer1Turn);}
                 }
+                System.out.println("Appuyez sur 'Q' pour quitter ou ENTER pour continuer...");
+                String input = scanner.nextLine().trim().toUpperCase();
+                if ("Q".equals(input)) {
+                    askForSaveAndExit();
+                    break; // Sortie de la boucle de jeu
+                }
             }
     
             System.out.println("Le jeu est terminé.");
@@ -155,10 +177,12 @@ public class NormalMode {
         }
 
         public boolean checkWinConditions(Player jr1, Player jr2) {
-            // Si l'un des joueurs a perdu tous ses bateaux, le jeu est terminé
+            if (jr1 == null || jr2 == null) {
+                System.out.println("Un des joueurs est null, impossible de vérifier les conditions de victoire.");
+                return false;
+            }
             return jr1.isAlive() && jr2.isAlive();
         }
-    
 
         // Fin du jeu
         //System.out.println("Le jeu est terminé. " + (player1.isAlive() ? player1.getName() : player2.getName()) + " a gagné !");
@@ -201,39 +225,68 @@ public class NormalMode {
     
     
 
-    private void playTurn(Player jr1,Player jr2) {
+    private void playTurn(Player jr1, Player jr2) {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Au tour de " + jr1.getName() + ".");
         int x = -1;
         int y = -1;
+    
+        board.ShowBoardShot(jr1, jr2);
+    
+        // Gère un tour pour un joueur humain ou automatique
         if (jr1 instanceof PlayerComputer) {
-            // Gère un tour automatique pour PlayerComputer
-            System.out.println("tour NPC");
+            System.out.println("Tour automatique de l'ordinateur.");
             ((PlayerComputer) jr1).chooseNextMove(jr2);
-            board.ShowBoardShot(jr1, jr2);
         } else {
-            board.ShowBoardShot(jr1, jr2);
-            
-
-            // Gère un tour pour un joueur humain
-            while (!jr1.canShoot(x, y)) {
+            boolean validShot = false;
+            while (!validShot) {
                 System.out.println("Entrez les coordonnées de votre tir (x, y):");
                 x = scanner.nextInt();
                 y = scanner.nextInt();
-            if (!jr1.canShoot(x, y)) {
-                System.out.println("Vous avez deja tiré sur cette case ou elle sort du plateau. \nVeuillez donner de nouvelle coordonnées.");
+                scanner.nextLine(); // nettoyer le buffer d'entrée
+                validShot = jr1.canShoot(x, y);
+                if (!validShot) {
+                    System.out.println("Vous avez déjà tiré sur cette case ou elle sort du plateau. Veuillez donner de nouvelles coordonnées.");
+                }
             }
+            jr1.shootAt(x, y); // Effectuer le tir
+            System.out.println("Tir en " + x + ";" + y);
+            if (jr2.isTouch(y, x)) {
+                System.out.println("Touché");
+            } else {
+                System.out.println("Manqué");
             }
-            
-            jr1.shootAt(x, y); // Supposons que cette méthode existe dans `Player`
-            
         }
-        if(!jr2.isTouch(y, x)){
+    
+        //askForSave();
+    
+        // Changement de tour
+        if (!jr2.isTouch(y, x)) {
             isPlayer1Turn = !isPlayer1Turn;
         }
-        
+        System.out.println("Au tour de " + (isPlayer1Turn ? jr1.getName() : jr2.getName()) + ".");
     }
     
+    
+    private void askForSaveAndExit() {
+        System.out.println("Voulez-vous sauvegarder la partie en cours ? (Oui/Non)");
+        String response = scanner.nextLine().trim().toLowerCase();
+        if ("oui".equals(response)) {
+            sauvegarderPartie("normal_mode_game.sav");
+            System.out.println("La partie en cours a été sauvegardée.");
+        }
+        System.out.println("Fin du jeu.");
+        System.exit(0); // Quitter l'application
+    }
+    
+    
+
+private void sauvegarderPartie(String fileName) {
+    SaveGamePart.sauvegarderPartie(this);
+}
+    
     private void endGame() {
+        //askForSave();
         menu.displayEndGameOptions();
         int endChoice = menu.getPlayerChoice();
         
@@ -242,13 +295,13 @@ public class NormalMode {
                 if (choice == 1) {
                     initGame(player1, player2);
                 } else {
-                initGameComputer(player1, bot); // Cela devrait fonctionner si initGame est défini dans la même classe
+                initGameComputer(player1, bot);
                 }
             case 2:
-                gameOver = true; // Marque le jeu comme terminé
+                gameOver = true;
                 break;
             case 3:
-                System.exit(0); // Quitte l'application
+                System.exit(0);
                 break;
         }
     }

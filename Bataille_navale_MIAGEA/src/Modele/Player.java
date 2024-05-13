@@ -1,13 +1,12 @@
 package Modele;
 
-//import java.io.BufferedReader;
+
 import java.util.*;
 import java.util.Random;
+import java.io.Serializable;
 
-/**
- *
- */
-public class Player {
+
+public class Player implements Serializable{
 
     private Random random = new Random();
 
@@ -465,6 +464,13 @@ public class Player {
             default:
                 return -1;
         }
+    }
+
+
+
+    public Object getShipName(int i) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getShipName'");
     }
 
 }

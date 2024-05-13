@@ -1,132 +1,77 @@
 package Modele;
 
-import java.util.*;
+import java.io.File;
+import java.io.Serializable;
+import java.util.Scanner;
 
-/**
- * 
- */
-public class Jeu_Bataillenavale {
+public class Jeu_Bataillenavale implements Serializable {
 
-    /**
-     * Default constructor
-     */
+    private NormalMode normalMode;
+    private ModeArtillerie modeArtillerie;
+    private Menu menu;
+    private transient Scanner scanner;
+
     public Jeu_Bataillenavale() {
-        
-        //playerPlay=null;
-        winnerPlayer=null;
-        //buffer=null;
         scanner = new Scanner(System.in);
         menu = new Menu();
+        start();
+    }
 
-        menu.ShowMenu();
+    public void displaySavedGames() {
+        File[] savedGames = SaveGamePart.listSavedGames(); // Récupère les fichiers de sauvegarde
+        if (savedGames == null || savedGames.length == 0) {
+            System.out.println("Aucune partie sauvegardée trouvée.");
+            return;
+        }
+        System.out.println("Parties sauvegardées disponibles:");
+        for (File file : savedGames) {
+            System.out.println("Fichier: " + file.getName());
+        }
+        System.out.println("Entrez le nom de fichier de la partie que vous souhaitez charger:");
+        String fileName = scanner.nextLine();
+        loadGame(fileName);
+    }
+
+    public void start() {
         menu.displayMainMenu();
-
-        switch (menu.getPlayerChoice()) {
+        int choice = menu.getPlayerChoice();
+        switch (choice) {
             case 1:
-                
-                new NormalMode(1);
-
+                normalMode = new NormalMode(1);
+                break;
             case 2:
-                
-                new NormalMode(2);
-
+                normalMode = new NormalMode(2);
+                break;
             case 3:
-                
-                new ModeArtillerie();
-
+                modeArtillerie = new ModeArtillerie();
+                break;
             case 4:
-            
+                displaySavedGames();
                 break;
-
-            case 5:
-                
-                break;
-
             default:
+                System.exit(0);
                 break;
         }
-
-        
-
-
-        
     }
 
-    public Scanner scanner;
-    private Menu menu;
-
-    /**
-     * 
-     */
-    //public int playerPlay;
-
-    /**
-     * 
-     */
-    public String winnerPlayer;
-
-    /**
-     * 
-     */
-    //public BufferReader buffer;
-
-    /**
-     * @return
-     */
-    public void start() {
-        
+    public void saveGame() {
+        if (normalMode != null) {
+            SaveGamePart.sauvegarderPartie(normalMode);
+        } else if (modeArtillerie != null) {
+            SaveGamePart.sauvegarderPartie(modeArtillerie);
+        }
+        System.out.println("État du jeu sauvegardé.");
     }
 
-    /*public static void main(String[] args){
-        new Jeu_Bataillenavale();
-    }*/
-
-    ///**
-    // * @return
-    // */
-    //public void Jouer() {
-    //    // TODO implement here
-    //    return null;
-    //}
-
-    ///**
-    // * @return
-    // */
-    //public boolean over() {
-    //    // TODO implement here
-    //    return false;
-    //}
-
-    ///**
-    // * @return
-    // */
-    //public void end() {
-    //    // TODO implement here
-    //    return null;
-    //}
-
-    ///**
-    // * @return
-    // */
-    //public boolean isTurn() {
-    //    // TODO implement here
-    //    return false;
-    //}
-
-    ///**
-    // * @return
-    // */
-    //public void SetFirstPlayer() {
-    //    // TODO implement here
-    //    return null;
-    //}
-
-    ///**
-    // * @return
-    // */
-    //public void AffichageRegleJeu() {
-    //    // TODO implement here
-    //    return null;
-    //}
-
+    public void loadGame(String fileName) {
+        Object loadedGame = SaveGamePart.chargerPartie(fileName);
+        if (loadedGame instanceof NormalMode) {
+            this.normalMode = (NormalMode) loadedGame;
+            System.out.println("Normal Mode game loaded.");
+            normalMode.resumeGame();
+        } else if (loadedGame instanceof ModeArtillerie) {
+            this.modeArtillerie = (ModeArtillerie) loadedGame;
+            System.out.println("Artillery Mode game loaded.");
+        }
+    }
 }

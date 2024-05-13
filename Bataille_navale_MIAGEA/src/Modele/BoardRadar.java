@@ -1,8 +1,9 @@
 package Modele;
 
 import java.util.List;
+import java.io.Serializable;
 
-public class BoardRadar extends Board{
+public class BoardRadar extends Board implements Serializable{
 
 
     public BoardRadar(int dim, Player plr1, Player plr2){

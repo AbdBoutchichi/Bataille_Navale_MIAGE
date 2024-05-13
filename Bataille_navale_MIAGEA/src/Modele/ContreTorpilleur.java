@@ -1,6 +1,7 @@
 package Modele;
+import java.io.Serializable;
 
-public class ContreTorpilleur extends Boat{
+public class ContreTorpilleur extends Boat implements Serializable{
     public ContreTorpilleur(int x, int y, char orientation) {
         super(x, y, orientation,3, "ContreTorpilleur" );
     }

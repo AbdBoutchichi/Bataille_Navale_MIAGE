@@ -1,8 +1,9 @@
 package Modele;
 
 import java.util.Scanner;
+import java.io.Serializable;
 
-public class Menu {
+public class Menu implements Serializable{
 
     private static Scanner lecteur;
 

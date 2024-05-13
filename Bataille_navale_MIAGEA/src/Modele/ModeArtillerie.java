@@ -1,7 +1,8 @@
 package Modele;
 import java.util.Scanner;
+import java.io.Serializable;
 
-public class ModeArtillerie extends NormalMode {
+public class ModeArtillerie extends NormalMode implements Serializable{
     
     private Scanner scanner;
     private Board board;

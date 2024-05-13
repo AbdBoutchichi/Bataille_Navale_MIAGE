@@ -1,6 +1,7 @@
 package Modele;
+import java.io.Serializable;
 
-public class PorteAvion extends Boat {
+public class PorteAvion extends Boat implements Serializable{
     public PorteAvion(int x, int y, char orientation){
         super(x,y,orientation,5,"PorteAvion");
     }
