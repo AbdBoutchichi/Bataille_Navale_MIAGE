@@ -212,6 +212,8 @@ public class Player implements Serializable{
         System.out.println(name + " tire en " + x + ";" + y);
     }
 
+    
+
     //renvoie la liste des cellules sur lesquelles il a tiré
     public Cell[] getCellsShot() {
         Cell[] shot = new Cell[cellsShot.size()];

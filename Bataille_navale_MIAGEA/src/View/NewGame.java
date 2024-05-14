@@ -20,6 +20,22 @@ public class NewGame extends JFrame {
     private JLabel timerLabel;
     private int elapsedTime = 0; // Temps écoulé en secondes
     private Timer timer;
+    private GridPanel gridPanelPlayer1;
+    private GridPanel gridPanelPlayer2;
+
+    public JTextField xFieldPlayer1;
+    public JTextField yFieldPlayer1;
+    public JButton fireButtonPlayer1;
+    public JButton cancelButtonPlayer1;
+    public JPanel controlPanelPlayer1;
+
+    public JTextField xFieldPlayer2;
+    public JTextField yFieldPlayer2;
+    public JButton fireButtonPlayer2;
+    public JButton cancelButtonPlayer2;
+    public JPanel controlPanelPlayer2;
+
+
 
     public NewGame(Player plr1, Player plr2) {
         this.player1 = plr1;
@@ -35,9 +51,10 @@ public class NewGame extends JFrame {
         setLayout(new BorderLayout(10, 10));
 
         add(createTimerPanel(), BorderLayout.NORTH);
-        add(createPlayerPanel(player1, player2), BorderLayout.WEST);
+        add(createPlayerPanel2(player2, player1), BorderLayout.EAST);
+        add(createPlayerPanel1(player1, player2), BorderLayout.WEST);
         add(createWelcomePanel(), BorderLayout.CENTER);
-        add(createPlayerPanel(player2, player1), BorderLayout.EAST);
+        
         add(createBottomPanel(), BorderLayout.SOUTH);
 
         setupTimer(); // Initialize and start the timer
@@ -71,7 +88,7 @@ public class NewGame extends JFrame {
         timerLabel.setText(timeString);
     }
 
-    private JPanel createPlayerPanel(Player player, Player enemy) {
+    private JPanel createPlayerPanel2(Player player, Player enemy) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(THEME_COLOR);
 
@@ -79,35 +96,95 @@ public class NewGame extends JFrame {
         nameLabel.setForeground(TEXT_COLOR);
         nameLabel.setFont(BUTTON_FONT);
 
-        GridPanel gridPanel = new GridPanel(10, player, enemy, this);
-        JPanel controlPanel = createControlPanel();
+        gridPanelPlayer2 = new GridPanel(player, enemy);
+        controlPanelPlayer2 = createControlPanel(player, enemy);
 
         panel.add(nameLabel, BorderLayout.NORTH);
-        panel.add(gridPanel, BorderLayout.CENTER);
-        panel.add(controlPanel, BorderLayout.SOUTH);
+        panel.add(gridPanelPlayer2, BorderLayout.CENTER);
+        panel.add(controlPanelPlayer2, BorderLayout.SOUTH);
 
         return panel;
     }
 
-    private JPanel createControlPanel() {
+    private JPanel createPlayerPanel1(Player player, Player enemy) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(THEME_COLOR);
+
+        JLabel nameLabel = new JLabel(player.getName(), SwingConstants.CENTER);
+        nameLabel.setForeground(TEXT_COLOR);
+        nameLabel.setFont(BUTTON_FONT);
+
+        gridPanelPlayer1 = new GridPanel(10, player, enemy, gridPanelPlayer2);
+        controlPanelPlayer1 = createControlPanel(player, enemy);
+
+        panel.add(nameLabel, BorderLayout.NORTH);
+        panel.add(gridPanelPlayer1, BorderLayout.CENTER);
+        panel.add(controlPanelPlayer1, BorderLayout.SOUTH);
+
+        return panel;
+    }
+
+    private JPanel createControlPanel(Player player, Player enemy) {
+        
         JPanel controlPanel = new JPanel(new GridLayout(4, 2));
-        controlPanel.setBackground(THEME_COLOR);
 
-        JTextField xField = new JTextField();
-        JTextField yField = new JTextField();
-        JButton fireButton = new JButton("Tirer");
-        JButton cancelButton = new JButton("Annuler");
+        if(player1 == player){
+            controlPanel.setBackground(THEME_COLOR);
 
-        stylizeButton(fireButton);
-        stylizeButton(cancelButton);
+            xFieldPlayer1 = new JTextField();
+            yFieldPlayer1 = new JTextField();
+            fireButtonPlayer1 = new JButton("Tirer");
 
-        controlPanel.add(new JLabel("X:"));
-        controlPanel.add(xField);
-        controlPanel.add(new JLabel("Y:"));
-        controlPanel.add(yField);
-        controlPanel.add(fireButton);
-        controlPanel.add(cancelButton);
+            
+            fireButtonPlayer1.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer1, gridPanelPlayer2, true));
+            
 
+
+
+            cancelButtonPlayer1 = new JButton("Annuler");
+            cancelButtonPlayer1.addActionListener(e -> {
+                xFieldPlayer1.setText("");
+                yFieldPlayer1.setText("");
+            });
+
+            stylizeButton(fireButtonPlayer1);
+            stylizeButton(cancelButtonPlayer1);
+
+            controlPanel.add(new JLabel("X:"));
+            controlPanel.add(xFieldPlayer1);
+            controlPanel.add(new JLabel("Y:"));
+            controlPanel.add(yFieldPlayer1);
+            controlPanel.add(fireButtonPlayer1);
+            controlPanel.add(cancelButtonPlayer1);
+        } else {
+            controlPanel.setBackground(THEME_COLOR);
+
+            xFieldPlayer2 = new JTextField();
+            yFieldPlayer2 = new JTextField();
+            fireButtonPlayer2 = new JButton("Tirer");
+
+            
+            fireButtonPlayer2.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer2, gridPanelPlayer1, false));
+            
+
+
+
+            cancelButtonPlayer2 = new JButton("Annuler");
+            cancelButtonPlayer2.addActionListener(e -> {
+                xFieldPlayer2.setText("");
+                yFieldPlayer2.setText("");
+            });
+
+            stylizeButton(fireButtonPlayer2);
+            stylizeButton(cancelButtonPlayer2);
+
+            controlPanel.add(new JLabel("X:"));
+            controlPanel.add(xFieldPlayer2);
+            controlPanel.add(new JLabel("Y:"));
+            controlPanel.add(yFieldPlayer2);
+            controlPanel.add(fireButtonPlayer2);
+            controlPanel.add(cancelButtonPlayer2);
+        }
         return controlPanel;
     }
 

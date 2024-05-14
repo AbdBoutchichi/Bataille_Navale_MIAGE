@@ -6,4 +6,5 @@
  */
 module Bataille_navale_MIAGEA {
     requires java.desktop;
+    requires jdk.jfr;
 }

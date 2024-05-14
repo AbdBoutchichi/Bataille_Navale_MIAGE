@@ -1,6 +1,6 @@
 package Controler;
 
-import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -26,15 +26,15 @@ public class PlacementField  implements ActionListener{
     private PlacementPanel page;
     private boolean random;
 
-    public PlacementField(Player player, GridPanel placement, JTextField posX, JTextField posY, String orientation, PlacementPanel placementPanel){
+    public PlacementField(Player player, GridPanel placement, JTextField posX, JTextField posY, String orientation, PlacementPanel p){
         
         this.player = player;
         this.x = posX;
         this.y = posY;
-        this.size = placementPanel.selectedSize;
-        this.name = placementPanel.selectedBoat;
+        this.size = p.selectedSize;
+        this.name = p.selectedBoat;
         this.grille = placement;
-        this.page = placementPanel;
+        this.page = p;
         this.orientation = orientation;
     }
 

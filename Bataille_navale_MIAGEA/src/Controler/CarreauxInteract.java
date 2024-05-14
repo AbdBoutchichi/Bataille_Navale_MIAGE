@@ -32,19 +32,25 @@ public class CarreauxInteract implements ActionListener{
         if(joueur.canShoot(x, y)){
             joueur.shootAt(x, y);
             if(adversaire.isTouch(x, y)){
+                grille1.setBackground(null);
                 grille1.removeAll();
                 grille2.removeAll();
-                grille2.initGridPanelBoat(joueur, adversaire);
+                grille2.initGridPanelInert(adversaire, joueur);
                 grille1.initGridPanelShot(joueur, adversaire, grille2);
                 
+                grille2.revalidate();
+                grille2.repaint();
                 grille1.revalidate();
                 grille1.repaint();
             } else {
+                grille1.setBackground(null);
                 grille1.removeAll();
                 grille2.removeAll();
-                grille2.initGridPanelBoat(adversaire, joueur);
-                grille1.initGridPanelShot(adversaire, joueur, grille2);
+                grille1.initGridPanelInert(joueur, adversaire);
+                grille2.initGridPanelShot(adversaire, joueur, grille1);
                 
+                grille2.revalidate();
+                grille2.repaint();
                 grille1.revalidate();
                 grille1.repaint();
             }

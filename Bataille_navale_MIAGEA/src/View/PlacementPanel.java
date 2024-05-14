@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -38,6 +41,8 @@ public class PlacementPanel extends JPanel {
     private JLabel[] shipLabels;
     private boolean[] shipsPlaced;
     private String playerName;
+    private JLabel avatarLabel; 
+    private ImageIcon avatarIcon;
 
     private Player player;
 
@@ -53,13 +58,14 @@ public class PlacementPanel extends JPanel {
     private boolean firstPlayer;
     private NewGameMenu page;
 
-    public PlacementPanel(String playerName, NewGameMenu page) {
-
-        this.firstPlayer = firstPlayer;
-        this.page = page;
+    public PlacementPanel(String playerName,NewGameMenu page, ImageIcon avatar) {
 
         this.playerName = playerName;
         player = new Player(playerName);
+        if (page == null) {
+            throw new IllegalArgumentException("Page parameter cannot be null");
+        }
+        this.page = page;
         ImageIcon[] shipIcons = {
             new ImageIcon("Images/Torpilleur.png"),
             new ImageIcon("Images/sousMarin.png"),
@@ -67,6 +73,7 @@ public class PlacementPanel extends JPanel {
             new ImageIcon("Images/Croiseur.png"),
             new ImageIcon("Images/contreTorpilleur.png")
         };
+        this.avatarIcon = avatar;
         this.shipLabels = new JLabel[shipIcons.length];
         this.shipsPlaced = new boolean[shipIcons.length];
         initializeComponents(shipIcons);
@@ -162,14 +169,34 @@ public class PlacementPanel extends JPanel {
     }
 
     private JPanel createTitlePanel() {
-        JPanel titlePanel = new JPanel();
+        JPanel titlePanel = new JPanel(new GridBagLayout()); // Utilisation de GridBagLayout pour un placement plus flexible
         titlePanel.setBackground(THEME_COLOR);
+    
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);  // Ajoute des marges autour des composants
+    
+        // Avatar Label
+        avatarLabel = new JLabel();
+        if (avatarIcon != null) {
+            avatarLabel.setIcon(new ImageIcon(avatarIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH))); // Redimensionnement et affichage de l'avatar
+        }
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        titlePanel.add(avatarLabel, gbc);
+    
+        // Title Label
         JLabel titleLabel = new JLabel("Place Your Ships, Player: " + playerName);
         titleLabel.setForeground(TEXT_COLOR);
         titleLabel.setFont(new Font("Stencil", Font.BOLD, 20));
-        titlePanel.add(titleLabel);
+        gbc.gridx = 1; // Seconde colonne, à côté de l'avatar
+        gbc.anchor = GridBagConstraints.WEST;  // Ancrage à l'ouest
+        titlePanel.add(titleLabel, gbc);
+    
         return titlePanel;
     }
+    
+    
 
     private JPanel createInputPanel() {
         JPanel inputPanel = new JPanel();
@@ -292,25 +319,26 @@ public class PlacementPanel extends JPanel {
     }
     
     private void validateAndProceed() {
-        if(player.boats.size() == 5){
-            System.out.println("firstPlayer de page: "+ page.firstPlayer);
-            if(page.firstPlayer){
+        if (page == null) {
+            System.err.println("Error: Page reference is null");
+            return;
+        }
+    
+        if (player.boats.size() == 5) {
+            if (page.firstPlayer) {
                 page.firstPlayer = false;
                 page.player1 = player;
                 page.showProfileMenu(page.PROFILE_MENU);
                 player = new Player(page.firstNameField.getText());
-                
-                System.out.println("firstPlayer: "+firstPlayer);
             } else {
-                System.out.println("firstPlayer: "+firstPlayer);
                 NewGame game = new NewGame(page.player1, this.player);
                 game.setVisible(true);
-
                 page.setVisible(false);
                 page = null;
             }
         }
     }
+    
 
     public void updateShipPlacement(int shipIndex) {
         if (shipIndex >= 0 && shipIndex < shipsPlaced.length) {
