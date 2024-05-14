@@ -18,13 +18,17 @@ public class NewGameArtillerie extends JFrame {
     private JLabel timerLabel;
     private int elapsedTime = 0;
     private Timer timer;
+    private GridPanel gridPanelPlayer1;
+    private GridPanel gridPanelPlayer2;
+    public JPanel controlPanelPlayer2;
+    public JPanel controlPanelPlayer1;
 
     public NewGameArtillerie(Player plr1, Player plr2) {
         this.player1 = plr1;
         this.player2 = plr2;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Artillery Mode - Naval Battle");
+        setTitle("Mode Artillerie - Bataille navale");
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width * 75 / 100, screenSize.height * 95 / 100);
@@ -33,9 +37,9 @@ public class NewGameArtillerie extends JFrame {
         setLayout(new BorderLayout(10, 10));
 
         add(createTimerPanel(), BorderLayout.NORTH);
-        add(createPlayerPanel(player1, player2), BorderLayout.WEST);
+        add(createPlayerPanel1(player1, player2), BorderLayout.WEST);
+        add(createPlayerPanel2(player2, player1), BorderLayout.EAST);
         add(createWelcomePanel(), BorderLayout.CENTER);
-        add(createPlayerPanel(player2, player1), BorderLayout.EAST);
         add(createBottomPanel(), BorderLayout.SOUTH);
 
         setupTimer();
@@ -71,7 +75,7 @@ public class NewGameArtillerie extends JFrame {
         timerLabel.setText(timeString);
     }
 
-    private JPanel createPlayerPanel(Player player, Player enemy) {
+    /*private JPanel createPlayerPanel(Player player, Player enemy) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(THEME_COLOR);
 
@@ -87,9 +91,45 @@ public class NewGameArtillerie extends JFrame {
         panel.add(controlPanel, BorderLayout.SOUTH);
 
         return panel;
+    }*/
+
+    private JPanel createPlayerPanel2(Player player, Player enemy) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(THEME_COLOR);
+
+        JLabel nameLabel = new JLabel(player.getName(), SwingConstants.CENTER);
+        nameLabel.setForeground(TEXT_COLOR);
+        nameLabel.setFont(BUTTON_FONT);
+
+        gridPanelPlayer2 = new GridPanel(player, enemy);
+        controlPanelPlayer2 = createControlPanelArtillery(player, enemy);
+
+        panel.add(nameLabel, BorderLayout.NORTH);
+        panel.add(gridPanelPlayer2, BorderLayout.CENTER);
+        panel.add(controlPanelPlayer2, BorderLayout.SOUTH);
+
+        return panel;
     }
 
-    private JPanel createControlPanelArtillery() {
+    private JPanel createPlayerPanel1(Player player, Player enemy) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(THEME_COLOR);
+
+        JLabel nameLabel = new JLabel(player.getName(), SwingConstants.CENTER);
+        nameLabel.setForeground(TEXT_COLOR);
+        nameLabel.setFont(BUTTON_FONT);
+
+        gridPanelPlayer1 = new GridPanel(10, player, enemy, gridPanelPlayer2);
+        controlPanelPlayer1 = createControlPanelArtillery(player, enemy);
+
+        panel.add(nameLabel, BorderLayout.NORTH);
+        panel.add(gridPanelPlayer1, BorderLayout.CENTER);
+        panel.add(controlPanelPlayer1, BorderLayout.SOUTH);
+
+        return panel;
+    }
+
+    private JPanel createControlPanelArtillery(Player player, Player enemy) {
         JPanel controlPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         controlPanel.setBackground(THEME_COLOR);

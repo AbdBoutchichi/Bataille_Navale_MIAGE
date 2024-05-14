@@ -29,7 +29,7 @@ public class NewGameMenu extends JFrame implements MenuCallback{
     public JPanel cardPanel;
     public JTextField firstNameField;
     private CardLayout cardLayout;
-    private ImageIcon playerAvatar; // Stocke l'avatar du joueur
+    private ImageIcon playerAvatar;
 
     public final static String Acceuil_View = "Acceuil_View";
     public final static String MAIN_MENU = "Main Menu";
@@ -165,41 +165,41 @@ public class NewGameMenu extends JFrame implements MenuCallback{
         JPanel profilePanel = new JPanel(null);
         profilePanel.setBackground(new Color(10, 25, 48));
     
-        // Label pour afficher l'avatar
+        
         JLabel avatarLabel = new JLabel();
-        avatarLabel.setBounds(400, 50, 100, 100);  // Position ajustée pour être au-dessus des champs de texte
+        avatarLabel.setBounds(400, 50, 100, 100);
         avatarLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         profilePanel.add(avatarLabel);
     
-        // Bouton pour choisir l'avatar
+    
         JButton avatarButton = new JButton("Choisir Avatar");
-        styleButton(avatarButton, 400, 160, 200, 30);  // Position ajustée sous l'avatar
+        styleButton(avatarButton, 400, 160, 200, 30);
         avatarButton.addActionListener(e -> chooseAvatar(avatarLabel));
         profilePanel.add(avatarButton);
     
-        // Label pour le nom
+        
         JLabel nameLabel = new JLabel("Nom du joueur:");
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         nameLabel.setBounds(250, 200, 200, 30);  // Position ajustée en dessous de l'avatar
         profilePanel.add(nameLabel);
     
-        // Champ de texte pour le nom
+        
         firstNameField = new JTextField(10);
         firstNameField.setBounds(450, 200, 300, 30);
         profilePanel.add(firstNameField);
     
-        // Bouton de soumission
+        
         JButton submitButton = new JButton("Valider");
         styleButton(submitButton, 350, 240, 300, 50);
         submitButton.addActionListener(e -> {
             playerName = firstNameField.getText();
             updatePlacementPanel(playerName, avatarLabel.getIcon());
             cardLayout.show(cardPanel, PLACEMENT_PANEL);
-        });        
+        });
         profilePanel.add(submitButton);
     
-        // Bouton de retour
+        
         JButton backButton = new JButton("Retour");
         styleButton(backButton, 350, 300, 300, 50);
         backButton.addActionListener(e -> cardLayout.show(cardPanel, DIFFICULTY_MENU));
@@ -265,10 +265,10 @@ public void showAcceuilMenu() {
         cardLayout.show(cardPanel, PROFILE_MENU);
     }
 
-private void openPlacementPage() {
+/*private void openPlacementPage() {
     cardLayout.show(cardPanel, PLACEMENT_PANEL);
 }
-
+*/
 
     private void styleButton(JButton button, int x, int y, int width, int height) {
         button.setBounds(x, y, width, height);

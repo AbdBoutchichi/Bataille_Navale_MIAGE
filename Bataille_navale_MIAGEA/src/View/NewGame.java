@@ -35,9 +35,6 @@ public class NewGame extends JFrame {
     public JButton cancelButtonPlayer2;
     public JPanel controlPanelPlayer2;
 
-    private ShootField shootFieldPlayer1;
-    private ShootField shootFieldPlayer2;
-
 
 
     public NewGame(Player plr1, Player plr2) {
@@ -60,10 +57,7 @@ public class NewGame extends JFrame {
         
         add(createBottomPanel(), BorderLayout.SOUTH);
 
-        initActionListener(plr1, plr2);
-
-
-        setupTimer(); // Initialize and start the timer
+        setupTimer();
         setVisible(true);
     }
 
@@ -120,7 +114,7 @@ public class NewGame extends JFrame {
         nameLabel.setForeground(TEXT_COLOR);
         nameLabel.setFont(BUTTON_FONT);
 
-        gridPanelPlayer1 = new GridPanel(10, player, enemy, gridPanelPlayer2, this);
+        gridPanelPlayer1 = new GridPanel(10, player, enemy, gridPanelPlayer2);
         controlPanelPlayer1 = createControlPanel(player, enemy);
 
         panel.add(nameLabel, BorderLayout.NORTH);
@@ -140,6 +134,12 @@ public class NewGame extends JFrame {
             xFieldPlayer1 = new JTextField();
             yFieldPlayer1 = new JTextField();
             fireButtonPlayer1 = new JButton("Tirer");
+
+            
+            fireButtonPlayer1.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer1, gridPanelPlayer2, true));
+            
+
+
 
             cancelButtonPlayer1 = new JButton("Annuler");
             cancelButtonPlayer1.addActionListener(e -> {
@@ -162,6 +162,12 @@ public class NewGame extends JFrame {
             xFieldPlayer2 = new JTextField();
             yFieldPlayer2 = new JTextField();
             fireButtonPlayer2 = new JButton("Tirer");
+
+            
+            fireButtonPlayer2.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer2, gridPanelPlayer1, false));
+            
+
+
 
             cancelButtonPlayer2 = new JButton("Annuler");
             cancelButtonPlayer2.addActionListener(e -> {
@@ -250,7 +256,7 @@ public class NewGame extends JFrame {
             ImageIcon resizedIcon = new ImageIcon(shipImage);
 
             JLabel shipLabel = new JLabel(resizedIcon);
-            JButton shipCountLabel = new JButton("1");
+            JButton shipCountLabel = new JButton("EN ETAT");
             stylizeButton(shipCountLabel);
 
             JPanel shipPanel = new JPanel(new BorderLayout());
@@ -271,24 +277,6 @@ public class NewGame extends JFrame {
         button.setFocusPainted(false);
         button.setBorderPainted(false);
         button.setOpaque(true);
-    }
-
-    private void initActionListener(Player player, Player enemy){
-        shootFieldPlayer1 = new ShootField(this, player, enemy, gridPanelPlayer1, gridPanelPlayer2, true);
-        shootFieldPlayer2 = new ShootField(this, enemy, player, gridPanelPlayer2, gridPanelPlayer1, false);
-        fireButtonPlayer1.addActionListener(shootFieldPlayer1);
-    }
-
-    public void setActionlistener(Player player, Player enemy){
-        if(player1 == player){
-            fireButtonPlayer2.removeActionListener(shootFieldPlayer2);
-            fireButtonPlayer1.addActionListener(shootFieldPlayer1);
-        } else {
-            fireButtonPlayer1.removeActionListener(shootFieldPlayer1);
-            fireButtonPlayer2.addActionListener(shootFieldPlayer2);
-        }
-        
-               
     }
 
     public static void main(String[] args) {
