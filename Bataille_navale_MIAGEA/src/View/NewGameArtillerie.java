@@ -2,23 +2,21 @@ package View;
 
 import java.awt.*;
 import javax.swing.*;
-import java.io.InputStream;
-import Controler.*;
 import Modele.Player;
 
 public class NewGameArtillerie extends JFrame {
 
-    private static final Color THEME_COLOR = new Color(10, 25, 48); // Navy blue background
-    private static final Color TEXT_COLOR = new Color(255, 255, 255); // White text for contrast
-    private static final Color BUTTON_COLOR = new Color(30, 144, 255); // Dodger blue for buttons
-    private static final Font BUTTON_FONT = new Font("Arial", Font.BOLD, 12);
+    private static final Color THEME_COLOR = new Color(10, 25, 48);
+    private static final Color TEXT_COLOR = new Color(255, 255, 255);
+    private static final Color BUTTON_COLOR = new Color(30, 144, 255);
+    private static final Font BUTTON_FONT = new Font("Stencil", Font.BOLD, 12);
     private static final int CELL_SIZE = 30;
 
     private Player player1;
     private Player player2;
     private JLabel welcomeLabel;
     private JLabel timerLabel;
-    private int elapsedTime = 0; // Elapsed time in seconds
+    private int elapsedTime = 0;
     private Timer timer;
 
     public NewGameArtillerie(Player plr1, Player plr2) {
@@ -40,7 +38,7 @@ public class NewGameArtillerie extends JFrame {
         add(createPlayerPanel(player2, player1), BorderLayout.EAST);
         add(createBottomPanel(), BorderLayout.SOUTH);
 
-        setupTimer(); // Initialize and start the timer
+        setupTimer();
         setVisible(true);
     }
 
@@ -50,7 +48,7 @@ public class NewGameArtillerie extends JFrame {
         timerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
     
         timerLabel = new JLabel("00:00:00", SwingConstants.CENTER);
-        timerLabel.setFont(new Font("Monospaced", Font.BOLD, 20));  // Utilisation de Monospaced
+        timerLabel.setFont(new Font("Monospaced", Font.BOLD, 20));
         timerLabel.setForeground(TEXT_COLOR);
     
         timerPanel.add(timerLabel);
@@ -108,7 +106,6 @@ public class NewGameArtillerie extends JFrame {
         setLabelStyles(xValueLabel, yValueLabel);
         setButtonStyles(incrementXButton, incrementYButton, stopXButton, stopYButton, confirmFireButton, cancelButton);
 
-        // Setting component placements
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -210,8 +207,8 @@ public class NewGameArtillerie extends JFrame {
         shipsPanel.setBackground(THEME_COLOR);
         shipsPanel.setLayout(new BoxLayout(shipsPanel, BoxLayout.LINE_AXIS));
 
-        int[] shipSizes = {5, 4, 3, 3, 2}; // Ship sizes
-        String[] shipImageFiles = { // Ship images
+        int[] shipSizes = {5, 4, 3, 3, 2};
+        String[] shipImageFiles = {
             "/Images/Torpilleur.png",
             "/Images/sousMarin.png",
             "/Images/PorteAvion.png",

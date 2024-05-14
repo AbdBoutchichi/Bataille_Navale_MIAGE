@@ -46,22 +46,19 @@ public class AcceuilView extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0; 
         gbc.gridy = 0;
-        gbc.gridwidth = 2; // Span across two columns
+        gbc.gridwidth = 2; 
         gbc.weightx = 1.0;
         gbc.weighty = 0.1;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(20, 20, 20, 20);
 
-        // Add the top icon
         backgroundLabel.add(createImageButton(WELCOMEICONE, 500, 150), gbc);
 
-        // Positioning the buttons
-        gbc.gridwidth = 1; // Reset to one column
+        gbc.gridwidth = 1; 
         gbc.gridy++;
-        gbc.weighty = 0.2; // Give more space vertically
+        gbc.weighty = 0.2; 
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // New Game and Continue buttons
         backgroundLabel.add(createImageButton(NEW_GAME_BUTTON_IMAGE_PATH, 180, 120), gbc);
         
        
@@ -69,7 +66,6 @@ public class AcceuilView extends JPanel {
         gbc.gridx = 1;
         backgroundLabel.add(createImageButton(CONTINUE_BUTTON_IMAGE_PATH, 180, 120), gbc);
 
-        // Reset grid x for next row and add options and quit buttons
         gbc.gridx = 0;
         gbc.gridy++;
         backgroundLabel.add(createImageButton(OPTIONS_BUTTON_IMAGE_PATH, 180, 120), gbc);
@@ -77,7 +73,7 @@ public class AcceuilView extends JPanel {
         backgroundLabel.add(createImageButton(QUIT_BUTTON_IMAGE_PATH, 180, 120), gbc);
         
 
-        gbc.gridwidth = 2; // Span across two columns again
+        gbc.gridwidth = 2; 
         gbc.gridx = 0;
         gbc.gridy++;
         backgroundLabel.add(createImageButton(HELP_IMAGE_PATH, 180, 120), gbc);
@@ -89,7 +85,7 @@ public class AcceuilView extends JPanel {
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
     
         JButton button = new JButton(scaledIcon);
-        button.setName(imagePath); // Utilisez le chemin de l'image comme nom pour retrouver l'icône originale lors de l'animation
+        button.setName(imagePath);
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
@@ -97,11 +93,11 @@ public class AcceuilView extends JPanel {
     
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                animateButton(button, width, height, (int)(width * 1.1), (int)(height * 1.1), 500); // Agrandit le bouton pendant 1 seconde
+                animateButton(button, width, height, (int)(width * 1.1), (int)(height * 1.1), 500);
             }
     
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                animateButton(button, (int)(width * 1.1), (int)(height * 1.1), width, height, 500); // Réduit le bouton pendant 1 seconde
+                animateButton(button, (int)(width * 1.1), (int)(height * 1.1), width, height, 500);
             }
         });
 
@@ -118,9 +114,9 @@ public class AcceuilView extends JPanel {
 
     }
     
-   
+
     
-   
+
 
     private void animateButton(JButton button, int startWidth, int startHeight, int endWidth, int endHeight, long duration) {
         final int delay = 10;
@@ -147,10 +143,10 @@ public class AcceuilView extends JPanel {
         helpView.setVisible(true);
     }*/
 
-    private void showMainMenu() {
+    /*private void showMainMenu() {
         NewGameMenu MENU = new NewGameMenu();
         MENU.setVisible(true);
-    }
+    }*/
    
 
     private void buttonAction(ActionEvent e) {
