@@ -46,14 +46,14 @@ public class GridPanel extends JPanel{
         initGridPanelInert(jr, adv);
     }
 
-    public GridPanel(int dim, Player jr, Player adv, GridPanel grilleBoat){
+    public GridPanel(int dim, Player jr, Player adv, GridPanel grilleBoat, NewGame page){
         backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
         setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
         setOpaque(true);
         setLayout(new GridLayout(ROWS, COLS));
 
 
-        initGridPanelShot(jr, adv, grilleBoat);
+        initGridPanelShot(jr, adv, grilleBoat, page);
     }
 
     public GridPanel(int dim, Player jr, String orientation, int size, String name){
@@ -112,7 +112,7 @@ public class GridPanel extends JPanel{
 
 
     //Génére une grille de bouton 
-    public void initGridPanelShot(Player jr, Player adv, GridPanel boat){
+    public void initGridPanelShot(Player jr, Player adv, GridPanel boat, NewGame page){
         inert = false;
         for (int col = 0; col < COLS; col++) {
             for (int row = 0; row < ROWS; row++) {
@@ -121,7 +121,7 @@ public class GridPanel extends JPanel{
 
                 cell.setOpaque(true);
                 //Attribue un lecteur de tire a chaque bouton
-                cell.addActionListener(new CarreauxInteract(col, row, jr, adv, this, boat));
+                cell.addActionListener(new CarreauxInteract(col, row, jr, adv, this, boat, page));
 
                 //Détermine la position de chaque tire du joueur
                 for (Cell c : jr.cellsShot) {
@@ -238,32 +238,7 @@ public class GridPanel extends JPanel{
         // Pas besoin d'appeler initGrid ici, il suffit de dessiner l'image
     }
 
-    public void main(String[] arg){
-        JFrame frame = new JFrame();
-        
-        frame.setSize(2000, 1000);
-
-        Player jr = new Player("Bob");
-        Player adv = new Player("Bill");
-
-        jr.placeBoatsRand();
-        adv.placeBoatsRand();
-        
-
-        GridPanel grille1 = new GridPanel(adv, jr);
-        GridPanel grille2 = new GridPanel(10, jr, adv, grille1);
-        
-        frame.add(grille1, BorderLayout.WEST);
-        frame.add(grille2, BorderLayout.EAST);
-
-        frame.pack();
-
-        frame.setVisible(true);
-
-        
-
-
-    } 
+    
 
     
     

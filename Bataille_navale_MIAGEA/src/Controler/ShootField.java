@@ -51,31 +51,32 @@ public class ShootField implements ActionListener{
                 joueur.shootAt(Integer.parseInt(x), Integer.parseInt(y));
                 if(adversaire.isTouch(Integer.parseInt(x), Integer.parseInt(y))){
                     grille1.setBackground(null);
-                    grille1.removeAll();
-                    grille2.removeAll();
-                    grille2.initGridPanelInert(adversaire, joueur);
-                    grille1.initGridPanelShot(joueur, adversaire, grille2);
+                grille1.removeAll();
+                grille2.removeAll();
+                grille2.initGridPanelInert(adversaire, joueur);
+                grille1.initGridPanelShot(joueur, adversaire, grille2, page);
 
-                    grille2.revalidate();
-                    grille2.repaint();
-                    grille1.revalidate();
-                    grille1.repaint();
-                } else {
-                    grille1.setBackground(null);
-                    grille1.removeAll();
-                    grille2.removeAll();
-                    grille1.initGridPanelInert(joueur, adversaire);
-                    grille2.initGridPanelShot(adversaire, joueur, grille1);
+                page.setActionlistener(joueur, adversaire);
+                
+                
+            } else {
+                grille1.setBackground(null);
+                grille1.removeAll();
+                grille2.removeAll();
+                grille1.initGridPanelInert(joueur, adversaire);
+                grille2.initGridPanelShot(adversaire, joueur, grille1, page);
 
-                    grille2.revalidate();
-                    grille2.repaint();
-                    grille1.revalidate();
-                    grille1.repaint();
+                page.setActionlistener(adversaire, joueur);
+                
+                
                 }
-
+                grille2.revalidate();
+                grille2.repaint();
+                grille1.revalidate();
+                grille1.repaint();
             } 
             else
-                JOptionPane.showMessageDialog(null, "Valeur déjà tiré", "Vous avez déja tiré ici essayer ailleur", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Vous avez déja tiré ici. Essayer ailleur", "Valeur déjà tiré", JOptionPane.INFORMATION_MESSAGE);
 
         } else
             JOptionPane.showMessageDialog(null, "Valeur invalide", "Valeur invalide", JOptionPane.INFORMATION_MESSAGE); 

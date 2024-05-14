@@ -18,7 +18,6 @@ public class OrientationController implements ActionListener{
     private String selectedBoat;
     private int selectedSize;
     private PlacementPanel frame;
-    private PlacementPanel frame;
 
     //Constructeur
 
