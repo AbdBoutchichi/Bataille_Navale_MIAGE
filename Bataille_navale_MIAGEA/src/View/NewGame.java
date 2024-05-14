@@ -234,7 +234,7 @@ public class NewGame extends JFrame {
         shipsPanel.setBackground(THEME_COLOR);
         shipsPanel.setLayout(new BoxLayout(shipsPanel, BoxLayout.LINE_AXIS));
 
-        // Assuming you have ship sizes and corresponding images
+
         int[] shipSizes = {5, 4, 3, 3, 2};
         String[] shipImageFiles = {
             "/Images/Torpilleur.png",
@@ -259,7 +259,7 @@ public class NewGame extends JFrame {
             shipPanel.add(shipCountLabel, BorderLayout.SOUTH);
             shipsPanel.add(shipPanel);
         }
-        shipsPanel.add(Box.createHorizontalGlue()); // Add glue to space out the ships
+        shipsPanel.add(Box.createHorizontalGlue());
         
         return shipsPanel;
     }

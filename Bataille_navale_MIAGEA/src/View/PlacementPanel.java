@@ -175,7 +175,7 @@ public class PlacementPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);  // Ajoute des marges autour des composants
     
-        // Avatar Label
+        
         avatarLabel = new JLabel();
         if (avatarIcon != null) {
             avatarLabel.setIcon(new ImageIcon(avatarIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH))); // Redimensionnement et affichage de l'avatar
@@ -185,12 +185,12 @@ public class PlacementPanel extends JPanel {
         gbc.anchor = GridBagConstraints.WEST;
         titlePanel.add(avatarLabel, gbc);
     
-        // Title Label
+     
         JLabel titleLabel = new JLabel("Place Your Ships, Player: " + playerName);
         titleLabel.setForeground(TEXT_COLOR);
         titleLabel.setFont(new Font("Stencil", Font.BOLD, 20));
-        gbc.gridx = 1; // Seconde colonne, à côté de l'avatar
-        gbc.anchor = GridBagConstraints.WEST;  // Ancrage à l'ouest
+        gbc.gridx = 1; 
+        gbc.anchor = GridBagConstraints.WEST; 
         titlePanel.add(titleLabel, gbc);
     
         return titlePanel;
@@ -276,7 +276,7 @@ public class PlacementPanel extends JPanel {
             shipPanel.setBackground(THEME_COLOR);
     
             if (!(shipNames[i].equals(selectedBoat))) {
-                JButton shipCountLabel = new JButton("1");
+                JButton shipCountLabel = new JButton("EN ETAT");
                 stylizeButton(shipCountLabel);
                 shipPanel.add(shipCountLabel, BorderLayout.SOUTH);
                 shipCountLabel.addActionListener(new SelectBoat(this, shipPanel, shipImageFiles[i], gridPanel, player, orientationComboBox));

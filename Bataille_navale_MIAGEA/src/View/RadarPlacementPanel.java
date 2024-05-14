@@ -39,9 +39,9 @@ public class RadarPlacementPanel extends JPanel {
     public String selectedBoat;
     public String orientation = "Horizontale";
 
-    private static final Color THEME_COLOR = new Color(0, 100, 0); // Dark green typical of radar screens
-    private static final Color TEXT_COLOR = new Color(255, 255, 255); // White text for better readability
-    private static final Font BUTTON_FONT = new Font("Monospaced", Font.BOLD, 12); // Monospaced font for a digital look
+    private static final Color THEME_COLOR = new Color(0, 100, 0);
+    private static final Color TEXT_COLOR = new Color(255, 255, 255);
+    private static final Font BUTTON_FONT = new Font("Monospaced", Font.BOLD, 12);
     
 
     public RadarPlacementPanel(String playerName) {
@@ -261,7 +261,7 @@ public class RadarPlacementPanel extends JPanel {
         titlePanel.setBackground(THEME_COLOR);
         JLabel titleLabel = new JLabel("Deploy Radar, Player: " + playerName);
         titleLabel.setForeground(TEXT_COLOR);
-        titleLabel.setFont(new Font("Monospaced", Font.BOLD, 20));
+        titleLabel.setFont(new Font("Stencil", Font.BOLD, 20));
         titlePanel.add(titleLabel);
         return titlePanel;
     }
