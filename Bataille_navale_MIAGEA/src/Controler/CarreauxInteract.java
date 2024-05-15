@@ -40,7 +40,6 @@ public class CarreauxInteract implements ActionListener{
                 grille2.initGridPanelInert(adversaire, joueur);
                 grille1.initGridPanelShot(joueur, adversaire, grille2, page);
 
-                page.setActionlistener(joueur, adversaire);
             } else {
                 grille1.setBackground(null);
                 grille1.removeAll();
@@ -48,7 +47,7 @@ public class CarreauxInteract implements ActionListener{
                 grille1.initGridPanelInert(joueur, adversaire);
                 grille2.initGridPanelShot(adversaire, joueur, grille1, page);
 
-                page.setActionlistener(adversaire, joueur);
+                page.setActionlistener(joueur);
             }
 
                 grille2.revalidate();

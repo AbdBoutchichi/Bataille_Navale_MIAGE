@@ -35,6 +35,9 @@ public class NewGame extends JFrame {
     public JButton cancelButtonPlayer2;
     public JPanel controlPanelPlayer2;
 
+    private ShootField shootFieldPlayer1;
+    private ShootField shootFieldPlayer2;
+
 
 
     public NewGame(Player plr1, Player plr2) {
@@ -52,10 +55,14 @@ public class NewGame extends JFrame {
 
         add(createTimerPanel(), BorderLayout.NORTH);
         add(createPlayerPanel2(player2, player1), BorderLayout.EAST);
+        
         add(createPlayerPanel1(player1, player2), BorderLayout.WEST);
+        
         add(createWelcomePanel(), BorderLayout.CENTER);
         
         add(createBottomPanel(), BorderLayout.SOUTH);
+
+        initActionListener(player1, player2);
 
         setupTimer();
         setVisible(true);
@@ -114,7 +121,7 @@ public class NewGame extends JFrame {
         nameLabel.setForeground(TEXT_COLOR);
         nameLabel.setFont(BUTTON_FONT);
 
-        gridPanelPlayer1 = new GridPanel(10, player, enemy, gridPanelPlayer2);
+        gridPanelPlayer1 = new GridPanel(10, player, enemy, gridPanelPlayer2, this);
         controlPanelPlayer1 = createControlPanel(player, enemy);
 
         panel.add(nameLabel, BorderLayout.NORTH);
@@ -136,7 +143,7 @@ public class NewGame extends JFrame {
             fireButtonPlayer1 = new JButton("Tirer");
 
             
-            fireButtonPlayer1.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer1, gridPanelPlayer2, true));
+            //fireButtonPlayer1.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer1, gridPanelPlayer2, true));
             
 
 
@@ -164,7 +171,7 @@ public class NewGame extends JFrame {
             fireButtonPlayer2 = new JButton("Tirer");
 
             
-            fireButtonPlayer2.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer2, gridPanelPlayer1, false));
+            //fireButtonPlayer2.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer2, gridPanelPlayer1, false));
             
 
 
@@ -268,6 +275,27 @@ public class NewGame extends JFrame {
         shipsPanel.add(Box.createHorizontalGlue());
         
         return shipsPanel;
+    }
+
+    private void initActionListener(Player joueur, Player adversaire){
+        shootFieldPlayer1 = new ShootField(this, player1, player2, gridPanelPlayer1, gridPanelPlayer2, true);
+        shootFieldPlayer2 = new ShootField(this, player2, player1, gridPanelPlayer2, gridPanelPlayer1, false);
+        fireButtonPlayer1.addActionListener(shootFieldPlayer1);
+        //fireButtonPlayer2.setBackground(Color.GRAY);
+    }
+
+    public void setActionlistener(Player joueur){
+        if(joueur == player1){
+            fireButtonPlayer1.removeActionListener(shootFieldPlayer1);
+            fireButtonPlayer2.addActionListener(shootFieldPlayer2);
+            //fireButtonPlayer2.setBackground(new Color(199, 153, 119));
+            //fireButtonPlayer1.setBackground(Color.GRAY);
+        } else {
+            fireButtonPlayer2.removeActionListener(shootFieldPlayer2);
+            fireButtonPlayer1.addActionListener(shootFieldPlayer1);
+            //fireButtonPlayer1.setBackground(new Color(199, 153, 119));
+            //fireButtonPlayer2.setBackground(Color.GRAY);
+        }
     }
 
     private void stylizeButton(JButton button) {

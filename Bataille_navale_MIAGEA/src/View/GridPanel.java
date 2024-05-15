@@ -225,6 +225,48 @@ public class GridPanel extends JPanel{
         }
     }
 
+    public void initGridPanelRadar(Player jr, Player adv, GridPanel boat, NewGame page){
+        inert = false;
+        for (int col = 0; col < COLS; col++) {
+            for (int row = 0; row < ROWS; row++) {
+                Carreaux cell = new Carreaux(row, col);
+                
+
+                cell.setOpaque(true);
+                //Attribue un lecteur de tire a chaque bouton
+                cell.addActionListener(new CarreauxInteract(col, row, jr, adv, this, boat, page));
+
+                //Détermine la position de chaque tire du joueur
+                for (Cell c : jr.cellsShot) {
+                    if (c.position(col, row)) {
+                        cell.setIcon(null);
+                        //Donne une nouvelle couleur au bouton si le joueur a tiré a cette position
+                        cell.setBackground(Color.red);
+                        //récupere les position occupé par chaque bateau
+                        for (Boat b : adv.getCellsBoats()) {
+                            //Change la couleur du bouton si il y un bateau dessus
+                            if(b.isPosition(row, col)){
+                                cell.setBackground(Color.green);
+                            } else {
+                                cell.setText("");
+                            }
+                                
+                            
+
+                        }
+                        
+                    }
+                    
+                }
+                this.add(cell);
+            }
+        }
+
+        
+       
+        
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
