@@ -61,7 +61,7 @@ public class NewGameOrdi extends JFrame {
         setLayout(new BorderLayout(10, 10));
 
         add(createTimerPanel(), BorderLayout.NORTH);
-        add(createPlayerPanel(player2, player1, false), BorderLayout.EAST);
+        add(createComputerPanel(player2, player1, false), BorderLayout.EAST);
         add(createPlayerPanel(player1, player2, true), BorderLayout.WEST);
         add(createWelcomePanel(), BorderLayout.CENTER);
 
@@ -98,7 +98,7 @@ public class NewGameOrdi extends JFrame {
         timerLabel.setText(timeString);
     }
 
-    private JPanel createPlayerPanel(Player player, Player enemy, boolean isHuman) {
+    private JPanel createPlayerPanel(Player player, PlayerComputer enemy, boolean isHuman) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(THEME_COLOR);
 
@@ -106,11 +106,29 @@ public class NewGameOrdi extends JFrame {
         nameLabel.setForeground(TEXT_COLOR);
         nameLabel.setFont(BUTTON_FONT);
 
-        GridPanel gridPanel = new GridPanel(10, player, enemy,gridPanelPlayer1 );
+        gridPanelPlayer1 = new GridPanel(10, player, enemy, gridPanelPlayer2, this);
         JPanel controlPanel = createControlPanel(player, enemy, isHuman);
 
         panel.add(nameLabel, BorderLayout.NORTH);
-        panel.add(gridPanel, BorderLayout.CENTER);
+        panel.add(gridPanelPlayer1, BorderLayout.CENTER);
+        panel.add(controlPanel, BorderLayout.SOUTH);
+
+        return panel;
+    }
+
+    private JPanel createComputerPanel(PlayerComputer player, Player enemy, boolean isHuman) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(THEME_COLOR);
+
+        JLabel nameLabel = new JLabel(player.getName(), SwingConstants.CENTER);
+        nameLabel.setForeground(TEXT_COLOR);
+        nameLabel.setFont(BUTTON_FONT);
+
+        gridPanelPlayer2 = new GridPanel(player, enemy);
+        JPanel controlPanel = createControlPanel(player, enemy, isHuman);
+
+        panel.add(nameLabel, BorderLayout.NORTH);
+        panel.add(gridPanelPlayer2, BorderLayout.CENTER);
         panel.add(controlPanel, BorderLayout.SOUTH);
 
         return panel;
@@ -249,6 +267,7 @@ public class NewGameOrdi extends JFrame {
 
     public static void main(String[] args) {
         Player plr1 = new Player("Bob");
+        plr1.placeBoatsRand();
         int difficulty = PlayerComputer.MEDIUM; // Choisissez la difficulté ici
         new NewGameOrdi(plr1, difficulty);
     }

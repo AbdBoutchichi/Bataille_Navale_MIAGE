@@ -19,10 +19,12 @@ public class PlayerComputer extends Player implements Serializable{
     private boolean[][] ships = new boolean[10][10]; // Suivre la position des bateaux de l'adversaire pour simulation
     private int lastHitX = -1; // Dernière position en X d'un tir réussi
     private int lastHitY = -1; // Dernière position en Y d'un tir réussi
+    public boolean playAgain;
     
     public PlayerComputer(int difficulty,  String n) {
         super(n);
         this.difficultyLevel = difficulty;
+        placeBoatsRand();
     }
 
     // Placement aléatoire des navires
@@ -93,7 +95,8 @@ public class PlayerComputer extends Player implements Serializable{
         } while (hits[x][y]);
         
         shootAt(x, y);
-        adv.isTouch(x, y);
+        
+        playAgain = adv.isTouch(x, y);
     }
 
     private void chooseNearHit(Player adv) {
@@ -107,7 +110,7 @@ public class PlayerComputer extends Player implements Serializable{
                         int newY = j + dir[1];
                         if (isValidMove(newX, newY)) {
                             shootAt(newX, newY);
-                            adv.isTouch(newX, newY);
+                            playAgain = adv.isTouch(newX, newY);
                             return;
                         }
                     }
@@ -143,7 +146,7 @@ public class PlayerComputer extends Player implements Serializable{
                 int newY = lastHitY + dir[1];
                 if (isValidMove(newX, newY)) {
                     shootAt(newX, newY);
-                    adv.isTouch(newX, newY);
+                    playAgain = adv.isTouch(newX, newY);
                     return;
                 }
             }

@@ -3,11 +3,9 @@ package Controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 
 import View.GridPanel;
 import View.NewGame;
-import Modele.NormalMode;
 import Modele.Player;
 
 

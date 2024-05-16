@@ -281,20 +281,20 @@ public class NewGame extends JFrame {
         shootFieldPlayer1 = new ShootField(this, player1, player2, gridPanelPlayer1, gridPanelPlayer2, true);
         shootFieldPlayer2 = new ShootField(this, player2, player1, gridPanelPlayer2, gridPanelPlayer1, false);
         fireButtonPlayer1.addActionListener(shootFieldPlayer1);
-        //fireButtonPlayer2.setBackground(Color.GRAY);
+        fireButtonPlayer2.setBackground(Color.GRAY);
     }
 
     public void setActionlistener(Player joueur){
         if(joueur == player1){
             fireButtonPlayer1.removeActionListener(shootFieldPlayer1);
             fireButtonPlayer2.addActionListener(shootFieldPlayer2);
-            //fireButtonPlayer2.setBackground(new Color(199, 153, 119));
-            //fireButtonPlayer1.setBackground(Color.GRAY);
+            fireButtonPlayer2.setBackground(new Color(199, 153, 119));
+            fireButtonPlayer1.setBackground(Color.GRAY);
         } else {
             fireButtonPlayer2.removeActionListener(shootFieldPlayer2);
             fireButtonPlayer1.addActionListener(shootFieldPlayer1);
-            //fireButtonPlayer1.setBackground(new Color(199, 153, 119));
-            //fireButtonPlayer2.setBackground(Color.GRAY);
+            fireButtonPlayer1.setBackground(new Color(199, 153, 119));
+            fireButtonPlayer2.setBackground(Color.GRAY);
         }
     }
 

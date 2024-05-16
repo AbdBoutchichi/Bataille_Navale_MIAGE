@@ -56,6 +56,16 @@ public class GridPanel extends JPanel{
         initGridPanelShot(jr, adv, grilleBoat, page);
     }
 
+    public GridPanel(int dim, Player jr, PlayerComputer adv, GridPanel grilleBoat, NewGameOrdi page){
+        backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
+        setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
+        setOpaque(true);
+        setLayout(new GridLayout(ROWS, COLS));
+
+
+        initGridPanelShotOrdi(jr, adv, grilleBoat, page);
+    }
+
     public GridPanel(int dim, Player jr, String orientation, int size, String name){
         backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
         setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
@@ -261,12 +271,44 @@ public class GridPanel extends JPanel{
                 this.add(cell);
             }
         }
-
-        
-       
-        
     }
 
+
+    public void initGridPanelShotOrdi(Player jr, PlayerComputer adv, GridPanel boat, NewGameOrdi page){
+        inert = false;
+        for (int col = 0; col < COLS; col++) {
+            for (int row = 0; row < ROWS; row++) {
+                Carreaux cell = new Carreaux(row, col);
+                
+
+                cell.setOpaque(true);
+                //Attribue un lecteur de tire a chaque bouton
+                cell.addActionListener(new InteractOrdi(col, row, jr, adv, this, boat, page));
+
+                //Détermine la position de chaque tire du joueur
+                for (Cell c : jr.cellsShot) {
+                    if (c.position(col, row)) {
+                        cell.setIcon(null);
+                        //Donne une nouvelle couleur au bouton si le joueur a tiré a cette position
+                        cell.setBackground(Color.red);
+                        //récupere les position occupé par chaque bateau
+                        for (Boat b : adv.getCellsBoats()) {
+                            //Change la couleur du bouton si il y un bateau dessus
+                            if(b.isPosition(row, col)){
+                                cell.setBackground(Color.green);
+                            }
+                                
+                            
+
+                        }
+                        
+                    }
+                    
+                }
+                this.add(cell);
+            }
+        }
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
