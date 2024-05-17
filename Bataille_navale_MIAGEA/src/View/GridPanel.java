@@ -6,6 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import Controler.*;
+import Modele.BoardRadar;
 
 
 
@@ -19,6 +20,7 @@ public class GridPanel extends JPanel{
 
     private boolean inert;
 
+    //Affichage des bateaux sans interraction
     public GridPanel(int dim, Player jr, Player adv, JFrame frame){
         backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
         
@@ -35,6 +37,7 @@ public class GridPanel extends JPanel{
         initGridPanelBoat(jr, adv);
     }
 
+    //Creation Grille de tire inert 
     public GridPanel(Player jr, Player adv){
         backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
         setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
@@ -46,6 +49,7 @@ public class GridPanel extends JPanel{
         initGridPanelInert(jr, adv);
     }
 
+    //Creation d'une Grille de tire avec interraction
     public GridPanel(int dim, Player jr, Player adv, GridPanel grilleBoat, NewGame page){
         backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
         setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
@@ -56,6 +60,7 @@ public class GridPanel extends JPanel{
         initGridPanelShot(jr, adv, grilleBoat, page);
     }
 
+    //Creation d'une Grille de jeu contre l'ordi
     public GridPanel(int dim, Player jr, PlayerComputer adv, GridPanel grilleBoat, NewGameOrdi page){
         backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
         setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
@@ -66,6 +71,7 @@ public class GridPanel extends JPanel{
         initGridPanelShotOrdi(jr, adv, grilleBoat, page);
     }
 
+    //Creation d'une Grille de placement
     public GridPanel(int dim, Player jr, String orientation, int size, String name){
         backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
         setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
@@ -73,6 +79,16 @@ public class GridPanel extends JPanel{
         setLayout(new GridLayout(ROWS, COLS));
 
         initGridPanelPlacement(jr, orientation, size, name);
+    }
+
+    public GridPanel(Player jr, Player adv, GridPanel grilleBoat, NewGameRadar page){
+        backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
+        setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE * ROWS));
+        setOpaque(true);
+        setLayout(new GridLayout(ROWS, COLS));
+
+
+        initGridPanelRadar(jr, adv, grilleBoat, page);
     }
     
     //Génére une grille de bouton 
@@ -235,8 +251,9 @@ public class GridPanel extends JPanel{
         }
     }
 
-    public void initGridPanelRadar(Player jr, Player adv, GridPanel boat, NewGame page){
+    public void initGridPanelRadar(Player jr, Player adv, GridPanel boat, NewGameRadar page){
         inert = false;
+        BoardRadar radar = new BoardRadar(10, jr, adv);
         for (int col = 0; col < COLS; col++) {
             for (int row = 0; row < ROWS; row++) {
                 Carreaux cell = new Carreaux(row, col);
@@ -244,7 +261,7 @@ public class GridPanel extends JPanel{
 
                 cell.setOpaque(true);
                 //Attribue un lecteur de tire a chaque bouton
-                cell.addActionListener(new CarreauxInteract(col, row, jr, adv, this, boat, page));
+                cell.addActionListener(new InteractRadar(col, row, jr, adv, this, boat, page));
 
                 //Détermine la position de chaque tire du joueur
                 for (Cell c : jr.cellsShot) {
@@ -252,13 +269,16 @@ public class GridPanel extends JPanel{
                         cell.setIcon(null);
                         //Donne une nouvelle couleur au bouton si le joueur a tiré a cette position
                         cell.setBackground(Color.red);
+                        cell.setText(""+radar.radar(col, row, jr, adv));
                         //récupere les position occupé par chaque bateau
                         for (Boat b : adv.getCellsBoats()) {
                             //Change la couleur du bouton si il y un bateau dessus
                             if(b.isPosition(row, col)){
                                 cell.setBackground(Color.green);
-                            } else {
                                 cell.setText("");
+                            } else {
+                                
+                                
                             }
                                 
                             

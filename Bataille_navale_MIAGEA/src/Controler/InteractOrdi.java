@@ -64,6 +64,8 @@ public class InteractOrdi implements ActionListener{
                     grille1.initGridPanelInert(joueur, adversaire);
                     grille2.initGridPanelInert(adversaire, joueur);
 
+                    
+
                     grille2.revalidate();
                     grille2.repaint();
                     grille1.revalidate();

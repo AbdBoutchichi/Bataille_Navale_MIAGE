@@ -67,23 +67,26 @@ public class BoardRadar extends Board implements Serializable{
 
     //Cette methode recherche la cellule la plus proche avec un bateau enemie dessus
     public int radar(int x, int y,Player jr, Player adv){
-        int count = dimension;
+        int count = dimension*2;
         List<Boat> boats = adv.getCellsBoats();
         Cell[] shoots = jr.getCellsShot();
 
         //il parcours toute les cellules  du plateau de jeu 
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-
-                //Il verifie que chacune d'entre elle ne soit pas deja une cellule sur laquelle le joueur a tiré et si il y a un bateau
-                for (Boat b : boats) {
-                    for (Cell s : shoots) {
-                        if (b.isPosition(x, y) && !s.position(x, y))
-                        count = (count > Math.abs(x-i) + Math.abs(y-j) ? Math.abs(x-i) + Math.abs(y-j) : count);
+                System.err.println(i + " ; " + j);
+                
+                for(int b = 0; b<boats.size(); b++){
+                    if(boats.get(b).isPosition(i, j)){
+                        if(count > (x-j > 0 ? x-j : j-x) + (y-i > 0 ? y-i : i-y)){
+                            count = (x-j > 0 ? x-j : j-x) + (y-i > 0 ? y-i : i-y);
+                        }
                     }
                 }
+                
             }
         }
+        System.out.println("count: " + count);
         return count;
     }
 
