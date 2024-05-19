@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Modele.Player;
+import Modele.PlayerComputer;
 
 
 public class NewGameMenu extends JFrame implements MenuCallback{
@@ -43,6 +44,8 @@ public class NewGameMenu extends JFrame implements MenuCallback{
 
     public Player player1;
     public Player player2;
+    public int selectedDifficulty;
+    public boolean singlePlayerMode = false;
 
     public boolean firstPlayer;
 
@@ -108,7 +111,7 @@ public class NewGameMenu extends JFrame implements MenuCallback{
         JButton btnVsComputer = new JButton("Jouer contre l'ordinateur");
         styleButton(btnVsComputer, 250, 100, 300, 50);
         btnVsComputer.addActionListener(e -> {
-            cardLayout.show(cardPanel, PROFILE_MENU);
+            cardLayout.show(cardPanel, DIFFICULTY_MENU);
         });
         mainMenu.add(btnVsComputer);
 
@@ -150,8 +153,10 @@ public class NewGameMenu extends JFrame implements MenuCallback{
         for (String diff : difficulties) {
             JButton btn = new JButton(diff);
             styleButton(btn, 250, yPos, 300, 50);
-            btn.addActionListener(e -> {
-                showProfileMenu(PROFILE_MENU);
+             btn.addActionListener(e -> {
+                selectedDifficulty = "Facile".equals(diff) ? PlayerComputer.EASY : "Moyen".equals(diff) ? PlayerComputer.MEDIUM : PlayerComputer.HARD;
+                singlePlayerMode = true;
+                cardLayout.show(cardPanel, PROFILE_MENU);
             });
             yPos += 70;
             difficultyMenu.add(btn);

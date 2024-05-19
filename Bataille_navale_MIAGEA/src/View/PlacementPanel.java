@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import Controler.OrientationController;
@@ -318,26 +319,35 @@ public class PlacementPanel extends JPanel {
         //backButton.addActionListener(e -> revertLastAction());
     }
     
+
     private void validateAndProceed() {
         if (page == null) {
             System.err.println("Error: Page reference is null");
             return;
         }
+        if (player.boats.size() != 5) {
+            JOptionPane.showMessageDialog(this, "Vous devez placer tous les bateaux avant de continuer.", "Placement incomplet", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
     
-        if (player.boats.size() == 5) {
+        if (page.singlePlayerMode) {
+            NewGameOrdi gameOrdi = new NewGameOrdi(player, page.selectedDifficulty);
+            gameOrdi.setVisible(true);
+            page.setVisible(false);
+        } else {
             if (page.firstPlayer) {
                 page.firstPlayer = false;
                 page.player1 = player;
                 page.showProfileMenu(page.PROFILE_MENU);
-                player = new Player(page.firstNameField.getText());
+                player = new Player("");
             } else {
                 NewGame game = new NewGame(page.player1, this.player);
                 game.setVisible(true);
                 page.setVisible(false);
-                page = null;
             }
         }
     }
+    
     
 
     public void updateShipPlacement(int shipIndex) {
