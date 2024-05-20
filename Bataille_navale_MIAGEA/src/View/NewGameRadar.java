@@ -1,17 +1,36 @@
 package View;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 
-import Controler.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
+import Controler.ShootField;
 import Modele.Player;
 
 public class NewGameRadar extends JFrame {
 
-    private static final Color THEME_COLOR = new Color(249, 246, 233);
-    private static final Color TEXT_COLOR = new Color(123, 85, 74);
-    private static final Font BUTTON_FONT = new Font("Stencil", Font.BOLD, 13);
+    private static final Color THEME_COLOR = Color.BLACK;
+    private static final Color TEXT_COLOR = Color.GREEN;
+    private static final Font BUTTON_FONT = new Font("Monospaced", Font.BOLD, 13);
     private static final int CELL_SIZE = 30;
 
     private Player player1;
@@ -37,8 +56,6 @@ public class NewGameRadar extends JFrame {
 
     private ShootField shootFieldPlayer1;
     private ShootField shootFieldPlayer2;
-
-
 
     public NewGameRadar(Player plr1, Player plr2) {
         this.player1 = plr1;
@@ -132,21 +149,16 @@ public class NewGameRadar extends JFrame {
     }
 
     private JPanel createControlPanel(Player player, Player enemy) {
-        
         JPanel controlPanel = new JPanel(new GridLayout(4, 2));
 
-        if(player1 == player){
+        if (player1 == player) {
             controlPanel.setBackground(THEME_COLOR);
 
-            xFieldPlayer1 = new JTextField();
-            yFieldPlayer1 = new JTextField();
+            xFieldPlayer1 = createStyledTextField();
+            yFieldPlayer1 = createStyledTextField();
             fireButtonPlayer1 = new JButton("Tirer");
 
-            
             //fireButtonPlayer1.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer1, gridPanelPlayer2, true));
-            
-
-
 
             cancelButtonPlayer1 = new JButton("Annuler");
             cancelButtonPlayer1.addActionListener(e -> {
@@ -157,24 +169,20 @@ public class NewGameRadar extends JFrame {
             stylizeButton(fireButtonPlayer1);
             stylizeButton(cancelButtonPlayer1);
 
-            controlPanel.add(new JLabel("X:"));
+            controlPanel.add(createStyledLabel("X:"));
             controlPanel.add(xFieldPlayer1);
-            controlPanel.add(new JLabel("Y:"));
+            controlPanel.add(createStyledLabel("Y:"));
             controlPanel.add(yFieldPlayer1);
             controlPanel.add(fireButtonPlayer1);
             controlPanel.add(cancelButtonPlayer1);
         } else {
             controlPanel.setBackground(THEME_COLOR);
 
-            xFieldPlayer2 = new JTextField();
-            yFieldPlayer2 = new JTextField();
+            xFieldPlayer2 = createStyledTextField();
+            yFieldPlayer2 = createStyledTextField();
             fireButtonPlayer2 = new JButton("Tirer");
 
-            
             //fireButtonPlayer2.addActionListener(new ShootField(this, player, enemy, gridPanelPlayer2, gridPanelPlayer1, false));
-            
-
-
 
             cancelButtonPlayer2 = new JButton("Annuler");
             cancelButtonPlayer2.addActionListener(e -> {
@@ -185,9 +193,9 @@ public class NewGameRadar extends JFrame {
             stylizeButton(fireButtonPlayer2);
             stylizeButton(cancelButtonPlayer2);
 
-            controlPanel.add(new JLabel("X:"));
+            controlPanel.add(createStyledLabel("X:"));
             controlPanel.add(xFieldPlayer2);
-            controlPanel.add(new JLabel("Y:"));
+            controlPanel.add(createStyledLabel("Y:"));
             controlPanel.add(yFieldPlayer2);
             controlPanel.add(fireButtonPlayer2);
             controlPanel.add(cancelButtonPlayer2);
@@ -199,7 +207,7 @@ public class NewGameRadar extends JFrame {
         JPanel welcomePanel = new JPanel(new BorderLayout());
         welcomePanel.setBackground(THEME_COLOR);
 
-        welcomeLabel = new JLabel("<html><center>Bienvenue à la Bataille Navale!<br>Que le meilleur gagne!</center></html>", SwingConstants.CENTER);
+        welcomeLabel = new JLabel("<html><center>Bienvenue à la Bataille Navale!<br>Que le meilleur gagne!<br>MODE RADAR</center></html>", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Serif", Font.BOLD, 18));
         welcomeLabel.setForeground(TEXT_COLOR);
 
@@ -225,7 +233,7 @@ public class NewGameRadar extends JFrame {
 
     private JPanel createTrackingPanel() {
         JPanel trackingPanel = new JPanel();
-        trackingPanel.setBorder(BorderFactory.createTitledBorder("Suivi du jeu"));
+        trackingPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(TEXT_COLOR), "Suivi du jeu"));
         trackingPanel.setBackground(THEME_COLOR);
 
         JTextArea trackingArea = new JTextArea(10, 30);
@@ -243,10 +251,9 @@ public class NewGameRadar extends JFrame {
 
     private JPanel createShipsPanel() {
         JPanel shipsPanel = new JPanel();
-        shipsPanel.setBorder(BorderFactory.createTitledBorder("Flottes"));
+        shipsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(TEXT_COLOR), "Flottes"));
         shipsPanel.setBackground(THEME_COLOR);
         shipsPanel.setLayout(new BoxLayout(shipsPanel, BoxLayout.LINE_AXIS));
-
 
         int[] shipSizes = {5, 4, 3, 3, 2};
         String[] shipImageFiles = {
@@ -273,38 +280,55 @@ public class NewGameRadar extends JFrame {
             shipsPanel.add(shipPanel);
         }
         shipsPanel.add(Box.createHorizontalGlue());
-        
+
         return shipsPanel;
     }
 
-    private void initActionListener(Player joueur, Player adversaire){
+    private void initActionListener(Player joueur, Player adversaire) {
         //shootFieldPlayer1 = new ShootField(this, player1, player2, gridPanelPlayer1, gridPanelPlayer2, true);
         //shootFieldPlayer2 = new ShootField(this, player2, player1, gridPanelPlayer2, gridPanelPlayer1, false);
         //fireButtonPlayer1.addActionListener(shootFieldPlayer1);
         //fireButtonPlayer2.setBackground(Color.GRAY);
     }
 
-    public void setActionlistener(Player joueur){
-        if(joueur == player1){
+    public void setActionlistener(Player joueur) {
+        if (joueur == player1) {
             fireButtonPlayer1.removeActionListener(shootFieldPlayer1);
             fireButtonPlayer2.addActionListener(shootFieldPlayer2);
-            fireButtonPlayer2.setBackground(new Color(199, 153, 119));
+            fireButtonPlayer2.setBackground(new Color(0, 100, 0));
             fireButtonPlayer1.setBackground(Color.GRAY);
         } else {
             fireButtonPlayer2.removeActionListener(shootFieldPlayer2);
             fireButtonPlayer1.addActionListener(shootFieldPlayer1);
-            fireButtonPlayer1.setBackground(new Color(199, 153, 119));
+            fireButtonPlayer1.setBackground(new Color(0, 100, 0));
             fireButtonPlayer2.setBackground(Color.GRAY);
         }
     }
 
     private void stylizeButton(JButton button) {
         button.setFont(BUTTON_FONT);
-        button.setBackground(new Color(199, 153, 119));
+        button.setBackground(new Color(0, 100, 0));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setBorderPainted(false);
         button.setOpaque(true);
+    }
+
+    private JTextField createStyledTextField() {
+        JTextField textField = new JTextField();
+        textField.setFont(BUTTON_FONT);
+        textField.setBackground(THEME_COLOR);
+        textField.setForeground(TEXT_COLOR);
+        textField.setCaretColor(TEXT_COLOR);
+        textField.setBorder(BorderFactory.createLineBorder(TEXT_COLOR));
+        return textField;
+    }
+
+    private JLabel createStyledLabel(String text) {
+        JLabel label = new JLabel(text, SwingConstants.RIGHT);
+        label.setFont(BUTTON_FONT);
+        label.setForeground(TEXT_COLOR);
+        return label;
     }
 
     public static void main(String[] args) {
