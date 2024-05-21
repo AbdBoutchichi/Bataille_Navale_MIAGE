@@ -50,16 +50,14 @@ public class NewGameArtillerie extends JFrame {
         JPanel timerPanel = new JPanel();
         timerPanel.setBackground(THEME_COLOR);
         timerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-    
+
         timerLabel = new JLabel("00:00:00", SwingConstants.CENTER);
         timerLabel.setFont(new Font("Monospaced", Font.BOLD, 20));
         timerLabel.setForeground(TEXT_COLOR);
-    
+
         timerPanel.add(timerLabel);
         return timerPanel;
     }
-    
-
 
     private void setupTimer() {
         timer = new Timer(1000, e -> updateTimer());
@@ -75,7 +73,7 @@ public class NewGameArtillerie extends JFrame {
         timerLabel.setText(timeString);
     }
 
-    /*private JPanel createPlayerPanel(Player player, Player enemy) {
+    private JPanel createPlayerPanel1(Player player, Player enemy) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(THEME_COLOR);
 
@@ -83,15 +81,15 @@ public class NewGameArtillerie extends JFrame {
         nameLabel.setForeground(TEXT_COLOR);
         nameLabel.setFont(BUTTON_FONT);
 
-        GridPanel gridPanel = new GridPanel(10, player, enemy, this);
-        JPanel controlPanel = createControlPanelArtillery();
+        gridPanelPlayer1 = new GridPanel(player, enemy);
+        controlPanelPlayer1 = createControlPanelArtillery(player, enemy);
 
         panel.add(nameLabel, BorderLayout.NORTH);
-        panel.add(gridPanel, BorderLayout.CENTER);
-        panel.add(controlPanel, BorderLayout.SOUTH);
+        panel.add(gridPanelPlayer1, BorderLayout.CENTER);
+        panel.add(controlPanelPlayer1, BorderLayout.SOUTH);
 
         return panel;
-    }*/
+    }
 
     private JPanel createPlayerPanel2(Player player, Player enemy) {
         JPanel panel = new JPanel(new BorderLayout());
@@ -107,24 +105,6 @@ public class NewGameArtillerie extends JFrame {
         panel.add(nameLabel, BorderLayout.NORTH);
         panel.add(gridPanelPlayer2, BorderLayout.CENTER);
         panel.add(controlPanelPlayer2, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-    private JPanel createPlayerPanel1(Player player, Player enemy) {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(THEME_COLOR);
-
-        JLabel nameLabel = new JLabel(player.getName(), SwingConstants.CENTER);
-        nameLabel.setForeground(TEXT_COLOR);
-        nameLabel.setFont(BUTTON_FONT);
-
-        gridPanelPlayer1 = new GridPanel(10, player, enemy, gridPanelPlayer2);
-        controlPanelPlayer1 = createControlPanelArtillery(player, enemy);
-
-        panel.add(nameLabel, BorderLayout.NORTH);
-        panel.add(gridPanelPlayer1, BorderLayout.CENTER);
-        panel.add(controlPanelPlayer1, BorderLayout.SOUTH);
 
         return panel;
     }

@@ -1,38 +1,13 @@
 package View;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
+import java.awt.*;
+import javax.swing.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-
-import Controler.OrientationController;
-import Controler.Placement;
-import Controler.PlacementField;
-import Controler.SelectBoat;
+import Controler.*;
 import Modele.Player;
 
 public class PlacementPanel extends JPanel {
     private GridPanel gridPanel;
-    //private GameController gameController;
     private final static int CELL_SIZE = 30;
     private JTextField xField, yField;
     public JComboBox<String> orientationComboBox;
@@ -47,10 +22,10 @@ public class PlacementPanel extends JPanel {
 
     private Player player;
 
-    private static final Color THEME_COLOR = new Color(249, 246, 233);
-    private static final Color TEXT_COLOR = new Color(123, 85, 74);
-    private static final Font BUTTON_FONT = new Font("Stencil", Font.BOLD, 13);
-
+    private Color themeColor;
+    private Color textColor;
+    private Color buttonColor;
+    private Font buttonFont;
 
     public String orientation = "Horizontale";
     public int selectedSize = 2;
@@ -59,14 +34,18 @@ public class PlacementPanel extends JPanel {
     private boolean firstPlayer;
     private NewGameMenu page;
 
-    public PlacementPanel(String playerName,NewGameMenu page, ImageIcon avatar) {
-
+    public PlacementPanel(String playerName, NewGameMenu page, ImageIcon avatar, GameMode mode) {
         this.playerName = playerName;
+        this.page = page;
+        this.avatarIcon = avatar;
         player = new Player(playerName);
         if (page == null) {
             throw new IllegalArgumentException("Page parameter cannot be null");
         }
-        this.page = page;
+
+        // Set theme based on game mode
+        setTheme(mode);
+
         ImageIcon[] shipIcons = {
             new ImageIcon("Images/Torpilleur.png"),
             new ImageIcon("Images/sousMarin.png"),
@@ -74,7 +53,6 @@ public class PlacementPanel extends JPanel {
             new ImageIcon("Images/Croiseur.png"),
             new ImageIcon("Images/contreTorpilleur.png")
         };
-        this.avatarIcon = avatar;
         this.shipLabels = new JLabel[shipIcons.length];
         this.shipsPlaced = new boolean[shipIcons.length];
         initializeComponents(shipIcons);
@@ -82,19 +60,41 @@ public class PlacementPanel extends JPanel {
         initializeController();
     }
 
-    
+    private void setTheme(GameMode mode) {
+        switch (mode) {
+            case NORMAL:
+                themeColor = new Color(249, 246, 233);
+                textColor = new Color(123, 85, 74);
+                buttonFont = new Font("Stencil", Font.BOLD, 13);
+                buttonColor = new Color(199, 153, 119);
+                break;
+            case RADAR:
+                themeColor = Color.BLACK;
+                textColor = Color.GREEN;
+                buttonFont = new Font("Monospaced", Font.BOLD, 13);
+                buttonColor = Color.GRAY;
+                break;
+            case ARTILLERY:
+                themeColor = new Color(10, 25, 48);
+                textColor = Color.WHITE;
+                buttonFont = new Font("Stencil", Font.BOLD, 12);
+                buttonColor = new Color(30, 144, 255);
+                break;
+        }
+    }
+
     private void initializeComponents(ImageIcon[] shipIcons) {
         gridPanel = new GridPanel(10, player, "Horizontale", 2, "Torpilleur");
         xField = new JTextField("0", 5);
         yField = new JTextField("0", 5);
         orientationComboBox = new JComboBox<>(new String[]{"Horizontal", "Vertical"});
 
-        xField.setFont(BUTTON_FONT);
-        yField.setFont(BUTTON_FONT);
-        xField.setForeground(TEXT_COLOR);
-        yField.setForeground(TEXT_COLOR);
-        xField.setBackground(THEME_COLOR);
-        yField.setBackground(THEME_COLOR);
+        xField.setFont(buttonFont);
+        yField.setFont(buttonFont);
+        xField.setForeground(textColor);
+        yField.setForeground(textColor);
+        xField.setBackground(themeColor);
+        yField.setBackground(themeColor);
 
         placeShipButton = new JButton("Place Ship");
         placeShipButtonRandomly = new JButton("Place Ship Randomly");
@@ -115,13 +115,13 @@ public class PlacementPanel extends JPanel {
         }
 
         statusLabel = new JLabel("Place your ships!");
-        statusLabel.setForeground(TEXT_COLOR);
+        statusLabel.setForeground(textColor);
         statusLabel.setFont(new Font("Stencil", Font.BOLD, 15));
     }
 
     private void stylizeButton(JButton button) {
-        button.setFont(BUTTON_FONT);
-        button.setBackground(new Color(199, 153, 119));
+        button.setFont(buttonFont);
+        button.setBackground(buttonColor);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setBorderPainted(false);
@@ -143,17 +143,17 @@ public class PlacementPanel extends JPanel {
     private JPanel createTrackingPanel() {
         JPanel trackingPanel = new JPanel();
         trackingPanel.setBorder(BorderFactory.createTitledBorder("Game Tracking"));
-        trackingPanel.setBackground(THEME_COLOR);
+        trackingPanel.setBackground(themeColor);
 
         JTextArea trackingArea = new JTextArea(10, 30);
         trackingArea.setEditable(false);
-        trackingArea.setFont(BUTTON_FONT);
-        trackingArea.setBackground(THEME_COLOR);
-        trackingArea.setForeground(TEXT_COLOR);
+        trackingArea.setFont(buttonFont);
+        trackingArea.setBackground(themeColor);
+        trackingArea.setForeground(textColor);
 
         JScrollPane scrollPane = new JScrollPane(trackingArea);
-        scrollPane.setBackground(THEME_COLOR);
-        scrollPane.getViewport().setBackground(THEME_COLOR);
+        scrollPane.setBackground(themeColor);
+        scrollPane.getViewport().setBackground(themeColor);
         trackingPanel.add(scrollPane);
 
         return trackingPanel;
@@ -170,25 +170,23 @@ public class PlacementPanel extends JPanel {
     }
 
     private JPanel createTitlePanel() {
-        JPanel titlePanel = new JPanel(new GridBagLayout()); // Utilisation de GridBagLayout pour un placement plus flexible
-        titlePanel.setBackground(THEME_COLOR);
+        JPanel titlePanel = new JPanel(new GridBagLayout()); 
+        titlePanel.setBackground(themeColor);
     
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);  // Ajoute des marges autour des composants
+        gbc.insets = new Insets(5, 5, 5, 5);  
     
-        
         avatarLabel = new JLabel();
         if (avatarIcon != null) {
-            avatarLabel.setIcon(new ImageIcon(avatarIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH))); // Redimensionnement et affichage de l'avatar
+            avatarLabel.setIcon(new ImageIcon(avatarIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH))); 
         }
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         titlePanel.add(avatarLabel, gbc);
     
-     
         JLabel titleLabel = new JLabel("Place Your Ships, Player: " + playerName);
-        titleLabel.setForeground(TEXT_COLOR);
+        titleLabel.setForeground(textColor);
         titleLabel.setFont(new Font("Stencil", Font.BOLD, 20));
         gbc.gridx = 1; 
         gbc.anchor = GridBagConstraints.WEST; 
@@ -197,13 +195,11 @@ public class PlacementPanel extends JPanel {
         return titlePanel;
     }
     
-    
-
     private JPanel createInputPanel() {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
         inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        inputPanel.setBackground(THEME_COLOR);
+        inputPanel.setBackground(themeColor);
 
         inputPanel.add(createInputFieldPanel("X:", xField, 200, 40));
         inputPanel.add(createInputFieldPanel("Y:", yField, 200, 40));
@@ -224,18 +220,18 @@ public class PlacementPanel extends JPanel {
         JPanel fieldPanel = new JPanel();
         fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.X_AXIS));
         fieldPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        fieldPanel.setBackground(THEME_COLOR);
+        fieldPanel.setBackground(themeColor);
 
         JLabel label = new JLabel(labelText);
         label.setPreferredSize(new Dimension(130, 30));
-        label.setForeground(TEXT_COLOR);
-        label.setFont(BUTTON_FONT);
+        label.setForeground(textColor);
+        label.setFont(buttonFont);
 
         inputField.setPreferredSize(new Dimension(width, height));
         inputField.setMaximumSize(new Dimension(width, height));
-        inputField.setFont(BUTTON_FONT);
-        inputField.setForeground(TEXT_COLOR);
-        inputField.setBackground(THEME_COLOR);
+        inputField.setFont(buttonFont);
+        inputField.setForeground(textColor);
+        inputField.setBackground(themeColor);
 
         fieldPanel.add(label);
         fieldPanel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -247,7 +243,7 @@ public class PlacementPanel extends JPanel {
     public void createShipsPanel() {
         shipsPanel.setBorder(BorderFactory.createTitledBorder("Flottes"));
         shipsPanel.setLayout(new BoxLayout(shipsPanel, BoxLayout.LINE_AXIS));
-        shipsPanel.setBackground(THEME_COLOR);
+        shipsPanel.setBackground(themeColor);
     
         int[] shipSizes = {5, 4, 3, 3, 2};
         String[] shipImageFiles = {
@@ -274,7 +270,7 @@ public class PlacementPanel extends JPanel {
             JLabel shipLabel = new JLabel(resizedIcon);
     
             JPanel shipPanel = new JPanel(new BorderLayout());
-            shipPanel.setBackground(THEME_COLOR);
+            shipPanel.setBackground(themeColor);
     
             if (!(shipNames[i].equals(selectedBoat))) {
                 JButton shipCountLabel = new JButton("EN ETAT");
@@ -283,8 +279,8 @@ public class PlacementPanel extends JPanel {
                 shipCountLabel.addActionListener(new SelectBoat(this, shipPanel, shipImageFiles[i], gridPanel, player, orientationComboBox));
             } else {
                 JLabel shipCountPanel = new JLabel("Place le", SwingConstants.CENTER);
-                shipCountPanel.setForeground(TEXT_COLOR);
-                shipCountPanel.setBackground(THEME_COLOR);
+                shipCountPanel.setForeground(textColor);
+                shipCountPanel.setBackground(themeColor);
                 shipCountPanel.setFont(new Font("Stencil", Font.BOLD, 16));
                 shipPanel.add(shipCountPanel, BorderLayout.SOUTH);
             }
@@ -301,7 +297,7 @@ public class PlacementPanel extends JPanel {
 
     private JPanel createButtonPanel(JButton button, int width, int height) {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(THEME_COLOR);
+        buttonPanel.setBackground(themeColor);
         button.setPreferredSize(new Dimension(width, height));
         button.setMaximumSize(new Dimension(width, height));
         stylizeButton(button);
@@ -318,7 +314,6 @@ public class PlacementPanel extends JPanel {
         validateButton.addActionListener(e -> validateAndProceed());
         //backButton.addActionListener(e -> revertLastAction());
     }
-    
 
     private void validateAndProceed() {
         if (page == null) {
@@ -341,13 +336,20 @@ public class PlacementPanel extends JPanel {
                 page.showProfileMenu(page.PROFILE_MENU);
                 player = new Player("");
             } else {
-                NewGame game = new NewGame(page.player1, this.player);
-                game.setVisible(true);
+                if (page.selectedGameMode == GameMode.RADAR) {
+                    NewGameRadar gameRadar = new NewGameRadar(page.player1, this.player);
+                    gameRadar.setVisible(true);
+                } else if (page.selectedGameMode == GameMode.ARTILLERY) {
+                    NewGameArtillerie gameArtillerie = new NewGameArtillerie(page.player1, this.player);
+                    gameArtillerie.setVisible(true);
+                } else {
+                    NewGame game = new NewGame(page.player1, this.player);
+                    game.setVisible(true);
+                }
                 page.setVisible(false);
             }
         }
     }
-    
     
 
     public void updateShipPlacement(int shipIndex) {
