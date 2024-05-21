@@ -33,6 +33,7 @@ public class Jeu_Bataillenavale implements Serializable {
     }
 
     public void start() {
+        menu.ShowMenu();
         menu.displayMainMenu();
         int choice = menu.getPlayerChoice();
         switch (choice) {
