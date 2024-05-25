@@ -1,10 +1,27 @@
 package View;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 
-import Controler.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
+import Controler.ShootField;
 import Modele.Player;
 
 public class NewGame extends JFrame {
@@ -212,8 +229,8 @@ public class NewGame extends JFrame {
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(THEME_COLOR);
 
-        JPanel trackingPanel1 = createTrackingPanel();
-        JPanel trackingPanel2 = createTrackingPanel();
+        JPanel trackingPanel1 = createTrackingPanel("/Images/DecorDroite.png");
+        JPanel trackingPanel2 = createTrackingPanel("/Images/DecorGauche.png");
         JPanel shipsPanel = createShipsPanel();
 
         bottomPanel.add(trackingPanel1, BorderLayout.WEST);
@@ -223,20 +240,26 @@ public class NewGame extends JFrame {
         return bottomPanel;
     }
 
-    private JPanel createTrackingPanel() {
-        JPanel trackingPanel = new JPanel();
-        trackingPanel.setBorder(BorderFactory.createTitledBorder("Suivi du jeu"));
+    private JPanel createTrackingPanel(String gifPath) {
+        JPanel trackingPanel = new JPanel(new BorderLayout());
+        trackingPanel.setBorder(BorderFactory.createTitledBorder(""));
         trackingPanel.setBackground(THEME_COLOR);
 
-        JTextArea trackingArea = new JTextArea(10, 30);
-        trackingArea.setEditable(false);
-        trackingArea.setForeground(TEXT_COLOR);
-        trackingArea.setBackground(THEME_COLOR);
+        // Load and resize GIF
+        JLabel gifLabel = new JLabel();
+        try {
+            ImageIcon gifIcon = new ImageIcon(getClass().getResource(gifPath));
+            Image gifImage = gifIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            gifLabel.setIcon(new ImageIcon(gifImage));
+        } catch (Exception e) {
+            e.printStackTrace();
+            gifLabel.setText("GIF not found");
+        }
 
-        JScrollPane scrollPane = new JScrollPane(trackingArea);
-        scrollPane.setBackground(THEME_COLOR);
-        scrollPane.getViewport().setBackground(THEME_COLOR);
-        trackingPanel.add(scrollPane);
+        gifLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gifLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+        trackingPanel.add(gifLabel, BorderLayout.CENTER);
 
         return trackingPanel;
     }
@@ -305,6 +328,24 @@ public class NewGame extends JFrame {
         button.setFocusPainted(false);
         button.setBorderPainted(false);
         button.setOpaque(true);
+    }
+
+    public void checkForWin() {
+        if (!player1.isNotDead()) {
+            endGame(player2, player1);
+        } else if (!player2.isNotDead()) {
+            endGame(player1, player2);
+        }
+    }
+    
+    public void endGame(Player winner, Player loser) {
+        timer.stop(); // Stop the game timer
+        int duration = elapsedTime;
+        int[] statsWinner = {(int) winner.incrementNbreShotSuccess(), winner.incrementNbreBateauShot() - winner.incrementNbreShotSuccess(), winner.incrementNbreTotalShot()};
+        int[] statsLoser = {loser.incrementNbreShotSuccess(), loser.incrementNbreTotalShot() - loser.incrementNbreShotSuccess(), loser.incrementNbreTotalShot()};
+        EndGamePanel endGamePanel = new EndGamePanel(winner.getName(), loser.getName(), duration, statsWinner, statsLoser);
+        endGamePanel.setVisible(true);
+        this.setVisible(false);
     }
 
     public static void main(String[] args) {

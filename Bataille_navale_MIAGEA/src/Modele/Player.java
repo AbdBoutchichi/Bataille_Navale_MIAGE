@@ -2,7 +2,6 @@ package Modele;
 
 
 import java.util.*;
-import java.util.Random;
 import java.io.Serializable;
 
 
@@ -37,8 +36,9 @@ public class Player implements Serializable{
     /**
      * @return
      */
-    public void incrementNbreTotalShot() {
+    public int incrementNbreTotalShot() {
         NbreTotalShot++;
+        return NbreTotalShot;
     }
 
     /**
@@ -127,15 +127,17 @@ public class Player implements Serializable{
     /**
      * @return
      */
-    public void incrementNbreShotSuccess() {
+    public int incrementNbreShotSuccess() {
         NbreShotSuccess++;
+        return NbreShotSuccess;
     }
 
     /**
      * @return
      */
-    public void incrementNbreBateauShot() {
+    public int incrementNbreBateauShot() {
         NbreBateauShot++;
+        return NbreBateauShot;
     }
 
     /**
@@ -184,6 +186,10 @@ public class Player implements Serializable{
      */
     public void setLastCellShot(int x, int y) {
         this.LastCellShot = new Cell(x, y);
+    }
+
+    public boolean hasWon() {
+        return !this.isAlive();
     }
 
     /**
@@ -348,6 +354,24 @@ public class Player implements Serializable{
         }
         return false;
     }
+
+    public boolean isSunk(int x, int y) {
+        for (Boat boat : boats) {
+            if (boat.isPosition(x, y) && boat.isSunk()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isNotDead() {
+    for (Boat boat : boats) {
+        if (!boat.isSunk()) {
+            return true;
+        }
+    }
+    return false; // All ships are sunk
+}
 
 
     /**

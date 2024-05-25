@@ -1,9 +1,23 @@
 package View;
 
-import java.awt.*;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -23,7 +37,8 @@ public class NewGameMenu extends JFrame implements MenuCallback {
     public final static String PROFILE_MENU = "Profile Menu";
     public final static String PLACEMENT_PANEL = "Placement Panel";
     private final static String RADAR_PLACEMENT_PANEL = "Radar Placement Panel";
-    private final static String HELP_MENU = "Help Panel";
+    public final static String HELP_MENU = "HelpPanel";
+
 
     private String playerName;
     public Player player1;
@@ -57,7 +72,7 @@ public class NewGameMenu extends JFrame implements MenuCallback {
 
     private void initializeWindow() {
         setTitle("New Game Options");
-        setSize(800, 700);
+        setSize(870, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(10, 25, 48));

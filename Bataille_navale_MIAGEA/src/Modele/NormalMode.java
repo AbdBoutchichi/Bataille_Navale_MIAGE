@@ -12,7 +12,7 @@ public class NormalMode implements Serializable{
     private transient Scanner scanner;
     private Board board;
     private Menu menu;
-    private boolean gameOver;
+    public boolean gameOver;
     private boolean isPlayer1Turn;
     private int choice;
     private Player player1;
@@ -27,14 +27,13 @@ public class NormalMode implements Serializable{
             this();
             choice= c;
             this.menu = new Menu();
-
            
             // Création du joueur 1
             System.out.println("Entrez le nom du Joueur 1:");
             String name1 = scanner.nextLine();
             
-            player1 = new Player(name1);
-            
+            this.player1 = new Player(name1);
+           
             
             
             
@@ -285,8 +284,7 @@ private void sauvegarderPartie(String fileName) {
     SaveGamePart.sauvegarderPartie(this);
 }
     
-    private void endGame() {
-        //askForSave();
+    public void endGame() {
         menu.displayEndGameOptions();
         int endChoice = menu.getPlayerChoice();
         

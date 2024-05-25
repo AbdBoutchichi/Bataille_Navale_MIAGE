@@ -1,9 +1,33 @@
 package View;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 
-import Controler.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import Controler.OrientationController;
+import Controler.Placement;
+import Controler.PlacementField;
+import Controler.SelectBoat;
 import Modele.Player;
 
 public class PlacementPanel extends JPanel {
@@ -47,11 +71,11 @@ public class PlacementPanel extends JPanel {
         setTheme(mode);
 
         ImageIcon[] shipIcons = {
-            new ImageIcon("Images/Torpilleur.png"),
-            new ImageIcon("Images/sousMarin.png"),
-            new ImageIcon("Images/PorteAvion.png"),
-            new ImageIcon("Images/Croiseur.png"),
-            new ImageIcon("Images/contreTorpilleur.png")
+            new ImageIcon(getClass().getResource("/Images/Torpilleur.png")),
+            new ImageIcon(getClass().getResource("/Images/sousMarin.png")),
+            new ImageIcon(getClass().getResource("/Images/PorteAvion.png")),
+            new ImageIcon(getClass().getResource("/Images/Croiseur.png")),
+            new ImageIcon(getClass().getResource("/Images/contreTorpilleur.png"))
         };
         this.shipLabels = new JLabel[shipIcons.length];
         this.shipsPlaced = new boolean[shipIcons.length];
@@ -141,20 +165,18 @@ public class PlacementPanel extends JPanel {
     }
 
     private JPanel createTrackingPanel() {
-        JPanel trackingPanel = new JPanel();
-        trackingPanel.setBorder(BorderFactory.createTitledBorder("Game Tracking"));
+        JPanel trackingPanel = new JPanel(new BorderLayout());
+        trackingPanel.setBorder(BorderFactory.createTitledBorder(" "));
         trackingPanel.setBackground(themeColor);
+        ImageIcon gifIcon = new ImageIcon(getClass().getResource("/Images/décorSHip.png"));
+        Image gifImage = gifIcon.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+        gifIcon = new ImageIcon(gifImage);
 
-        JTextArea trackingArea = new JTextArea(10, 30);
-        trackingArea.setEditable(false);
-        trackingArea.setFont(buttonFont);
-        trackingArea.setBackground(themeColor);
-        trackingArea.setForeground(textColor);
+        JLabel gifLabel = new JLabel(gifIcon);
+        gifLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gifLabel.setVerticalAlignment(SwingConstants.CENTER);
 
-        JScrollPane scrollPane = new JScrollPane(trackingArea);
-        scrollPane.setBackground(themeColor);
-        scrollPane.getViewport().setBackground(themeColor);
-        trackingPanel.add(scrollPane);
+        trackingPanel.add(gifLabel, BorderLayout.CENTER);
 
         return trackingPanel;
     }
@@ -352,11 +374,27 @@ public class PlacementPanel extends JPanel {
     }
     
 
-    public void updateShipPlacement(int shipIndex) {
+    public void updateShipPlacement(int shipIndex, String shipName) {
         if (shipIndex >= 0 && shipIndex < shipsPlaced.length) {
             shipsPlaced[shipIndex] = true;
             shipLabels[shipIndex].setText("0");
             shipLabels[shipIndex].setEnabled(false);
+            String message = shipName + " has been placed.";
+            ((JTextArea) ((JScrollPane) ((JPanel) getComponent(0)).getComponent(0)).getViewport().getView()).append(message + "\n");
+        }
+
+        // Check if all ships are placed
+        boolean allPlaced = true;
+        for (boolean placed : shipsPlaced) {
+            if (!placed) {
+                allPlaced = false;
+                break;
+            }
+        }
+
+        if (allPlaced) {
+            String message = "All ships have been placed. Click Validate to proceed.";
+            ((JTextArea) ((JScrollPane) ((JPanel) getComponent(0)).getComponent(0)).getViewport().getView()).append(message + "\n");
         }
     }
 }

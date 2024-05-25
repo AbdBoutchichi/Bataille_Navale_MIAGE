@@ -17,8 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -35,6 +33,7 @@ public class NewGameRadar extends JFrame {
 
     private Player player1;
     private Player player2;
+    public Player currentPlayer;
     private JLabel welcomeLabel;
     private JLabel timerLabel;
     private int elapsedTime = 0; // Temps écoulé en secondes
@@ -60,6 +59,7 @@ public class NewGameRadar extends JFrame {
     public NewGameRadar(Player plr1, Player plr2) {
         this.player1 = plr1;
         this.player2 = plr2;
+        this.currentPlayer = plr1;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bataille Navale");
@@ -72,11 +72,8 @@ public class NewGameRadar extends JFrame {
 
         add(createTimerPanel(), BorderLayout.NORTH);
         add(createPlayerPanel2(player2, player1), BorderLayout.EAST);
-        
         add(createPlayerPanel1(player1, player2), BorderLayout.WEST);
-        
         add(createWelcomePanel(), BorderLayout.CENTER);
-        
         add(createBottomPanel(), BorderLayout.SOUTH);
 
         initActionListener(player1, player2);
@@ -220,8 +217,8 @@ public class NewGameRadar extends JFrame {
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(THEME_COLOR);
 
-        JPanel trackingPanel1 = createTrackingPanel();
-        JPanel trackingPanel2 = createTrackingPanel();
+        JPanel trackingPanel1 = createTrackingPanel("/Images/DecorRadar1.png");
+        JPanel trackingPanel2 = createTrackingPanel("/Images/DecorRadar2.png");
         JPanel shipsPanel = createShipsPanel();
 
         bottomPanel.add(trackingPanel1, BorderLayout.WEST);
@@ -231,20 +228,24 @@ public class NewGameRadar extends JFrame {
         return bottomPanel;
     }
 
-    private JPanel createTrackingPanel() {
-        JPanel trackingPanel = new JPanel();
-        trackingPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(TEXT_COLOR), "Suivi du jeu"));
+    private JPanel createTrackingPanel(String gifPath) {
+        JPanel trackingPanel = new JPanel(new BorderLayout());
+        trackingPanel.setBorder(BorderFactory.createTitledBorder(""));
         trackingPanel.setBackground(THEME_COLOR);
+        JLabel gifLabel = new JLabel();
+        try {
+            ImageIcon gifIcon = new ImageIcon(getClass().getResource(gifPath));
+            Image gifImage = gifIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            gifLabel.setIcon(new ImageIcon(gifImage));
+        } catch (Exception e) {
+            e.printStackTrace();
+            gifLabel.setText("GIF not found");
+        }
 
-        JTextArea trackingArea = new JTextArea(10, 30);
-        trackingArea.setEditable(false);
-        trackingArea.setForeground(TEXT_COLOR);
-        trackingArea.setBackground(THEME_COLOR);
+        gifLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gifLabel.setVerticalAlignment(SwingConstants.CENTER);
 
-        JScrollPane scrollPane = new JScrollPane(trackingArea);
-        scrollPane.setBackground(THEME_COLOR);
-        scrollPane.getViewport().setBackground(THEME_COLOR);
-        trackingPanel.add(scrollPane);
+        trackingPanel.add(gifLabel, BorderLayout.CENTER);
 
         return trackingPanel;
     }
@@ -286,9 +287,10 @@ public class NewGameRadar extends JFrame {
 
     private void initActionListener(Player joueur, Player adversaire) {
         //shootFieldPlayer1 = new ShootField(this, player1, player2, gridPanelPlayer1, gridPanelPlayer2, true);
-        //shootFieldPlayer2 = new ShootField(this, player2, player1, gridPanelPlayer2, gridPanelPlayer1, false);
-        //fireButtonPlayer1.addActionListener(shootFieldPlayer1);
-        //fireButtonPlayer2.setBackground(Color.GRAY);
+        // shootFieldPlayer2 = new ShootField(this, player2, player1, gridPanelPlayer2, gridPanelPlayer1, false);
+        // fireButtonPlayer1.addActionListener(shootFieldPlayer1);
+        // fireButtonPlayer2.addActionListener(shootFieldPlayer2);
+        // fireButtonPlayer2.setBackground(Color.GRAY);
     }
 
     public void setActionlistener(Player joueur) {

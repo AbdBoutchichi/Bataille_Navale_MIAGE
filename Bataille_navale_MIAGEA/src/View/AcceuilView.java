@@ -25,8 +25,6 @@ public class AcceuilView extends JPanel {
     private static final String CONTINUE_BUTTON_IMAGE_PATH = "/Images/Continue.png";
     private static final String OPTIONS_BUTTON_IMAGE_PATH = "/Images/Options.png";
     private static final String QUIT_BUTTON_IMAGE_PATH = "/Images/Quit.png";
-    private static final String ICON_1_IMAGE_PATH = "/Images/Icone1.png";
-    private static final String ICON_2_IMAGE_PATH = "/Images/Icone2.png";
     private static final String HELP_IMAGE_PATH = "/Images/HELP.png"; 
     private static final String WELCOMEICONE = "/Images/GameMenu.png"; 
     private static final int BUTTON_WIDTH = 180;
@@ -103,13 +101,16 @@ public class AcceuilView extends JPanel {
 
         if (imagePath.equals(HELP_IMAGE_PATH)) {
             button.addActionListener(e -> callback.ShowHelpMenu());
-        }else  if(imagePath.equals(NEW_GAME_BUTTON_IMAGE_PATH)){
+        } else if (imagePath.equals(NEW_GAME_BUTTON_IMAGE_PATH)) {
             button.addActionListener(e -> callback.showMainMenu());
+        } else if (imagePath.equals(OPTIONS_BUTTON_IMAGE_PATH)) {
+            button.addActionListener(e -> callback.navigate("OptionsPanel"));
+        } else if (imagePath.equals(QUIT_BUTTON_IMAGE_PATH)) {
+            button.addActionListener(e -> System.exit(0)); // Quit the application
         } else {
             button.addActionListener(this::buttonAction);
         }
         return button;
-    
 
 
     }

@@ -15,10 +15,10 @@ public class PlayerComputer extends Player implements Serializable{
 
     private int difficultyLevel;
     private Random random = new Random();
-    private boolean[][] hits = new boolean[10][10]; // Suivre les cases déjà attaquées
-    private boolean[][] ships = new boolean[10][10]; // Suivre la position des bateaux de l'adversaire pour simulation
-    private int lastHitX = -1; // Dernière position en X d'un tir réussi
-    private int lastHitY = -1; // Dernière position en Y d'un tir réussi
+    private boolean[][] hits = new boolean[10][10];
+    private boolean[][] ships = new boolean[10][10];
+    private int lastHitX = -1;
+    private int lastHitY = -1;
     public boolean playAgain;
     
     public PlayerComputer(int difficulty,  String n) {

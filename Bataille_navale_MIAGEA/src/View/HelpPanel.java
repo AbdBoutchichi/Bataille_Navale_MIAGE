@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.net.URL;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -79,7 +78,7 @@ public class HelpPanel extends JPanel {
         deleteRuleButton.addActionListener(this::deleteRule);
         JButton returnButton = new JButton("<- Back");
         stylizeButton(returnButton);
-        returnButton.addActionListener(e ->callback.navigate("AcceuilView"));
+        returnButton.addActionListener(e -> callback.navigate(NewGameMenu.Acceuil_View)); // Utiliser le bon identifiant
         footerPanel.add(addButton);
         footerPanel.add(deleteRuleButton);
         footerPanel.add(returnButton);
@@ -91,14 +90,27 @@ public class HelpPanel extends JPanel {
     
         customizeScrollBar(textScrollPane.getVerticalScrollBar());
         customizeScrollBar(textScrollPane.getHorizontalScrollBar());
+
+        initializeDefaultRules();
     }
     
     private String getHtmlColor(Color color) {
         return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
 
-    private void deleteRule(ActionEvent e) {
+    private void initializeDefaultRules() {
+        String[] defaultRules = {
+            "Chaque joueur joue à tour de rôle en appelant une ligne et une colonne sur la grille de l'adversaire.",
+            "Marquez vos coups réussis et vos échecs sur votre propre grille.",
+            "Le premier joueur à couler tous les navires de l'adversaire gagne la partie."
+        };
 
+        for (String rule : defaultRules) {
+            textArea.append("Règle " + (++ruleCount) + ": " + rule + "\n");
+        }
+    }
+
+    private void deleteRule(ActionEvent e) {
         UIManager.put("OptionPane.background", THEME_COLOR);
         UIManager.put("Panel.background", THEME_COLOR);
         UIManager.put("Button.background", new Color(199, 153, 119));
@@ -126,7 +138,7 @@ public class HelpPanel extends JPanel {
                 
                 for (int i = 0; i < lines.length; i++) {
                     if (i != ruleNumber) {
-                        newText.append("Rule ").append(++newRuleCount).append(": ").append(lines[i].substring(lines[i].indexOf(':') + 1).trim()).append("\n");
+                        newText.append("Règle ").append(++newRuleCount).append(": ").append(lines[i].substring(lines[i].indexOf(':') + 1).trim()).append("\n");
                     }
                 }
                 textArea.setText(newText.toString());
@@ -136,10 +148,6 @@ public class HelpPanel extends JPanel {
             }
         }
     }
-    
-    
-    
-    
 
     private void stylizeButton(JButton button) {
         button.setFont(new Font("Stencil", Font.BOLD, 16));
@@ -151,28 +159,27 @@ public class HelpPanel extends JPanel {
     }
 
     private void addNewRule(ActionEvent e) {
-    UIManager.put("Panel.background", THEME_COLOR); 
-    UIManager.put("OptionPane.background", THEME_COLOR); 
-    UIManager.put("Button.background", new Color(199, 153, 119));  
-    UIManager.put("Button.foreground", Color.WHITE);  
-    UIManager.put("Button.font", new Font("Stencil", Font.BOLD, 12));  
-    UIManager.put("Label.font", new Font("Stencil", Font.PLAIN, 16));  
-    UIManager.put("TextField.font", new Font("Stencil", Font.PLAIN, 16)); 
+        UIManager.put("Panel.background", THEME_COLOR); 
+        UIManager.put("OptionPane.background", THEME_COLOR); 
+        UIManager.put("Button.background", new Color(199, 153, 119));  
+        UIManager.put("Button.foreground", Color.WHITE);  
+        UIManager.put("Button.font", new Font("Stencil", Font.BOLD, 12));  
+        UIManager.put("Label.font", new Font("Stencil", Font.PLAIN, 16));  
+        UIManager.put("TextField.font", new Font("Stencil", Font.PLAIN, 16)); 
 
-    String newRule = JOptionPane.showInputDialog(this, "Enter the new rule:", "New Rule", JOptionPane.PLAIN_MESSAGE);
-    if (newRule != null && !newRule.isEmpty()) {
-        textArea.append("Rule " + (++ruleCount) + ": " + newRule + "\n");
+        String newRule = JOptionPane.showInputDialog(this, "Enter the new rule:", "New Rule", JOptionPane.PLAIN_MESSAGE);
+        if (newRule != null && !newRule.isEmpty()) {
+            textArea.append("Règle " + (++ruleCount) + ": " + newRule + "\n");
+        }
+
+        UIManager.put("Panel.background", null);
+        UIManager.put("OptionPane.background", null);
+        UIManager.put("Button.background", null);
+        UIManager.put("Button.foreground", null);
+        UIManager.put("Button.font", null);
+        UIManager.put("Label.font", null);
+        UIManager.put("TextField.font", null);
     }
-
-    UIManager.put("Panel.background", null);
-    UIManager.put("OptionPane.background", null);
-    UIManager.put("Button.background", null);
-    UIManager.put("Button.foreground", null);
-    UIManager.put("Button.font", null);
-    UIManager.put("Label.font", null);
-    UIManager.put("TextField.font", null);
-}
-
 
     private void customizeScrollBar(JScrollBar scrollBar) {
         scrollBar.setUI(new BasicScrollBarUI() {

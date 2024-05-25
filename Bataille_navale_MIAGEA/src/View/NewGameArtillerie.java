@@ -192,8 +192,8 @@ public class NewGameArtillerie extends JFrame {
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(THEME_COLOR);
 
-        JPanel trackingPanel1 = createTrackingPanel();
-        JPanel trackingPanel2 = createTrackingPanel();
+        JPanel trackingPanel1 = createTrackingPanel("/Images/DecorArtillerie1.png");
+        JPanel trackingPanel2 = createTrackingPanel("/Images/DecorArtillerie2.png");
         JPanel shipsPanel = createShipsPanel();
 
         bottomPanel.add(trackingPanel1, BorderLayout.WEST);
@@ -203,20 +203,26 @@ public class NewGameArtillerie extends JFrame {
         return bottomPanel;
     }
 
-    private JPanel createTrackingPanel() {
-        JPanel trackingPanel = new JPanel();
-        trackingPanel.setBorder(BorderFactory.createTitledBorder("Game Tracking"));
+    private JPanel createTrackingPanel(String gifPath) {
+        JPanel trackingPanel = new JPanel(new BorderLayout());
+        trackingPanel.setBorder(BorderFactory.createTitledBorder("Suivi du jeu"));
         trackingPanel.setBackground(THEME_COLOR);
 
-        JTextArea trackingArea = new JTextArea(10, 30);
-        trackingArea.setEditable(false);
-        trackingArea.setForeground(TEXT_COLOR);
-        trackingArea.setBackground(THEME_COLOR);
+        // Load and resize GIF
+        JLabel gifLabel = new JLabel();
+        try {
+            ImageIcon gifIcon = new ImageIcon(getClass().getResource(gifPath));
+            Image gifImage = gifIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            gifLabel.setIcon(new ImageIcon(gifImage));
+        } catch (Exception e) {
+            e.printStackTrace();
+            gifLabel.setText("GIF not found");
+        }
 
-        JScrollPane scrollPane = new JScrollPane(trackingArea);
-        scrollPane.setBackground(THEME_COLOR);
-        scrollPane.getViewport().setBackground(THEME_COLOR);
-        trackingPanel.add(scrollPane);
+        gifLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gifLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+        trackingPanel.add(gifLabel, BorderLayout.CENTER);
 
         return trackingPanel;
     }
