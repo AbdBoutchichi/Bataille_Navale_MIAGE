@@ -36,13 +36,7 @@ public class Board implements Serializable{
     
     private Player joueur2;
 
-    //private ArrayList<Boat> bateaux;
 
-    
-
-    /**
-     * @return
-     */
 
      //affichage des bateaux du joueur
     public void ShowBoardBoat(Player joueur, Player adversaire) {
@@ -177,58 +171,7 @@ public class Board implements Serializable{
 
     
     
-    /**
-     * @param cells 
-     * @return
-     */
-    public boolean isboatInBoard(Cell cells) {
-        // TODO implement here
-        return false;
-    }
-
-    /**
-     * @param hauteur 
-     * @param largeur
-     */
-    public void generateBoard(int hauteur, int largeur) {
-        // TODO implement here
-    }
-
-    /**
-     * @param x 
-     * @param y 
-     * @param size 
-     * @param position 
-     * @return
-     */
-    public Cell generateBoat(int x, int y, int size, String position) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Boat getBoats() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Cell getCells() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public int getNbreBoats() {
-        // TODO implement here
-        return 0;
-    }
+  
 
     //vérifie le placement des bateaux
     boolean canPlaceBoat(Boat boat) {
@@ -279,24 +222,6 @@ public class Board implements Serializable{
     }
 
 
-
-    //Méthode vérifiant le voisinage
-    /*private boolean hasAdjacentBoats(int x, int y) {
-        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
-        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
-    
-        for (int i = 0; i < dx.length; i++) {
-            int nx = x + dx[i];
-            int ny = y + dy[i];
-    
-            if (nx >= 0 && nx < dimension && ny >= 0 && ny < dimension) {
-                if (cellules[nx][ny].hasBoat()) {
-                    return true; // Une cellule adjacente contient un bateau
-                }
-            }
-        }
-        return false;
-    }*/
 
     //permet de placer les bateaux sur le plateau
     public void placeBoat(Boat boat) {

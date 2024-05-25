@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class SaveGamePart {
 
-    private static final String SAVE_DIRECTORY = "C:\\Users\\lenovo\\git\\Bataille_Navale_MIAGE\\"; // Chemin du dossier de sauvegarde
+    private static final String SAVE_DIRECTORY = "C:\\Users\\lenovo\\git\\Bataille_Navale_MIAGE\\"; 
 
     /**
      * Sauvegarde une partie dans un fichier unique basé sur un timestamp.

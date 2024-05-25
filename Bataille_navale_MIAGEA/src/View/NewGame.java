@@ -273,9 +273,9 @@ public class NewGame extends JFrame {
 
         int[] shipSizes = {5, 4, 3, 3, 2};
         String[] shipImageFiles = {
-            "/Images/Torpilleur.png",
-            "/Images/sousMarin.png",
             "/Images/PorteAvion.png",
+            "/Images/sousMarin.png",
+            "/Images/Torpilleur.png",
             "/Images/Croiseur.png",
             "/Images/contreTorpilleur.png"
         };

@@ -103,15 +103,6 @@ public class Boat implements Serializable{
         return cells;
     }
 
-    /*
-     * public Cell getCellsAtPosition(int cellPosition) {
-     * if (cellPosition >= 0 && cellPosition < cells.length) {
-     * return cells[cellPosition];
-     * } else {
-     * return null;
-     * }
-     * }
-     */
 
 
     public Cell getCellByCoordinate(int x, int y) {
