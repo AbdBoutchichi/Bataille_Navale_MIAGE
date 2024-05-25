@@ -38,7 +38,7 @@ public class NewGameMenu extends JFrame implements MenuCallback {
     public final static String PLACEMENT_PANEL = "Placement Panel";
     private final static String RADAR_PLACEMENT_PANEL = "Radar Placement Panel";
     public final static String HELP_MENU = "HelpPanel";
-
+    public final static String OPTIONS_PANEL = "OptionsPanel"; // Ensure this is defined
 
     private String playerName;
     public Player player1;
@@ -57,12 +57,14 @@ public class NewGameMenu extends JFrame implements MenuCallback {
     private void setupUI() {
         AcceuilView acceuilView = new AcceuilView(this);
         HelpPanel helpPanel = new HelpPanel(this);
+        OptionsPanel optionsPanel = new OptionsPanel(this); // Create the options panel
 
-        cardPanel.add(acceuilView, "AcceuilView");
-        cardPanel.add(helpPanel, "HelpPanel");
+        cardPanel.add(acceuilView, Acceuil_View);
+        cardPanel.add(helpPanel, HELP_MENU);
+        cardPanel.add(optionsPanel, OPTIONS_PANEL); // Add the options panel
 
         add(cardPanel);
-        cardLayout.show(cardPanel, "AcceuilView");
+        cardLayout.show(cardPanel, Acceuil_View);
     }
 
     @Override

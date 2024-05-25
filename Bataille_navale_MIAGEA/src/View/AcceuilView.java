@@ -106,12 +106,11 @@ public class AcceuilView extends JPanel {
         } else if (imagePath.equals(OPTIONS_BUTTON_IMAGE_PATH)) {
             button.addActionListener(e -> callback.navigate("OptionsPanel"));
         } else if (imagePath.equals(QUIT_BUTTON_IMAGE_PATH)) {
-            button.addActionListener(e -> System.exit(0)); // Quit the application
+            button.addActionListener(e -> System.exit(0));
         } else {
             button.addActionListener(this::buttonAction);
         }
         return button;
-
 
     }
     
