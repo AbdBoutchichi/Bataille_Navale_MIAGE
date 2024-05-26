@@ -19,8 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import Controler.EndGameController;
 import Controler.ShootField;
 import Modele.Player;
 
@@ -46,7 +48,7 @@ public class NewGameRadar extends JFrame {
     public JButton fireButtonPlayer1;
     public JButton cancelButtonPlayer1;
     public JPanel controlPanelPlayer1;
-
+    public EndGameController endGameController;
     public JTextField xFieldPlayer2;
     public JTextField yFieldPlayer2;
     public JButton fireButtonPlayer2;
@@ -60,7 +62,7 @@ public class NewGameRadar extends JFrame {
         this.player1 = plr1;
         this.player2 = plr2;
         this.currentPlayer = plr1;
-
+        this.endGameController = new EndGameController(plr1, plr2, this, false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bataille Navale");
 
@@ -331,6 +333,22 @@ public class NewGameRadar extends JFrame {
         label.setFont(BUTTON_FONT);
         label.setForeground(TEXT_COLOR);
         return label;
+    }
+
+     public void checkForWin() {
+    if (!player1.isAlive()) {
+        SwingUtilities.invokeLater(() -> endGame(player2, player1));
+    } else if (!player2.isAlive()) {
+        SwingUtilities.invokeLater(() -> endGame(player1, player2));
+    }
+}
+
+    
+    public void endGame(Player winner, Player loser) {
+        endGameController.endGame();
+    }
+    public int getElapsedTime() {
+        return elapsedTime;
     }
 
     // public static void main(String[] args) {

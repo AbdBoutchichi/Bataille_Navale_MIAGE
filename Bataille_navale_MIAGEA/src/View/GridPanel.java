@@ -271,24 +271,24 @@ public class GridPanel extends JPanel{
         BoardRadar radar = new BoardRadar(10, jr, adv);
         for (int col = 0; col < COLS; col++) {
             for (int row = 0; row < ROWS; row++) {
-                Carreaux cell = new Carreaux(col, row);
+                Carreaux cell = new Carreaux(row, col);
                 
 
                 cell.setOpaque(true);
                 //Attribue un lecteur de tire a chaque bouton
-                cell.addActionListener(new InteractRadar(col, row, jr, adv, this, boat, page));
+                cell.addActionListener(new InteractRadar(row, col, jr, adv, this, boat, page));
 
                 //Détermine la position de chaque tire du joueur
                 for (Cell c : jr.cellsShot) {
-                    if (c.position(col, row)) {
+                    if (c.position(row, col)) {
                         cell.setIcon(null);
                         //Donne une nouvelle couleur au bouton si le joueur a tiré a cette position
                         cell.setBackground(Color.red);
-                        cell.setText(""+radar.radar(col, row, jr, adv));
+                        cell.setText(""+radar.radar(row, col, jr, adv));
                         //récupere les position occupé par chaque bateau
                         for (Boat b : adv.getCellsBoats()) {
                             //Change la couleur du bouton si il y un bateau dessus
-                            if(b.isPosition(col, row)){
+                            if(b.isPosition(row, col)){
                                 cell.setBackground(Color.green);
                                 cell.setText("");
                             } else {

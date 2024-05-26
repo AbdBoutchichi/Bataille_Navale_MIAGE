@@ -52,7 +52,7 @@ public class InteractRadar implements ActionListener{
                 grille2.repaint();
                 grille1.revalidate();
                 grille1.repaint();
-
+                page.checkForWin();
         }
     }
 }

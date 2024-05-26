@@ -3,6 +3,7 @@ package Controler;
 import View.EndGamePanel;
 import View.NewGame;
 import View.NewGameOrdi;
+import View.NewGameRadar;
 import Modele.Player;
 import java.lang.System;
 
@@ -11,6 +12,7 @@ public class EndGameController {
     private Player player2;
     private NewGame gameView;
     private NewGameOrdi gameOrdiView;
+    public NewGameRadar gameRadar;
     private boolean isVsComputer;
 
     public EndGameController(Player p1, Player p2, NewGame game, boolean isVsComp) {
@@ -27,6 +29,14 @@ public class EndGameController {
         this.isVsComputer = true;
     }
 
+    public EndGameController(Player p1, Player p2, NewGameRadar gameRadar, boolean isVsComp) {
+        this.player1 = p1;
+        this.player2 = p2;
+        this.gameRadar = gameRadar;
+        this.isVsComputer = isVsComp;
+    }
+    
+
     public void checkGameStatus() {
         System.out.println("Checking game status...");
         System.out.println("Player 1 Alive: " + player1.isAlive());
@@ -38,24 +48,43 @@ public class EndGameController {
     }
     
     public void endGame() {
-        Player winner = player1.isAlive() ? player1 : player2;
-        Player loser = player1.isAlive() ? player2 : player1;
+    Player winner = player1.isAlive() ? player1 : player2;
+    Player loser = player1.isAlive() ? player2 : player1;
 
-        int duration = isVsComputer ? gameOrdiView.getElapsedTime() : gameView.getElapsedTime();
-        int[] statsWinner = {winner.incrementNbreBateauShot(), winner.incrementNbreShotSuccess(), winner.incrementNbreTotalShot()};
-        int[] statsLoser = {loser.incrementNbreBateauShot(), loser.incrementNbreShotSuccess(), loser.incrementNbreTotalShot()};
-
-        EndGamePanel endGamePanel = new EndGamePanel(winner.getName(), loser.getName(), duration, statsWinner, statsLoser);
-        endGamePanel.setVisible(true);
-
-        if (isVsComputer) {
-            gameOrdiView.setVisible(false);
-        } else {
-            gameView.setVisible(false);
-        }
+    int duration;
+    if (isVsComputer) {
+        duration = gameOrdiView != null ? gameOrdiView.getElapsedTime() : 0;  // Ajouter une vérification pour null
+    } else if (gameRadar != null) {
+        duration = gameRadar.getElapsedTime();  // Ajouter la gestion pour gameRadar
+    } else {
+        duration = gameView != null ? gameView.getElapsedTime() : 0;  // Ajouter une vérification pour null
     }
 
-    public int getElapsedTime() {
-        return isVsComputer ? gameOrdiView.getElapsedTime() : gameView.getElapsedTime();
+    int[] statsWinner = {winner.incrementNbreBateauShot(), winner.incrementNbreShotSuccess(), winner.incrementNbreTotalShot()};
+    int[] statsLoser = {loser.incrementNbreBateauShot(), loser.incrementNbreShotSuccess(), loser.incrementNbreTotalShot()};
+
+    EndGamePanel endGamePanel = new EndGamePanel(winner.getName(), loser.getName(), duration, statsWinner, statsLoser);
+    endGamePanel.setVisible(true);
+
+    if (gameOrdiView != null && isVsComputer) {
+        gameOrdiView.setVisible(false);
+    } else if (gameRadar != null) {
+        gameRadar.setVisible(false);
+    } else if (gameView != null) {
+        gameView.setVisible(false);
     }
+}
+
+
+public int getElapsedTime() {
+    if (gameOrdiView != null && isVsComputer) {
+        return gameOrdiView.getElapsedTime();
+    } else if (gameRadar != null) {
+        return gameRadar.getElapsedTime();
+    } else if (gameView != null) {
+        return gameView.getElapsedTime();
+    }
+    return 0;  // Retourner une valeur par défaut si aucun cas n'est applicable
+}
+
 }
