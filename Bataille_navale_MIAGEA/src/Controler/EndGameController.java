@@ -53,11 +53,11 @@ public class EndGameController {
 
     int duration;
     if (isVsComputer) {
-        duration = gameOrdiView != null ? gameOrdiView.getElapsedTime() : 0;  // Ajouter une vérification pour null
+        duration = gameOrdiView != null ? gameOrdiView.getElapsedTime() : 0;
     } else if (gameRadar != null) {
-        duration = gameRadar.getElapsedTime();  // Ajouter la gestion pour gameRadar
+        duration = gameRadar.getElapsedTime();
     } else {
-        duration = gameView != null ? gameView.getElapsedTime() : 0;  // Ajouter une vérification pour null
+        duration = gameView != null ? gameView.getElapsedTime() : 0;
     }
 
     int[] statsWinner = {winner.incrementNbreBateauShot(), winner.incrementNbreShotSuccess(), winner.incrementNbreTotalShot()};
@@ -84,7 +84,7 @@ public int getElapsedTime() {
     } else if (gameView != null) {
         return gameView.getElapsedTime();
     }
-    return 0;  // Retourner une valeur par défaut si aucun cas n'est applicable
+    return 0;
 }
 
 }

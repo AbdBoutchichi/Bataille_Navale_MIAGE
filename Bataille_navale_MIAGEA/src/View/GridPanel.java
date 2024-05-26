@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -86,6 +87,8 @@ public class GridPanel extends JPanel{
         initGridPanelShotOrdi(jr, adv, grilleBoat, page);
     }
 
+   
+
     //Creation d'une Grille de placement
     public GridPanel(int dim, Player jr, String orientation, int size, String name){
         backgroundImage = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
@@ -149,6 +152,19 @@ public class GridPanel extends JPanel{
         
        
         
+    }
+
+    public void updateCell(int row, int col, Color color) {
+        for (Component comp : this.getComponents()) {
+            if (comp instanceof Carreaux) {
+                Carreaux cell = (Carreaux) comp;
+                if (cell.getX() == row && cell.getY() == col) {
+                    cell.setBackground(color);
+                    cell.repaint(); // Assurez-vous que la cellule est redessinée
+                    break;
+                }
+            }
+        }
     }
 
 
@@ -307,6 +323,9 @@ public class GridPanel extends JPanel{
             }
         }
     }
+
+
+    
 
 
     public void initGridPanelShotOrdi(Player jr, PlayerComputer adv, GridPanel boat, NewGameOrdi page){

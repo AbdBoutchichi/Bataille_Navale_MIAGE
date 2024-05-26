@@ -3,6 +3,7 @@ package View;
 import java.awt.*;
 import javax.swing.*;
 import Modele.Player;
+import Controler.ArtilleryController;
 
 public class NewGameArtillerie extends JFrame {
 
@@ -18,10 +19,15 @@ public class NewGameArtillerie extends JFrame {
     private JLabel timerLabel;
     private int elapsedTime = 0;
     private Timer timer;
-    private GridPanel gridPanelPlayer1;
-    private GridPanel gridPanelPlayer2;
-    public JPanel controlPanelPlayer2;
+    public GridPanel gridPanelPlayer1;
+    public GridPanel gridPanelPlayer2;
     public JPanel controlPanelPlayer1;
+    public JPanel controlPanelPlayer2;
+
+    private JLabel xLabelPlayer1;
+    private JLabel yLabelPlayer1;
+    private JLabel xLabelPlayer2;
+    private JLabel yLabelPlayer2;
 
     public NewGameArtillerie(Player plr1, Player plr2) {
         this.player1 = plr1;
@@ -44,6 +50,8 @@ public class NewGameArtillerie extends JFrame {
 
         setupTimer();
         setVisible(true);
+
+        ArtilleryController controller = new ArtilleryController(plr1, plr2, this);
     }
 
     private JPanel createTimerPanel() {
@@ -153,6 +161,14 @@ public class NewGameArtillerie extends JFrame {
         controlPanel.add(confirmFireButton, gbc);
         gbc.gridy = 5;
         controlPanel.add(cancelButton, gbc);
+
+        if (player == player1) {
+            xLabelPlayer1 = xValueLabel;
+            yLabelPlayer1 = yValueLabel;
+        } else {
+            xLabelPlayer2 = xValueLabel;
+            yLabelPlayer2 = yValueLabel;
+        }
 
         return controlPanel;
     }
@@ -269,6 +285,19 @@ public class NewGameArtillerie extends JFrame {
         button.setFocusPainted(false);
         button.setBorderPainted(false);
         button.setOpaque(true);
+    }
+
+    public JLabel getXLabel(Player player) {
+        return player == player1 ? xLabelPlayer1 : xLabelPlayer2;
+    }
+
+    public JLabel getYLabel(Player player) {
+        return player == player1 ? yLabelPlayer1 : yLabelPlayer2;
+    }
+
+    public void endGame(String winner) {
+        JOptionPane.showMessageDialog(this, winner + " wins the game!");
+        System.exit(0);
     }
 
     public static void main(String[] args) {
