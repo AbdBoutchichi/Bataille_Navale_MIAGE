@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+import Controler.EndGameController;
 import Modele.Player;
 import Modele.PlayerComputer;
 
@@ -45,11 +46,12 @@ public class NewGameOrdi extends JFrame {
     public JButton fireButtonPlayer1;
     public JButton cancelButtonPlayer1;
     public JPanel controlPanelPlayer1;
+    public EndGameController endGameController;
 
     public NewGameOrdi(Player plr1, int difficulty) {
         this.player1 = plr1;
         this.player2 = new PlayerComputer(difficulty, "AI");
-
+        this.endGameController = new EndGameController(plr1, new PlayerComputer(difficulty, "AI"), this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bataille Navale");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -278,17 +280,15 @@ public class NewGameOrdi extends JFrame {
     }
     
     public void endGame(Player winner, Player loser) {
-        timer.stop(); // Stop the game timer
-        int duration = elapsedTime;
-        int[] statsWinner = {winner.incrementNbreShotSuccess(), winner.incrementNbreTotalShot() - winner.incrementNbreShotSuccess(), winner.incrementNbreTotalShot()};
-        int[] statsLoser = {loser.incrementNbreShotSuccess(), loser.incrementNbreTotalShot() - loser.incrementNbreShotSuccess(), loser.incrementNbreTotalShot()};
-        
-        EndGamePanel endGamePanel = new EndGamePanel(winner.getName(), loser.getName(), duration, statsWinner, statsLoser);
-        endGamePanel.setVisible(true);
-        this.setVisible(false);
+        endGameController.endGame();
     }
     
-    
+    public int getElapsedTime() {
+        return elapsedTime;
+    }
+    public EndGameController getEndGameController() {
+        return endGameController;
+    }
 
     // public static void main(String[] args) {
     //     Player plr1 = new Player("Bob");

@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+import Controler.EndGameController;
 import Controler.ShootField;
 import Modele.Player;
 
@@ -54,6 +55,7 @@ public class NewGame extends JFrame {
 
     private ShootField shootFieldPlayer1;
     private ShootField shootFieldPlayer2;
+    public EndGameController endGameController;
 
 
 
@@ -63,6 +65,7 @@ public class NewGame extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bataille Navale");
+        this.endGameController = new EndGameController(plr1, plr2, this, false);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width * 75 / 100, screenSize.height * 75 / 100);
@@ -339,15 +342,11 @@ public class NewGame extends JFrame {
     }
     
     public void endGame(Player winner, Player loser) {
-        timer.stop(); // Stop the game timer
-        int duration = elapsedTime;
-        int[] statsWinner = {(int) winner.incrementNbreShotSuccess(), winner.incrementNbreBateauShot() - winner.incrementNbreShotSuccess(), winner.incrementNbreTotalShot()};
-        int[] statsLoser = {loser.incrementNbreShotSuccess(), loser.incrementNbreTotalShot() - loser.incrementNbreShotSuccess(), loser.incrementNbreTotalShot()};
-        EndGamePanel endGamePanel = new EndGamePanel(winner.getName(), loser.getName(), duration, statsWinner, statsLoser);
-        endGamePanel.setVisible(true);
-        this.setVisible(false);
+        endGameController.endGame();
     }
-
+    public int getElapsedTime() {
+        return elapsedTime;
+    }
     public static void main(String[] args) {
         Player plr1 = new Player("Bob");
         Player plr2 = new Player("Bill");

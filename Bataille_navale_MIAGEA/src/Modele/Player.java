@@ -235,27 +235,44 @@ public class Player implements Serializable{
         return boats;
     }
 
-    public boolean isTouch(int x, int y){
-        for(Boat b : boats){
-            //verifie si un bateau a été touché
-            if (b.isPosition(x, y)) {
-                System.out.println("Touché");
-                b.touch();
-                //verifie si il coule
-                if(b.isSunk()){
-                    System.out.println("Coulé");
-                } 
+    // public boolean isTouch(int x, int y){
+    //     for(Boat b : boats){
+    //         //verifie si un bateau a été touché
+    //         if (b.isPosition(x, y)) {
+    //             System.out.println("Touché");
+    //             b.touch();
+    //             //verifie si il coule
+    //             if(b.isSunk()){
+    //                 System.out.println("Coulé");
+    //             } 
 
+    //             return true;
+    //         }
+    //     }
+
+        
+
+    //         System.out.println("Raté");
+    //         return false;
+
+        
+    // }
+
+    public boolean isTouch(int x, int y) {
+        for (Boat b : boats) {
+            if (b.isPosition(x, y)) {
+                b.touch();
+                if (b.isSunk()) {
+                    System.out.println("Le bateau " + b.getName() + " a coulé!");
+                }
+                System.out.println("Touché à " + x + "," + y);
                 return true;
             }
         }
-
-            System.out.println("Raté");
-            return false;
-
-        
+        System.out.println("Raté à " + x + "," + y);
+        return false;
     }
-
+    
 
     //Verifie si un bateau est a cette position
     public boolean over(int x, int y, int taille, char o){

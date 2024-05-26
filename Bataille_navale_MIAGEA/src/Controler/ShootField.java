@@ -5,14 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 import View.GridPanel;
 import View.NewGame;
-
-import Modele.NormalMode;
+import View.EndGamePanel; // Assurez-vous d'avoir un panneau pour la fin du jeu
 import Modele.Player;
-
 
 public class ShootField implements ActionListener{
     private String x;
@@ -24,62 +21,60 @@ public class ShootField implements ActionListener{
     private NewGame page;
     private boolean firstPlayer;
 
-    public ShootField(NewGame game, Player plr, Player adv, GridPanel shot, GridPanel boat, boolean b){
-        firstPlayer = b;
-        joueur = plr;
-        adversaire = adv;
-        grille1 = shot;
-        grille2 = boat;
-        page = game;
+    public ShootField(NewGame game, Player plr, Player adv, GridPanel shot, GridPanel boat, boolean isFirstPlayer){
+        this.firstPlayer = isFirstPlayer;
+        this.joueur = plr;
+        this.adversaire = adv;
+        this.grille1 = shot;
+        this.grille2 = boat;
+        this.page = game;
     }
 
     public void actionPerformed(ActionEvent e){
-        if(firstPlayer){
-            x = page.xFieldPlayer1.getText();
-            y = page.yFieldPlayer1.getText();
-        } else {
-            x = page.xFieldPlayer2.getText();
-            y = page.yFieldPlayer2.getText();
-        }
+        try {
+            x = firstPlayer ? page.xFieldPlayer1.getText() : page.xFieldPlayer2.getText();
+            y = firstPlayer ? page.yFieldPlayer1.getText() : page.yFieldPlayer2.getText();
 
-        System.out.println("val: " + Integer.parseInt(x) + " ; " + Integer.parseInt(y));
+            int posX = Integer.parseInt(x);
+            int posY = Integer.parseInt(y);
 
-        if(Integer.parseInt(x) > 0 || Integer.parseInt(x) < 9 || Integer.parseInt(y) > 0 || Integer.parseInt(y) < 9){
-            System.out.println("val: " + Integer.parseInt(x) + " ; " + Integer.parseInt(y));
-            if(joueur.canShoot(Integer.parseInt(x), Integer.parseInt(y))){
+            if (posX >= 0 && posX <= 9 && posY >= 0 && posY <= 9) {
+                if(joueur.canShoot(posX, posY)){
+                    joueur.shootAt(posX, posY);
+                    boolean hit = adversaire.isTouch(posX, posY);
+                    updateGameUI(hit);
 
-                joueur.shootAt(Integer.parseInt(x), Integer.parseInt(y));
-                if(adversaire.isTouch(Integer.parseInt(x), Integer.parseInt(y))){
-                    grille1.setBackground(null);
-                    grille1.removeAll();
-                    grille2.removeAll();
-                    grille2.initGridPanelInert(adversaire, joueur);
-                    grille1.initGridPanelShot(joueur, adversaire, grille2, page);
-
-                
-                
-                
+                    if (!adversaire.isAlive()) {
+                        endGame(joueur, adversaire);
+                    } else {
+                        page.setActionlistener(adversaire);
+                    }
                 } else {
-                    grille1.setBackground(null);
-                    grille1.removeAll();
-                    grille2.removeAll();
-                    grille1.initGridPanelInert(joueur, adversaire);
-                    grille2.initGridPanelShot(adversaire, joueur, grille1, page);
-
-                    page.setActionlistener(joueur);
-                
-                
+                    JOptionPane.showMessageDialog(null, "Vous avez déjà tiré ici. Essayer ailleurs", "Valeur déjà tirée", JOptionPane.INFORMATION_MESSAGE);
                 }
-                grille2.revalidate();
-                grille2.repaint();
-                grille1.revalidate();
-                grille1.repaint();
-            } 
-            else{
-                JOptionPane.showMessageDialog(null, "Vous avez déja tiré ici. Essayer ailleur", "Valeur déjà tiré", JOptionPane.INFORMATION_MESSAGE);}
+            } else {
+                JOptionPane.showMessageDialog(null, "Valeur invalide", "Valeur invalide", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Veuillez entrer des nombres valides", "Erreur de Format", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-        } else {
-            JOptionPane.showMessageDialog(null, "Valeur invalide", "Valeur invalide", JOptionPane.INFORMATION_MESSAGE); }
+    private void updateGameUI(boolean hit) {
+        grille1.setBackground(null);
+        grille1.removeAll();
+        grille2.removeAll();
+        grille2.initGridPanelInert(adversaire, joueur);
+        grille1.initGridPanelShot(joueur, adversaire, grille2, page);
+        grille1.revalidate();
+        grille1.repaint();
+        grille2.revalidate();
+        grille2.repaint();
+    }
+
+    private void endGame(Player winner, Player loser) {
+        JFrame endGameFrame = new EndGamePanel(null,null,0, null, null);
+        endGameFrame.setVisible(true);
+        page.setVisible(false);  // Cache la fenêtre du jeu
     }
 }
-
