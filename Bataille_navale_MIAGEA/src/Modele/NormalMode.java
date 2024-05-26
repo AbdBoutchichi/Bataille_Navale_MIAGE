@@ -224,47 +224,87 @@ public class NormalMode implements Serializable{
     
     
 
+    // private void playTurn(Player jr1, Player jr2) {
+    //     Scanner scanner = new Scanner(System.in);
+    //     System.out.println("Au tour de " + jr1.getName() + ".");
+    //     int x = -1;
+    //     int y = -1;
+    
+    //     board.ShowBoardShot(jr1, jr2);
+    
+    //     // Gère un tour pour un joueur humain ou automatique
+    //     if (jr1 instanceof PlayerComputer) {
+    //         System.out.println("Tour automatique de l'ordinateur.");
+    //         ((PlayerComputer) jr1).chooseNextMove(jr2);
+    //     } else {
+    //         boolean validShot = false;
+    //         while (!validShot) {
+    //             System.out.println("Entrez les coordonnées de votre tir (x, y):");
+    //             x = scanner.nextInt();
+    //             y = scanner.nextInt();
+    //             scanner.nextLine(); // nettoyer le buffer d'entrée
+    //             validShot = jr1.canShoot(x, y);
+    //             if (!validShot) {
+    //                 System.out.println("Vous avez déjà tiré sur cette case ou elle sort du plateau. Veuillez donner de nouvelles coordonnées.");
+    //             }
+    //         }
+    //         jr1.shootAt(x, y); // Effectuer le tir
+    //         System.out.println("Tir en " + x + ";" + y);
+    //         if (jr2.isTouch(y, x)) {
+    //             System.out.println("Touché");
+    //         } else {
+    //             System.out.println("Manqué");
+    //         }
+    //     }
+    
+    //     //askForSave();
+    
+    //     // Changement de tour
+    //     if (!jr2.isTouch(y, x)) {
+    //         isPlayer1Turn = !isPlayer1Turn;
+    //     }
+    //     System.out.println("Au tour de " + (isPlayer1Turn ? jr1.getName() : jr2.getName()) + ".");
+    // }
+
     private void playTurn(Player jr1, Player jr2) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Au tour de " + jr1.getName() + ".");
         int x = -1;
         int y = -1;
     
         board.ShowBoardShot(jr1, jr2);
     
-        // Gère un tour pour un joueur humain ou automatique
         if (jr1 instanceof PlayerComputer) {
-            System.out.println("Tour automatique de l'ordinateur.");
-            ((PlayerComputer) jr1).chooseNextMove(jr2);
+            // Si le joueur est un ordinateur, exécutez son mouvement automatiquement.
+            ((PlayerComputer) jr1).makeMove(jr2);
         } else {
+            // Interaction avec l'utilisateur pour un joueur humain.
             boolean validShot = false;
             while (!validShot) {
-                System.out.println("Entrez les coordonnées de votre tir (x, y):");
-                x = scanner.nextInt();
-                y = scanner.nextInt();
-                scanner.nextLine(); // nettoyer le buffer d'entrée
+                System.out.println("Entrez les coordonnées de votre tir (colonne x, ligne y):");
+                x = scanner.nextInt();  // D'abord x, la coordonnée de la colonne.
+                y = scanner.nextInt();  // Ensuite y, la coordonnée de la ligne.
+                scanner.nextLine();  // Nettoyer le buffer d'entrée.
                 validShot = jr1.canShoot(x, y);
                 if (!validShot) {
-                    System.out.println("Vous avez déjà tiré sur cette case ou elle sort du plateau. Veuillez donner de nouvelles coordonnées.");
+                    System.out.println("Vous avez déjà tiré sur cette case, ou elle sort du plateau. Veuillez donner de nouvelles coordonnées.");
                 }
             }
-            jr1.shootAt(x, y); // Effectuer le tir
-            System.out.println("Tir en " + x + ";" + y);
-            if (jr2.isTouch(y, x)) {
-                System.out.println("Touché");
-            } else {
-                System.out.println("Manqué");
-            }
+            jr1.shootAt(x, y); // Enregistrement du tir effectué par le joueur.
         }
     
-        //askForSave();
+        // Vérifier si le tir est réussi.
+        boolean hit = jr2.isTouch(x, y);
+        System.out.println(hit ? "Touché" : "Manqué");
     
-        // Changement de tour
-        if (!jr2.isTouch(y, x)) {
+        // Changement de tour seulement si le tir est manqué.
+        if (!hit) {
             isPlayer1Turn = !isPlayer1Turn;
         }
+    
         System.out.println("Au tour de " + (isPlayer1Turn ? jr1.getName() : jr2.getName()) + ".");
     }
+    
+    
     
     
     private void askForSaveAndExit() {

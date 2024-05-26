@@ -1,7 +1,7 @@
 package Modele;
 
-import java.util.Random;
 import java.io.Serializable;
+import java.util.Random;
 
 public class Boat implements Serializable{
     //public enum nom {PorteAvion, SousMarin, Torpilleur, Croiseur, ContreTorpilleur};
@@ -91,12 +91,17 @@ public class Boat implements Serializable{
     
 
     // Check si un bateau a coulé ou pas
+    // public boolean isSunk() {
+    //     if(life == 0)
+    //         return true;
+    //     else 
+    //         return false;
+    // }
+    // Check si un bateau a coulé ou pas
     public boolean isSunk() {
-        if(life == 0)
-            return true;
-        else 
-            return false;
+        return this.life <= 0; // Vérifie si la vie du bateau est à 0 ou moins
     }
+    
 
     // Retourne le tableau de cellule appartenant à un bateau
     public Cell[] getCells() {
@@ -132,9 +137,11 @@ public class Boat implements Serializable{
 
 
     //retire de la vie au le bateau a chaque fois qu'il est touché
-    public void touch(){
-        life--;
+    public void touch() {
+        this.life--; // Décrémenter la vie du bateau
+        System.out.println("Vie restante du bateau: " + this.life);
     }
+    
 
     public char getOrientation() {
         return orientation;

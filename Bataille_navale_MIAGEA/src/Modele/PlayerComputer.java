@@ -24,7 +24,7 @@ public class PlayerComputer extends Player implements Serializable{
     public PlayerComputer(int difficulty,  String n) {
         super(n);
         this.difficultyLevel = difficulty;
-        placeBoatsRand();
+        //placeBoatsRand();
     }
 
     // Placement aléatoire des navires

@@ -1,8 +1,10 @@
 package Modele;
 
 
-import java.util.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 public class Player implements Serializable{
@@ -236,7 +238,7 @@ public class Player implements Serializable{
     public boolean isTouch(int x, int y){
         for(Boat b : boats){
             //verifie si un bateau a été touché
-            if (b.isPosition(y, x)) {
+            if (b.isPosition(x, y)) {
                 System.out.println("Touché");
                 b.touch();
                 //verifie si il coule

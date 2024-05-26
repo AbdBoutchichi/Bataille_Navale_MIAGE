@@ -290,10 +290,10 @@ public class NewGameOrdi extends JFrame {
     
     
 
-    public static void main(String[] args) {
-        Player plr1 = new Player("Bob");
-        plr1.placeBoatsRand();
-        int difficulty = PlayerComputer.MEDIUM;
-        new NewGameOrdi(plr1, difficulty);
-    }
+    // public static void main(String[] args) {
+    //     Player plr1 = new Player("Bob");
+    //     plr1.placeBoatsRand();
+    //     int difficulty = PlayerComputer.MEDIUM;
+    //     new NewGameOrdi(plr1, difficulty);
+    // }
 }
