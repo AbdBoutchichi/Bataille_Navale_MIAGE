@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import Controler.EndGameController;
@@ -333,13 +334,14 @@ public class NewGame extends JFrame {
         button.setOpaque(true);
     }
 
-    public void checkForWin() {
-        if (!player1.isNotDead()) {
-            endGame(player2, player1);
-        } else if (!player2.isNotDead()) {
-            endGame(player1, player2);
-        }
+   public void checkForWin() {
+    if (!player1.isAlive()) {
+        SwingUtilities.invokeLater(() -> endGame(player2, player1));
+    } else if (!player2.isAlive()) {
+        SwingUtilities.invokeLater(() -> endGame(player1, player2));
     }
+}
+
     
     public void endGame(Player winner, Player loser) {
         endGameController.endGame();

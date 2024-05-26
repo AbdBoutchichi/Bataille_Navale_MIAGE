@@ -39,7 +39,7 @@ public class InteractOrdi implements ActionListener{
                 grille2.removeAll();
                 grille2.initGridPanelInert(adversaire, joueur);
                 grille1.initGridPanelShotOrdi(joueur, adversaire, grille2, page);
-
+                page.checkForWin();
             } else {
                 grille1.removeAll();
                 grille2.removeAll();
@@ -70,7 +70,7 @@ public class InteractOrdi implements ActionListener{
                     grille2.repaint();
                     grille1.revalidate();
                     grille1.repaint();
-
+                    page.checkForWin();
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException a){
@@ -88,7 +88,7 @@ public class InteractOrdi implements ActionListener{
                 grille2.repaint();
                 grille1.revalidate();
                 grille1.repaint();
-
+                page.checkForWin();
                 
             }
 
@@ -96,6 +96,7 @@ public class InteractOrdi implements ActionListener{
                 grille2.repaint();
                 grille1.revalidate();
                 grille1.repaint();
+                page.checkForWin();
 
         }
     }

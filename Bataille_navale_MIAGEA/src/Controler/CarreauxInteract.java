@@ -3,10 +3,9 @@ package Controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+import Modele.Player;
 import View.GridPanel;
 import View.NewGame;
-import Modele.Player;
 
 
 public class CarreauxInteract implements ActionListener{
@@ -35,9 +34,10 @@ public class CarreauxInteract implements ActionListener{
                 grille1.setBackground(null);
                 grille1.removeAll();
                 grille2.removeAll();
+
                 grille2.initGridPanelInert(adversaire, joueur);
                 grille1.initGridPanelShot(joueur, adversaire, grille2, page);
-
+                
             } else {
                 grille1.setBackground(null);
                 grille1.removeAll();
@@ -52,7 +52,7 @@ public class CarreauxInteract implements ActionListener{
                 grille2.repaint();
                 grille1.revalidate();
                 grille1.repaint();
-
+                page.checkForWin();
         }
     }
 }

@@ -1,11 +1,25 @@
 package View;
 
-import Modele.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import Controler.*;
+import Controler.CarreauxInteract;
+import Controler.InteractOrdi;
+import Controler.InteractRadar;
+import Controler.Placement;
+import Modele.Board;
+import Modele.BoardRadar;
+import Modele.Boat;
+import Modele.Cell;
+import Modele.Player;
+import Modele.PlayerComputer;
 
 
 
@@ -97,18 +111,18 @@ public class GridPanel extends JPanel{
         inert = false;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                Carreaux cell = new Carreaux(col, row);
+                Carreaux cell = new Carreaux(row, col);
                 ImageIcon imageI;
                 Image pict;
                 //Il détermine les position occupé par chaque bateau
                 for (Boat b : jr.getCellsBoats()) {
-                    if (b.isPosition(col, row)) {
+                    if (b.isPosition(row, col)) {
                         //Attribue a chaque cellule la bonne image de bateau
-                        imageI = new ImageIcon(getClass().getResource(b.part(col, row)));
+                        imageI = new ImageIcon(getClass().getResource(b.part(row, col)));
                         
                         for (Cell s : adv.cellsShot) {
 
-                                if(s.position(col, row)){
+                                if(s.position(row, col)){
                                     cell.setBackground(Color.red);
                                 } else { cell.setBackground(Color.blue); }
                         }
@@ -116,7 +130,7 @@ public class GridPanel extends JPanel{
                         pict = imageI.getImage();
                         pict = pict.getScaledInstance(CELL_SIZE, CELL_SIZE,  java.awt.Image.SCALE_SMOOTH);
                         imageI = new ImageIcon(pict);
-                        cell = new Carreaux(col, row, imageI);
+                        cell = new Carreaux(row, col, imageI);
                        
                     } else { 
                         imageI = new ImageIcon(getClass().getResource("/Images/Mer.gif"));
@@ -143,23 +157,23 @@ public class GridPanel extends JPanel{
         inert = false;
         for (int col = 0; col < COLS; col++) {
             for (int row = 0; row < ROWS; row++) {
-                Carreaux cell = new Carreaux(col, row);
+                Carreaux cell = new Carreaux(row, col);
                 
 
                 cell.setOpaque(true);
                 //Attribue un lecteur de tire a chaque bouton
-                cell.addActionListener(new CarreauxInteract(col, row, jr, adv, this, boat, page));
+                cell.addActionListener(new CarreauxInteract(row, col, jr, adv, this, boat, page));
 
                 //Détermine la position de chaque tire du joueur
                 for (Cell c : jr.cellsShot) {
-                    if (c.position(col, row)) {
+                    if (c.position(row, col)) {
                         cell.setIcon(null);
                         //Donne une nouvelle couleur au bouton si le joueur a tiré a cette position
                         cell.setBackground(Color.red);
                         //récupere les position occupé par chaque bateau
                         for (Boat b : adv.getCellsBoats()) {
                             //Change la couleur du bouton si il y un bateau dessus
-                            if(b.isPosition(col, row)){
+                            if(b.isPosition(row, col)){
                                 cell.setBackground(Color.green);
                             }
                                 
@@ -223,20 +237,20 @@ public class GridPanel extends JPanel{
         Color miss = new Color(255, 100, 100);
         for (int col = 0; col < COLS; col++) {
             for (int row = 0; row < ROWS; row++) {
-                Carreaux cell = new Carreaux(col, row);
+                Carreaux cell = new Carreaux(row, col);
                 
                 cell.setBackground(new Color(255, 255, 255, 50));
                 
                 //Détermine la position de chaque tire du joueur
                 for (Cell c : jr.cellsShot) {
-                    if (c.position(col, row)) {
+                    if (c.position(row, col)) {
                         cell.setIcon(null);
                         //Donne une nouvelle couleur au bouton si le joueur a tiré a cette position
                         cell.setBackground(miss);
                         //récupere les position occupé par chaque bateau
                         for (Boat b : adv.getCellsBoats()) {
                             //Change la couleur du bouton si il y un bateau dessus
-                            if(b.isPosition(col, row)){
+                            if(b.isPosition(row, col)){
                                 cell.setBackground(touch);
                             }
                                 
