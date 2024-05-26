@@ -1,5 +1,6 @@
 package Modele;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Scanner;
 /**
  * 
@@ -327,10 +328,16 @@ private void sauvegarderPartie(String fileName) {
     public void endGame() {
         menu.displayEndGameOptions();
         int endChoice = menu.getPlayerChoice();
+
+        player1.removeAllBoat();
+        player2.removeAllBoat();
+        player1.removeAllShot();
+        player2.removeAllShot();
         
         switch (endChoice) {
             case 1:
                 if (choice == 1) {
+                    
                     initGame(player1, player2);
                 } else {
                 initGameComputer(player1, bot);

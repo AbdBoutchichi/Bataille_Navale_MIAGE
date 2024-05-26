@@ -156,18 +156,23 @@ public class ModeArtillerie extends NormalMode implements Serializable{
         }
     }
 
-    private void endGameArt() {
+    public void endGameArt() {
         menu.displayEndGameOptions();
         int endChoice = menu.getPlayerChoice();
+
+        player1.removeAllBoat();
+        player2.removeAllBoat();
+        player1.removeAllShot();
+        player2.removeAllShot();
         
         switch (endChoice) {
             case 1:
-                initGameArtillerie(player1, player2); // Cela devrait fonctionner si initGame est défini dans la même classe
+                initGameArtillerie(player1, player2);
             case 2:
-                gameOver = true; // Marque le jeu comme terminé
+                gameOver = true;
                 break;
             case 3:
-                System.exit(0); // Quitte l'application
+                System.exit(0);
                 break;
         }
     }

@@ -93,13 +93,6 @@ public class NewGameMenu extends JFrame implements MenuCallback {
         add(cardPanel);
     }
 
-    private JPanel createRadarPlacementPanel() {
-        JPanel panel = new JPanel(new GridLayout(1, 1));
-        RadarPlacementPanel radarPlacementPanel = new RadarPlacementPanel(playerName);
-        panel.add(radarPlacementPanel);
-        return panel;
-    }
-
     private JPanel createMainMenu() {
         JPanel mainMenu = new JPanel();
         mainMenu.setBackground(new Color(120, 90, 40));

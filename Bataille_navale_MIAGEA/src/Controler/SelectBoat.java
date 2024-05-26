@@ -8,8 +8,6 @@ import javax.swing.*;
 
 import View.GridPanel;
 import View.PlacementPanel;
-//import View.RadarGridPanel;
-import View.RadarPlacementPanel;
 import Modele.Player;
 
 public class SelectBoat implements ActionListener{
@@ -17,7 +15,7 @@ public class SelectBoat implements ActionListener{
     private String path;
     private PlacementPanel frame;
     private GridPanel grille;
-    private String selecteur;
+    public String selecteur;
     private Player player;
     private JComboBox combo;
 

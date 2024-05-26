@@ -468,6 +468,18 @@ public class Player implements Serializable{
         
     }
 
+    public void removeAllShot(){
+        for (int i = 0; i< boats.size(); i++) {
+            cellsShot.remove(i);
+        }
+    }
+
+    public void removeAllBoat(){
+        for (int i = 0; i< boats.size(); i++) {
+            boats.remove(i);
+        }
+    }
+
     public boolean exist(String name){
         for (Boat boat : boats) {
             if (boat.getName()== name) return true;

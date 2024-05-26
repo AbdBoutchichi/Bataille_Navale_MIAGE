@@ -52,6 +52,7 @@ public class NewGameOrdi extends JFrame {
     public NewGameOrdi(Player plr1, int difficulty) {
         this.player1 = plr1;
         this.player2 = new PlayerComputer(difficulty, "AI");
+        this.player2.placeBoatsRand();
         this.endGameController = new EndGameController(plr1, new PlayerComputer(difficulty, "AI"), this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bataille Navale");
