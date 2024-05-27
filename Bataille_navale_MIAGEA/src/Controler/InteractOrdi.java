@@ -32,7 +32,7 @@ public class InteractOrdi implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
         if(joueur.canShoot(x, y)){
-            joueur.shootAt(x, y);
+            joueur.shootAt(x, y, adversaire);
             if(adversaire.isTouch(x, y)){
                 grille1.setBackground(null);
                 grille1.removeAll();
@@ -91,7 +91,9 @@ public class InteractOrdi implements ActionListener{
                 page.checkForWin();
                 
             }
-
+                page.updateShipPanel();
+                page.revalidate();
+                page.repaint();
                 grille2.revalidate();
                 grille2.repaint();
                 grille1.revalidate();

@@ -60,8 +60,8 @@ public class EndGameController {
         duration = gameView != null ? gameView.getElapsedTime() : 0;
     }
 
-    int[] statsWinner = {winner.incrementNbreBateauShot(), winner.incrementNbreShotSuccess(), winner.incrementNbreTotalShot()};
-    int[] statsLoser = {loser.incrementNbreBateauShot(), loser.incrementNbreShotSuccess(), loser.incrementNbreTotalShot()};
+    int[] statsWinner = {winner.NbreShotSuccess, winner.NbreTotalShot - winner.NbreShotSuccess, winner.NbreTotalShot};
+    int[] statsLoser = {loser.NbreShotSuccess, loser.NbreTotalShot - loser.NbreShotSuccess, loser.NbreTotalShot};
 
     EndGamePanel endGamePanel = new EndGamePanel(winner.getName(), loser.getName(), duration, statsWinner, statsLoser);
     endGamePanel.setVisible(true);

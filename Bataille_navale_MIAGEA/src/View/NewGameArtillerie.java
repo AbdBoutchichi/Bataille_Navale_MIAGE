@@ -303,6 +303,8 @@ public class NewGameArtillerie extends JFrame {
     public static void main(String[] args) {
         Player plr1 = new Player("Bob");
         Player plr2 = new Player("Bill");
+        plr1.placeBoatsRand();
+        plr2.placeBoatsRand();
         new NewGameArtillerie(plr1, plr2);
     }
 }

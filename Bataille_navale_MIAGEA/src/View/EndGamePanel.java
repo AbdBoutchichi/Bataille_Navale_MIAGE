@@ -9,6 +9,11 @@ public class EndGamePanel extends JFrame {
     private static final Font BUTTON_FONT = new Font("Stencil", Font.BOLD, 16);
     private static final Font LABEL_FONT = new Font("Serif", Font.BOLD, 18);
 
+    private JButton mainMenuButton;
+    private JButton restartButton;
+    private JButton modeSelectionButton;
+    private JButton quitButton;
+
     public EndGamePanel(String player1Name, String player2Name, int duration, int[] statsPlayer1, int[] statsPlayer2) {
         setTitle("Game Over");
         setSize(600, 300);
@@ -23,6 +28,7 @@ public class EndGamePanel extends JFrame {
 
         add(centerPanel, BorderLayout.CENTER);
         add(createButtonPanel(), BorderLayout.SOUTH);
+        initActionListener();
     }
 
     private JPanel createStatsPanel(String playerName, int duration, int[] stats) {
@@ -58,10 +64,10 @@ public class EndGamePanel extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buttonPanel.setBackground(THEME_COLOR);
 
-        JButton mainMenuButton = new JButton("Main Menu");
-        JButton restartButton = new JButton("Restart");
-        JButton modeSelectionButton = new JButton("Change Mode");
-        JButton quitButton = new JButton("Quit");
+        mainMenuButton = new JButton("Main Menu");
+        restartButton = new JButton("Restart");
+        modeSelectionButton = new JButton("Change Mode");
+        quitButton = new JButton("Quit");
 
         stylizeButton(mainMenuButton);
         stylizeButton(restartButton);
@@ -74,6 +80,29 @@ public class EndGamePanel extends JFrame {
         buttonPanel.add(quitButton);
 
         return buttonPanel;
+    }
+
+    private void initActionListener(){
+        mainMenuButton.addActionListener(e ->{
+            NewGameMenu menu = new NewGameMenu();
+            this.setVisible(false);
+            menu.setVisible(true);
+            this.dispose();
+        });
+
+        quitButton.addActionListener(e -> System.exit(0));
+
+        modeSelectionButton.addActionListener(e ->{
+            System.out.println("Frigo");
+            NewGameMenu menu = new NewGameMenu();
+            this.setVisible(false);
+            this.dispose();
+            menu.showMainMenu();
+
+            menu.setVisible(true);
+            
+        });
+
     }
 
     private void stylizeButton(JButton button) {

@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * 
  */
-public class NormalMode implements Serializable{
+public class ModeRadar implements Serializable{
 
     /**
      * Default constructor
@@ -20,79 +20,30 @@ public class NormalMode implements Serializable{
     private Player player2;
     private PlayerComputer bot;
 
-    public NormalMode(){
-        this.scanner = new Scanner(System.in);
-    }
+    
 
-        public NormalMode(int c) {
-            this();
-            choice= c;
-            this.menu = new Menu();
-           
-            // Création du joueur 1
-            System.out.println("Entrez le nom du Joueur 1:");
-            String name1 = scanner.nextLine();
-            
-            this.player1 = new Player(name1);
-           
-            
-            
-            
+        public ModeRadar() {
 
-            // Sélection du mode de jeu et création du joueur 2
-            if (choice == 1) {
-                System.out.println("Entrez le nom du Joueur 2:");
-                String name2 = scanner.nextLine();
-                player2 = new Player(name2);
-                initGame(player1, player2);
-                
-            } else if (choice == 2) {
-                //defini la difficulté de l'ordinateur
-                int difficulty = menu.getDifficultyChoice();
-                System.out.println("La difficulté de l'ordinateur sera :" + difficulty);
-
-                bot = new PlayerComputer(difficulty, "Computer");
-                
-                initGameComputer(player1, bot);
-            }
-        }
-
-        public NormalMode(int c, String name1, String name2) {
-
-            choice= c;
+            scanner = new Scanner(System.in);
             this.menu = new Menu();
 
            
             // Création du joueur 1
             System.out.println("Entrez le nom du Joueur 1:");
             
-            player1 = new Player(name1);
+            player1 = new Player(scanner.nextLine());
             
+            System.out.println("Entrez le nom du Joueur 2:");
             
-            
-
-            
-
-            // Sélection du mode de jeu et création du joueur 2
-            if (choice == 1) {
-                System.out.println("Entrez le nom du Joueur 2:");
-                player2 = new Player(name2);
-                initGame(player1, player2);
+            player2 = new Player(scanner.nextLine());
+            initGame(player1, player2);
                 
-            } else if (choice == 2) {
-                //defini la difficulté de l'ordinateur
-                int difficulty = menu.getDifficultyChoice();
-                System.out.println("La difficulté de l'ordinateur sera :" + difficulty);
-
-                bot = new PlayerComputer(difficulty, "Computer");
-                
-            }
         }
     
         private void initGame(Player jr1, Player jr2) {
             
             // Initialisation du plateau
-            this.board = new Board(10, jr1, jr2);
+            this.board = new BoardRadar(10, jr1, jr2);
     
             // Placement des bateaux (automatique ou manuelle)
             //choix du joueur 1 
@@ -125,27 +76,6 @@ public class NormalMode implements Serializable{
             }
         }
         
-
-        private void initGameComputer(Player jr1, PlayerComputer ordi) {
-            
-            System.out.println("le placement");
-    
-            // Initialisation du plateau
-            this.board = new Board(10, jr1, ordi);
-            
-            // Placement des bateaux du joueur humain
-            if(menu.modePlacement()==1)
-            placeBoats(jr1, bot);//Si le joueur 1 veut placer les bateaux lui-même
-            else jr1.placeBoatsRandomly(board);//Si le joueur 1 souhaites ne pas les placer lui même
-
-            //l'ordi va placer ses bateaux 
-            bot.placeShipsRandomly(board);
-
-            
-    
-            // Début du jeu
-            startGame(jr1, ordi);
-        }
     
         public void startGame(Player jr1, Player jr2) {
             System.out.println("Début de la Bataille Navale!");
@@ -163,12 +93,8 @@ public class NormalMode implements Serializable{
                     while(!isPlayer1Turn && checkWinConditions(jr1, jr2)){playTurn(jr2,jr1);
                         System.out.println("est ce au joueur 2:" + !isPlayer1Turn);}
                 }
-                System.out.println("Appuyez sur 'Q' pour quitter ou ENTER pour continuer...");
-                String input = scanner.nextLine().trim().toUpperCase();
-                if ("Q".equals(input)) {
-                    askForSaveAndExit();
-                    break; // Sortie de la boucle de jeu
-                }
+                
+                
             }
     
             System.out.println("Le jeu est terminé.");
@@ -308,22 +234,9 @@ public class NormalMode implements Serializable{
     
     
     
-    private void askForSaveAndExit() {
-        System.out.println("Voulez-vous sauvegarder la partie en cours ? (Oui/Non)");
-        String response = scanner.nextLine().trim().toLowerCase();
-        if ("oui".equals(response)) {
-            sauvegarderPartie("normal_mode_game.sav");
-            System.out.println("La partie en cours a été sauvegardée.");
-        }
-        System.out.println("Fin du jeu.");
-        System.exit(0); // Quitter l'application
-    }
     
     
-
-private void sauvegarderPartie(String fileName) {
-    SaveGamePart.sauvegarderPartie(this);
-}
+    
     
     public void endGame() {
         menu.displayEndGameOptions();
@@ -336,12 +249,10 @@ private void sauvegarderPartie(String fileName) {
         
         switch (endChoice) {
             case 1:
-                if (choice == 1) {
+                
                     
-                    initGame(player1, player2);
-                } else {
-                initGameComputer(player1, bot);
-                }
+                this.initGame(player1, player2);
+                
             case 2:
                 gameOver = true;
                 break;

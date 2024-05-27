@@ -23,7 +23,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import Controler.EndGameController;
-import Controler.ShootField;
+import Controler.FieldRadar;
+import Modele.Boat;
 import Modele.Player;
 
 public class NewGameRadar extends JFrame {
@@ -55,8 +56,11 @@ public class NewGameRadar extends JFrame {
     public JButton cancelButtonPlayer2;
     public JPanel controlPanelPlayer2;
 
-    private ShootField shootFieldPlayer1;
-    private ShootField shootFieldPlayer2;
+    private FieldRadar shootFieldPlayer1;
+    private FieldRadar shootFieldPlayer2;
+
+    public boolean firstPlayer;
+    private JPanel bottomPanel;
 
     public NewGameRadar(Player plr1, Player plr2) {
         this.player1 = plr1;
@@ -216,7 +220,7 @@ public class NewGameRadar extends JFrame {
     }
 
     private JPanel createBottomPanel() {
-        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(THEME_COLOR);
 
         JPanel trackingPanel1 = createTrackingPanel("/Images/DecorRadar1.png");
@@ -267,13 +271,33 @@ public class NewGameRadar extends JFrame {
             "/Images/contreTorpilleur.png"
         };
 
+        String[] shipNames= {
+            "PorteAvion",
+            "SousMarin",
+            "Torpilleur",
+            "Croiseur",
+            "ContreTorpilleur"
+        };
+
         for (int i = 0; i < shipSizes.length; i++) {
+            Boat actual;
+            if(firstPlayer){
+                actual = player1.recupBoat(shipNames[i]);
+            } else {
+                actual = player2.recupBoat(shipNames[i]);
+            }
+            String state = "EN ETAT";
+            if(actual.life < actual.taille){
+                state = "ENDOMMAGE";
+                if(actual.isSunk())
+                    state = "COULE";
+            }
             ImageIcon shipIcon = new ImageIcon(getClass().getResource(shipImageFiles[i]));
             Image shipImage = shipIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE * shipSizes[i], Image.SCALE_SMOOTH);
             ImageIcon resizedIcon = new ImageIcon(shipImage);
 
             JLabel shipLabel = new JLabel(resizedIcon);
-            JButton shipCountLabel = new JButton("EN ETAT");
+            JButton shipCountLabel = new JButton(state);
             stylizeButton(shipCountLabel);
 
             JPanel shipPanel = new JPanel(new BorderLayout());
@@ -288,14 +312,15 @@ public class NewGameRadar extends JFrame {
     }
 
     private void initActionListener(Player joueur, Player adversaire) {
-        //shootFieldPlayer1 = new ShootField(this, player1, player2, gridPanelPlayer1, gridPanelPlayer2, true);
-        // shootFieldPlayer2 = new ShootField(this, player2, player1, gridPanelPlayer2, gridPanelPlayer1, false);
-        // fireButtonPlayer1.addActionListener(shootFieldPlayer1);
-        // fireButtonPlayer2.addActionListener(shootFieldPlayer2);
-        // fireButtonPlayer2.setBackground(Color.GRAY);
+        shootFieldPlayer1 = new FieldRadar(this, player1, player2, gridPanelPlayer1, gridPanelPlayer2, true);
+        shootFieldPlayer2 = new FieldRadar(this, player2, player1, gridPanelPlayer2, gridPanelPlayer1, false);
+        fireButtonPlayer1.addActionListener(shootFieldPlayer1);
+        fireButtonPlayer2.addActionListener(shootFieldPlayer2);
+        fireButtonPlayer2.setBackground(Color.GRAY);
     }
 
     public void setActionlistener(Player joueur) {
+        firstPlayer = !firstPlayer;
         if (joueur == player1) {
             fireButtonPlayer1.removeActionListener(shootFieldPlayer1);
             fireButtonPlayer2.addActionListener(shootFieldPlayer2);
@@ -307,6 +332,9 @@ public class NewGameRadar extends JFrame {
             fireButtonPlayer1.setBackground(new Color(0, 100, 0));
             fireButtonPlayer2.setBackground(Color.GRAY);
         }
+        BorderLayout layout = (BorderLayout) bottomPanel.getLayout();
+        bottomPanel.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+        bottomPanel.add(createShipsPanel() , BorderLayout.CENTER);
     }
 
     private void stylizeButton(JButton button) {
@@ -351,11 +379,5 @@ public class NewGameRadar extends JFrame {
         return elapsedTime;
     }
 
-    // public static void main(String[] args) {
-    //     Player plr1 = new Player("Bob");
-    //     Player plr2 = new Player("Bill");
-    //     plr1.placeBoatsRand();
-    //     plr2.placeBoatsRand();
-    //     new NewGameRadar(plr1, plr2);
-    // }
+    
 }

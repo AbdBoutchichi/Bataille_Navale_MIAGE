@@ -106,7 +106,7 @@ public class PlayerComputer extends Player implements Serializable{
         } while (hits[x][y]);
         lastHitX = x;
         lastHitY = y;
-        shootAt(x, y);
+        shootAt(x, y, adv);
         
         if(adv.isTouch(x, y)){
             hits[x][y] = true;
@@ -129,7 +129,7 @@ public class PlayerComputer extends Player implements Serializable{
                         int newX = i + dir[0];
                         int newY = j + dir[1];
                         if (isValidMove(newX, newY)) {
-                            shootAt(newX, newY);
+                            shootAt(newX, newY, adv);
                             hits[newX][newY] = true;
                             playAgain = adv.isTouch(newX, newY);
                             return;
@@ -172,7 +172,7 @@ public class PlayerComputer extends Player implements Serializable{
                 System.out.println("pour " + newShot[0] +" ; "+ newShot[1] + "la dire possible " + (newShot[0] + directions[i][0]) + " ; " + (newShot[1] + directions[i][1]));
                 if((newShot[0] + directions[i][0] == 10 || newShot[1] + directions[i][1] == 10 || newShot[1] + directions[i][1] == -1 || newShot[0] + directions[i][0] == -1)){
                     if(map[newShot[0] - directions[i][0]][ newShot[1] - directions[i][1]] == 0){
-                    shootAt(newShot[0] - directions[i][0], newShot[1] - directions[i][1]);
+                    shootAt(newShot[0] - directions[i][0], newShot[1] - directions[i][1], adv);
                     lastHitX = newShot[0] - directions[i][0];
                     lastHitY = newShot[1] - directions[i][1];
                     
@@ -190,7 +190,7 @@ public class PlayerComputer extends Player implements Serializable{
                 else if(map[newShot[0] + directions[i][0]][ newShot[1] + directions[i][1]] == 2 && map[newShot[1] - directions[i][0]][ newShot[1] - directions[i][1]] == 0){
                     Scanner scan = new Scanner(System.in);
                     //scan.nextLine();
-                    shootAt(newShot[0] - directions[i][0], newShot[1] - directions[i][1]);
+                    shootAt(newShot[0] - directions[i][0], newShot[1] - directions[i][1], adv);
                     lastHitX = newShot[0] - directions[i][0];
                     lastHitY = newShot[1] - directions[i][1];
                     //scan.nextLine();
@@ -213,7 +213,7 @@ public class PlayerComputer extends Player implements Serializable{
                 //newDir = random.nextInt(4);
                 if((newShot[0] + directions[newDir][0] ==10 || newShot[1] + directions[newDir][1] ==10 || newShot[1] + directions[newDir][1] ==-1 || newShot[0] + directions[newDir][0] ==-1)){}
                 else if(map[newShot[0] + directions[newDir][0]][ newShot[1] + directions[newDir][1]] == 0){
-                    shootAt(newShot[0] + directions[newDir][0], newShot[1] + directions[newDir][1]);
+                    shootAt(newShot[0] + directions[newDir][0], newShot[1] + directions[newDir][1], adv);
                     lastHitX = newShot[0] + directions[newDir][0];
                     lastHitY = newShot[1] + directions[newDir][1];
                     if(adv.isTouch(lastHitX, lastHitY)){
@@ -246,7 +246,7 @@ public class PlayerComputer extends Player implements Serializable{
                 }   
             }
         }
-        boolean unit = true;
+
         int newX= random.nextInt(10);
         int newY= random.nextInt(10);
         while(canShoot(newX, newY)){

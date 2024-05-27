@@ -69,16 +69,24 @@ public class ArtilleryController implements ActionListener {
 
     private void handleFire(Player shooter, Player target, GridPanel shooterGrid, GridPanel targetGrid) {
         if (shooter.canShoot(x, y)) {
-            shooter.shootAt(x, y);
-            if (target.isTouch(x, y)) {
-                targetGrid.updateCell(x, y, Color.GREEN);
-            } else {
-                targetGrid.updateCell(x, y, Color.RED);
-            }
+            shooter.shootAt(x, y, player2);
+            shooterGrid.removeAll();
+            targetGrid.removeAll();
+
+            shooterGrid.initGridPanelInert(shooter, target);
+            targetGrid.initGridPanelInert(target, shooter);
+            
+            shooterGrid.revalidate();
+            shooterGrid.repaint();
+
+            targetGrid.revalidate();
+            targetGrid.repaint();
+
             if (!target.isAlive()) {
+
                 gameView.endGame(shooter.getName());
             } else {
-                switchTurns();
+                switchTurns(x, y, target);
             }
         }
         resetCoordinates();
@@ -92,8 +100,11 @@ public class ArtilleryController implements ActionListener {
         updateCoordinates(xLabel, yLabel);
     }
 
-    private void switchTurns() {
-        isPlayer1Turn = !isPlayer1Turn;
+    private void switchTurns(int x, int y, Player target) {
+        if(!target.isTouch(x,y)){
+            isPlayer1Turn = !isPlayer1Turn;
+        }
+            
         updateTurnIndicators();
     }
 

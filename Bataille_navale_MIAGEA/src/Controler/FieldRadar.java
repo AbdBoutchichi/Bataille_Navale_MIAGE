@@ -9,24 +9,24 @@ import javax.swing.JTextField;
 
 import View.EndGamePanel;
 import View.GridPanel;
-import View.NewGame;
+import View.NewGameRadar;
 import View.NewGameMenu;
 import Modele.NormalMode;
 import Modele.Player;
 
 
-public class ShootField implements ActionListener{
+public class FieldRadar implements ActionListener{
     private String x;
     private String y;
     private Player joueur;
     private Player adversaire;
     private GridPanel grille1;
     private GridPanel grille2;
-    private NewGame page;
+    private NewGameRadar page;
     private boolean firstPlayer;
     //private NewGameMenu masterPage;
 
-    public ShootField(NewGame game, Player plr, Player adv, GridPanel shot, GridPanel boat, boolean b){
+    public FieldRadar(NewGameRadar game, Player plr, Player adv, GridPanel shot, GridPanel boat, boolean b){
         firstPlayer = b;
         joueur = plr;
         adversaire = adv;
@@ -56,7 +56,7 @@ public class ShootField implements ActionListener{
                     grille1.removeAll();
                     grille2.removeAll();
                     grille2.initGridPanelInert(adversaire, joueur);
-                    grille1.initGridPanelShot(joueur, adversaire, grille2, page);
+                    grille1.initGridPanelRadar(joueur, adversaire, grille2, page);
 
                     
                 
@@ -66,7 +66,7 @@ public class ShootField implements ActionListener{
                     grille1.removeAll();
                     grille2.removeAll();
                     grille1.initGridPanelInert(joueur, adversaire);
-                    grille2.initGridPanelShot(adversaire, joueur, grille1, page);
+                    grille2.initGridPanelRadar(adversaire, joueur, grille1, page);
 
                     page.setActionlistener(joueur);
                 

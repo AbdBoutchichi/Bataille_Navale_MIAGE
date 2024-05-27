@@ -29,7 +29,7 @@ public class CarreauxInteract implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
         if(joueur.canShoot(x, y)){
-            joueur.shootAt(x, y);
+            joueur.shootAt(x, y, adversaire);
             if(adversaire.isTouch(x, y)){
                 grille1.setBackground(null);
                 grille1.removeAll();

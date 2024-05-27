@@ -25,6 +25,7 @@ import javax.swing.Timer;
 import Controler.EndGameController;
 import Controler.ShootField;
 import Modele.Player;
+import Modele.Boat;
 
 public class NewGame extends JFrame {
 
@@ -37,7 +38,7 @@ public class NewGame extends JFrame {
     private Player player2;
     private JLabel welcomeLabel;
     private JLabel timerLabel;
-    private int elapsedTime = 0; // Temps écoulé en secondes
+    public int elapsedTime = 0; // Temps écoulé en secondes
     private Timer timer;
     private GridPanel gridPanelPlayer1;
     private GridPanel gridPanelPlayer2;
@@ -58,11 +59,15 @@ public class NewGame extends JFrame {
     private ShootField shootFieldPlayer2;
     public EndGameController endGameController;
 
+    public boolean firstPlayer;
+    private JPanel bottomPanel;
+
 
 
     public NewGame(Player plr1, Player plr2) {
         this.player1 = plr1;
         this.player2 = plr2;
+        firstPlayer = true;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bataille Navale");
@@ -230,7 +235,7 @@ public class NewGame extends JFrame {
     }
 
     private JPanel createBottomPanel() {
-        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(THEME_COLOR);
 
         JPanel trackingPanel1 = createTrackingPanel("/Images/DecorDroite.png");
@@ -284,13 +289,34 @@ public class NewGame extends JFrame {
             "/Images/contreTorpilleur.png"
         };
 
+        String[] shipNames= {
+            "PorteAvion",
+            "SousMarin",
+            "Torpilleur",
+            "Croiseur",
+            "ContreTorpilleur"
+        };
+
         for (int i = 0; i < shipSizes.length; i++) {
+            Boat actual;
+            if(firstPlayer){
+                actual = player1.recupBoat(shipNames[i]);
+            } else {
+                actual = player2.recupBoat(shipNames[i]);
+            }
+            String state = "EN ETAT";
+            if(actual.life < actual.taille){
+                state = "ENDOMMAGE";
+                if(actual.isSunk())
+                    state = "COULE";
+            }
+
             ImageIcon shipIcon = new ImageIcon(getClass().getResource(shipImageFiles[i]));
             Image shipImage = shipIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE * shipSizes[i], Image.SCALE_SMOOTH);
             ImageIcon resizedIcon = new ImageIcon(shipImage);
 
             JLabel shipLabel = new JLabel(resizedIcon);
-            JButton shipCountLabel = new JButton("EN ETAT");
+            JButton shipCountLabel = new JButton(state);
             stylizeButton(shipCountLabel);
 
             JPanel shipPanel = new JPanel(new BorderLayout());
@@ -312,6 +338,7 @@ public class NewGame extends JFrame {
     }
 
     public void setActionlistener(Player joueur){
+        firstPlayer = !firstPlayer;
         if(joueur == player1){
             fireButtonPlayer1.removeActionListener(shootFieldPlayer1);
             fireButtonPlayer2.addActionListener(shootFieldPlayer2);
@@ -323,7 +350,12 @@ public class NewGame extends JFrame {
             fireButtonPlayer1.setBackground(new Color(199, 153, 119));
             fireButtonPlayer2.setBackground(Color.GRAY);
         }
+        BorderLayout layout = (BorderLayout) bottomPanel.getLayout();
+        bottomPanel.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+        bottomPanel.add(createShipsPanel() , BorderLayout.CENTER);
     }
+
+    
 
     private void stylizeButton(JButton button) {
         button.setFont(BUTTON_FONT);

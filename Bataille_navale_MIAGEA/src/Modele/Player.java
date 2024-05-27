@@ -215,9 +215,13 @@ public class Player implements Serializable{
     }*/
 
     //Ajoute la cellule sur laquelle le joueur tire a sa liste de tire
-    public void shootAt(int x, int y){
+    public void shootAt(int x, int y, Player adv){
         cellsShot.add(new Cell(x,y));
         System.out.println(name + " tire en " + x + ";" + y);
+        if(adv.verifTouch(x, y)){
+            NbreShotSuccess++;
+        }
+        NbreTotalShot++;
     }
 
     
@@ -270,6 +274,18 @@ public class Player implements Serializable{
             }
         }
         System.out.println("Raté à " + x + "," + y);
+        return false;
+    }
+
+    public boolean verifTouch(int x, int y) {
+        for (Boat b : boats) {
+            if (b.isPosition(x, y)) {
+                
+                
+                return true;
+            }
+        }
+        
         return false;
     }
     
@@ -469,15 +485,19 @@ public class Player implements Serializable{
     }
 
     public void removeAllShot(){
-        for (int i = 0; i< boats.size(); i++) {
-            cellsShot.remove(i);
+        List<Cell> suppression = new ArrayList<Cell>();
+        for (int i = 0; i < cellsShot.size(); i++) {
+            suppression.add(cellsShot.get(i));
         }
+        cellsShot.removeAll(suppression);
     }
 
     public void removeAllBoat(){
-        for (int i = 0; i< boats.size(); i++) {
-            boats.remove(i);
+        List<Boat> suppression = new ArrayList<Boat>();
+        for (int i = 0; i < boats.size(); i++) {
+            suppression.add(boats.get(i));
         }
+        boats.removeAll(suppression);
     }
 
     public boolean exist(String name){

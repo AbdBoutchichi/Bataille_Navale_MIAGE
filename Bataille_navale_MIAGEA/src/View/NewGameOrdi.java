@@ -23,6 +23,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import Controler.EndGameController;
+import Modele.Boat;
 import Modele.Player;
 import Modele.PlayerComputer;
 
@@ -48,6 +49,9 @@ public class NewGameOrdi extends JFrame {
     public JButton cancelButtonPlayer1;
     public JPanel controlPanelPlayer1;
     public EndGameController endGameController;
+
+    public boolean firstPlayer;
+    private JPanel bottomPanel;
 
     public NewGameOrdi(Player plr1, int difficulty) {
         this.player1 = plr1;
@@ -144,14 +148,7 @@ public class NewGameOrdi extends JFrame {
             xFieldPlayer1 = new JTextField();
             yFieldPlayer1 = new JTextField();
             fireButtonPlayer1 = new JButton("Tirer");
-            fireButtonPlayer1.addActionListener(e -> {
-                int x = Integer.parseInt(xFieldPlayer1.getText());
-                int y = Integer.parseInt(yFieldPlayer1.getText());
-                player.shootAt(x, y);
-                enemy.isTouch(x, y);
-                xFieldPlayer1.setText("");
-                yFieldPlayer1.setText("");
-            });
+            
 
             cancelButtonPlayer1 = new JButton("Annuler");
             cancelButtonPlayer1.addActionListener(e -> {
@@ -189,7 +186,7 @@ public class NewGameOrdi extends JFrame {
     }
 
     private JPanel createBottomPanel() {
-        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(THEME_COLOR);
 
         JPanel trackingPanel1 = createTrackingPanel("/Images/DecorDroite.png");
@@ -253,13 +250,29 @@ public class NewGameOrdi extends JFrame {
             "/Images/contreTorpilleur.png"
         };
 
+        String[] shipNames= {
+            "PorteAvion",
+            "SousMarin",
+            "Torpilleur",
+            "Croiseur",
+            "ContreTorpilleur"
+        };
+
         for (int i = 0; i < shipSizes.length; i++) {
+            Boat actual = player1.recupBoat(shipNames[i]);
+            
+            String state = "EN ETAT";
+            if(actual.life < actual.taille){
+                state = "ENDOMMAGE";
+                if(actual.isSunk())
+                    state = "COULE";
+            }
             ImageIcon shipIcon = new ImageIcon(getClass().getResource(shipImageFiles[i]));
             Image shipImage = shipIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE * shipSizes[i], Image.SCALE_SMOOTH);
             ImageIcon resizedIcon = new ImageIcon(shipImage);
 
             JLabel shipLabel = new JLabel(resizedIcon);
-            JButton shipCountLabel = new JButton("EN ETAT");
+            JButton shipCountLabel = new JButton(state);
             stylizeButton(shipCountLabel);
 
             JPanel shipPanel = new JPanel(new BorderLayout());
@@ -271,6 +284,12 @@ public class NewGameOrdi extends JFrame {
         shipsPanel.add(Box.createHorizontalGlue());
         
         return shipsPanel;
+    }
+
+    public void updateShipPanel(){
+        BorderLayout layout = (BorderLayout) bottomPanel.getLayout();
+        bottomPanel.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+        bottomPanel.add(createShipsPanel() , BorderLayout.CENTER);
     }
 
    public void checkForWin() {

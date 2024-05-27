@@ -15,7 +15,7 @@ public class BoardRadar extends Board implements Serializable{
         List<Boat> adv = adversaire.getCellsBoats();
         Cell[] plr = joueur.getCellsShot();
         System.out.print(" Tires de " + joueur.getName() + ":\n  ");
-        char ind = 'A';
+        int ind = 0;
         for (int index = 0; index < dimension; index++){
             System.out.print("  " + ind + " ");
             ind++;
@@ -74,7 +74,7 @@ public class BoardRadar extends Board implements Serializable{
         //il parcours toute les cellules  du plateau de jeu 
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                System.err.println(i + " ; " + j);
+                
                 
                 for(int b = 0; b<boats.size(); b++){
                     if(boats.get(b).isPosition(i, j)){
@@ -86,7 +86,7 @@ public class BoardRadar extends Board implements Serializable{
                 
             }
         }
-        System.out.println("count: " + count);
+        
         return count;
     }
 

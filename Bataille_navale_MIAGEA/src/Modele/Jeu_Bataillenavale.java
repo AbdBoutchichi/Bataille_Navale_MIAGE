@@ -46,7 +46,9 @@ public class Jeu_Bataillenavale implements Serializable {
             case 3:
                 modeArtillerie = new ModeArtillerie();
                 break;
-            case 4:
+            case 4: 
+                new ModeRadar();
+            case 5:
                 displaySavedGames();
                 break;
             default:

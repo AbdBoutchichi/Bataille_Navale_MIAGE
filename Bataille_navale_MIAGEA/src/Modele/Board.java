@@ -43,15 +43,15 @@ public class Board implements Serializable{
         Cell[] adv = adversaire.getCellsShot();
         List<Boat> plr = joueur.getCellsBoats();
         System.out.print("Bateaux de "+ joueur.getName()+":\n  ");
-        char ind = 'A';
+        
         for (int index = 0; index < dimension; index++){
-            System.out.print("  " + ind + " ");
-            ind++;
+            System.out.print("  " + index + " ");
+            
         }
         for (int index = 0; index <= dimension; index++) {
             if (index == 0) {
                 System.out.print("\n  ╔═══");
-                ind++;
+                
             } else if (index == dimension) {
                 System.out.print("╗\n");
             } else {System.out.print("╦═══");}
@@ -107,10 +107,10 @@ public class Board implements Serializable{
         List<Boat> adv = adversaire.getCellsBoats();
         Cell[] plr = joueur.getCellsShot();
         System.out.print(" Tires de " + joueur.getName() + ":\n  ");
-        char ind = 'A';
+        
         for (int index = 0; index < dimension; index++){
-            System.out.print("  " + ind + " ");
-            ind++;
+            System.out.print("  " + index + " ");
+            
         }
         for (int index = 0; index <= dimension; index++) {
             if (index == 0) {
@@ -157,17 +157,7 @@ public class Board implements Serializable{
         }
     }
 
-    //permet la transition entre 2 joueurs (n'est actuellement pas utilisé)
-    public void turn(){
-        try (Scanner scanner = new Scanner(System.in)) {
-            String tire;
-            System.out.println("\n\n\n══════════════════════════════════════════════════════════════════════════════════════════════\n\nAu tour de "+ joueur1.name+"\n\n══════════════════════════════════════════════════════════════════════════════════════════════\n\n\n");
-            ShowBoardShot(joueur1, joueur2);
-            ShowBoardBoat(joueur1, joueur2);
-            tire = scanner.nextLine();
-            joueur1.shootAt((int)tire.charAt(0), convertPos(tire.charAt(1)) );
-        }
-    }
+    
 
     
     

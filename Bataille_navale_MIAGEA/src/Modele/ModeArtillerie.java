@@ -80,7 +80,7 @@ public class ModeArtillerie extends NormalMode implements Serializable{
         System.out.println("tire souhaité en " + x + ";" + y);
         //indique si la cellule a déja été touché ou non 
         if(jr1.canShoot(x, y)){
-            jr1.shootAt(x, y);
+            jr1.shootAt(x, y, jr2);
             if(!jr2.isTouch(y, x)){
                 isPlayer1Turn = !isPlayer1Turn;
             }

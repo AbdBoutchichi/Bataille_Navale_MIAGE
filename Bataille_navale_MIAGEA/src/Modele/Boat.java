@@ -40,7 +40,7 @@ public class Boat implements Serializable{
     public int posY;
     private char orientation;
     public Cell[] cellules;
-    private int life;
+    public int life;
 
 
     //Cette methode confirme si une position (x;y) appartient bien au bateau
